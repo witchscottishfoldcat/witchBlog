@@ -1,0 +1,6 @@
+[compileall] PASS - 语法编译（app/tests/main.py）
+[black] PASS - black 格式检查
+[isort] PASS - isort 导入排序
+[flake8] PASS - flake8 lint
+[mypy-ratchet] PASS - mypy 棘轮门（app+tests+main.py）
+static_checks: PASS（全部静态检查通过）

@@ -1,0 +1,18 @@
+{
+  "reviewer": "reviewer-subagent",
+  "base_revision": "00e2732f8d9a58c27927ac32d38a7cee850f6a89",
+  "review_rounds": [
+    {
+      "round": 1,
+      "verdict": "approve-with-notes",
+      "findings": [],
+      "resolution": "No actionable findings and no fix round required. Independently confirmed official license bytes, current notices, license scope, unchanged assets and risk declaration."
+    }
+  ],
+  "disclosed_limits": [
+    "The user selected CC BY-NC-SA 4.0 with its known software/source-delivery limitations disclosed.",
+    "Third-party redistribution-rights certification remains outside this correction review.",
+    "Source approval does not certify unfinished machine-gate or future publication checks."
+  ],
+  "history": "Historical public-release archives were read only and remain immutable. This disposition records the new license correction review."
+}

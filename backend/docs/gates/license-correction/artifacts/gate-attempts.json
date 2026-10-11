@@ -1,0 +1,33 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "mode": "run",
+      "exit_code": 1,
+      "computed_verdict": "FAIL",
+      "record_violations": [
+        "G1: command executable not found: .venv/Scripts/python.exe",
+        "G2: command executable not found: .venv/Scripts/python.exe"
+      ],
+      "cause": "On Windows, launching the evaluator from the repository root prevented relative executable resolution against backend. No trusted command/config/baseline was changed to resolve this.",
+      "fix": "Launch the evaluator from backend. Also explicitly declare the unchanged trusted G3 command to re-execute coverage."
+    },
+    {
+      "attempt": 2,
+      "mode": "run",
+      "exit_code": 0,
+      "output_artifact": "gate-verdict.txt",
+      "checks": "Trusted G1, G2 and explicit G3 commands re-executed successfully. Current matrix and independent review records validated.",
+      "git_guard_note": "Top-level revisions validated separately in git-revisions.json; backend is a subproject, not the Git root.",
+      "archive_encoding": {
+        "output_encoding": "utf-8",
+        "original_child_log_encodings": {
+          "G1": "cp936",
+          "G2": "utf-8",
+          "G3": "cp936"
+        },
+        "redaction": "Repository absolute path replaced with PROJECT_ROOT in archived logs; outcomes unchanged."
+      }
+    }
+  ]
+}

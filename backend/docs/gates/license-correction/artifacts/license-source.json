@@ -1,0 +1,10 @@
+{
+  "publisher": "Creative Commons",
+  "license": "CC BY-NC-SA 4.0",
+  "spdx": "CC-BY-NC-SA-4.0",
+  "source_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.txt",
+  "bytes": 20850,
+  "sha256": "e66c269d4819aaab34b49ef5220c4ddab6756f21bb5180761a4eb8561f2b7bbd",
+  "official_bytes_match": true,
+  "verification": "Fresh official HTTPS download using Mozilla/5.0 User-Agent matched the complete LICENSE bytes. The official trailing blank line is preserved."
+}

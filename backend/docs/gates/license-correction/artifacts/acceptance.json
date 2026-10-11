@@ -1,0 +1,20 @@
+{
+  "checks": [
+    {
+      "requirement": "Use an existing published license, not custom terms.",
+      "verified": true,
+      "evidence": "LICENSE bytes matched official Creative Commons legalcode.txt; exact source and SHA are in license-source.json."
+    },
+    {
+      "requirement": "Noncommercial, attribution and ShareAlike.",
+      "verified": true,
+      "evidence": "CC BY-NC-SA 4.0 and user choice; no added exact UI placement or full-source requirement."
+    },
+    {
+      "requirement": "Preserve third-party assets and prior privacy cleanup.",
+      "verified": true,
+      "evidence": "Only the six named licensing/documentation/footer files change; third-party notices and retained assets are untouched."
+    }
+  ],
+  "publication": "Source revision 7c5c797dfc364b7006a8da85b9f9eea2eb771875 is published to the existing public repository; remote LICENSE bytes equal the official publisher text and description names CC BY-NC-SA 4.0."
+}

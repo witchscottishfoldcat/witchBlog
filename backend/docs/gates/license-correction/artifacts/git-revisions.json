@@ -1,0 +1,17 @@
+{
+  "revisions": [
+    {
+      "revision": "00e2732f8d9a58c27927ac32d38a7cee850f6a89",
+      "command": "git cat-file -e REVISION^{commit}",
+      "exit_code": 0,
+      "exists_in_repository_history": true
+    },
+    {
+      "revision": "7c5c797dfc364b7006a8da85b9f9eea2eb771875",
+      "command": "git cat-file -e REVISION^{commit}",
+      "exit_code": 0,
+      "exists_in_repository_history": true
+    }
+  ],
+  "note": "The gate project_root is backend because that subproject owns the trusted config and commands. The evaluator Git guard declines the ancestor repository; both actual revisions were independently verified here from the Git repository root and the provider CI SHA matches the published source commit."
+}

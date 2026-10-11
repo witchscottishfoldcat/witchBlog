@@ -1,0 +1,49 @@
+{
+  "revision": "00e2732f8d9a58c27927ac32d38a7cee850f6a89",
+  "steps": [
+    {
+      "action": "Restored previous tracked file into an isolated temporary directory and verified bytes against the base Git blob.",
+      "file": "LICENSE",
+      "executed": true,
+      "sha256": "0e2677cdc1b845f5cd672349d774667793c9f0f500d005c31244df52616ce35d",
+      "hash_matches": true
+    },
+    {
+      "action": "Restored previous tracked file into an isolated temporary directory and verified bytes against the base Git blob.",
+      "file": "README.md",
+      "executed": true,
+      "sha256": "371ae96ef42958f60a94033c518354f69666991c679b89d12526900bec4e7f41",
+      "hash_matches": true
+    },
+    {
+      "action": "Restored previous tracked file into an isolated temporary directory and verified bytes against the base Git blob.",
+      "file": "web/src/components/Footer.tsx",
+      "executed": true,
+      "sha256": "ca6835f74e0b3b02f3ad54e7d498e81f3e05fdfeed6ff423bafcff4bbc8631f9",
+      "hash_matches": true
+    },
+    {
+      "action": "Restored previous tracked file into an isolated temporary directory and verified bytes against the base Git blob.",
+      "file": "backend/pyproject.toml",
+      "executed": true,
+      "sha256": "8e97e76debb4d51450ad17a5a4c61e7a0287b145fcd002b3bdc6311f845b70b6",
+      "hash_matches": true
+    },
+    {
+      "action": "Restored previous tracked file into an isolated temporary directory and verified bytes against the base Git blob.",
+      "file": "backend/docs/README.md",
+      "executed": true,
+      "sha256": "24d84375db5fe23aa6f6e02b0a88e309dcc2019355538740737e42bcb6a29bbf",
+      "hash_matches": true
+    },
+    {
+      "action": "Restored previous tracked file into an isolated temporary directory and verified bytes against the base Git blob.",
+      "file": "web/README.md",
+      "executed": true,
+      "sha256": "e4c970b553eac90173df69a3f70663070bea32b749d2b8f1d24c47820fe76207",
+      "hash_matches": true
+    }
+  ],
+  "restore_verified": true,
+  "limitations": "A subsequent revert can restore tracked files; it cannot revoke license grants already received, nor does this correction rewrite historical commits."
+}

@@ -1,0 +1,87 @@
+{
+  "task": "license-correction",
+  "profile": "base-v1",
+  "level": "M",
+  "risk_hits": [
+    "public-api",
+    "irreversible",
+    "external-effects"
+  ],
+  "project_root": "../../..",
+  "items": [
+    {
+      "id": "G0",
+      "status": "PASS",
+      "evidence": "artifacts/risk-assessment.json"
+    },
+    {
+      "id": "G1",
+      "status": "PASS",
+      "evidence": "artifacts/static.log",
+      "exit_code": 0
+    },
+    {
+      "id": "G2",
+      "status": "PASS",
+      "evidence": "artifacts/pytest.xml",
+      "exit_code": 0
+    },
+    {
+      "id": "G3",
+      "status": "PASS",
+      "evidence": "artifacts/coverage.json",
+      "exit_code": 0,
+      "command": [
+        ".venv/Scripts/python.exe",
+        "scripts/coverage_gate.py"
+      ]
+    },
+    {
+      "id": "G4",
+      "status": "N-A",
+      "reason": "No separate requirements brief; selected published license and user-requested scope are verified in artifacts/acceptance.json."
+    },
+    {
+      "id": "G5",
+      "status": "N-A",
+      "reason": "No user-facing flow changes; existing footer license label and accessible name change only. Targeted lint, label and metadata checks are in artifacts/targeted-checks.json; hosted frontend build verifies integration."
+    },
+    {
+      "id": "G6",
+      "status": "N-A",
+      "reason": "No database schema or migrations."
+    },
+    {
+      "id": "G7",
+      "status": "PASS",
+      "evidence": "artifacts/platform.json",
+      "note": "Actual hosted Ubuntu and Windows CI results for the published license correction source revision."
+    },
+    {
+      "id": "G8",
+      "status": "N-A",
+      "reason": "No defined SLO or runtime capacity-sensitive change."
+    },
+    {
+      "id": "G9",
+      "status": "N-A",
+      "reason": "No security-relevant risk hit; licensing metadata and text only, with dependencies and privacy cleanup preserved."
+    },
+    {
+      "id": "G10_REVIEW",
+      "status": "PASS",
+      "evidence": "artifacts/review.json",
+      "note": "Fresh separate agent independently reviewed the diff, official license text, current references and risk declaration."
+    },
+    {
+      "id": "G11_ROLLBACK",
+      "status": "PASS",
+      "evidence": "artifacts/rollback.json"
+    },
+    {
+      "id": "G12_USER_AUTH",
+      "status": "PASS",
+      "evidence": "artifacts/authorization.json"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "reviewer": "reviewer-subagent",
+  "base_revision": "00e2732f8d9a58c27927ac32d38a7cee850f6a89",
+  "reviewed_head_revision": "00e2732f8d9a58c27927ac32d38a7cee850f6a89",
+  "review_round": 1,
+  "verdict": "approve-with-notes",
+  "scope": "Independent review of the six licensing, metadata, documentation and footer changes against the named base, with read-only access to the full repository and current gate evidence. Public source license correction only.",
+  "findings": [],
+  "conclusion": "No actionable findings. The replacement is the complete, unmodified official CC BY-NC-SA 4.0 English legal text. Current repository notices accurately describe the selected published license without additional attribution-placement or corresponding-source obligations.",
+  "evidence": {
+    "official_license": {
+      "source_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.txt",
+      "method": "Reviewer independently fetched the official HTTPS response into memory using HttpClient and compared complete byte arrays and SHA-256 with the local LICENSE; no implementer download was reused.",
+      "official_bytes": 20850,
+      "local_bytes": 20850,
+      "official_sha256": "e66c269d4819aaab34b49ef5220c4ddab6756f21bb5180761a4eb8561f2b7bbd",
+      "local_sha256": "e66c269d4819aaab34b49ef5220c4ddab6756f21bb5180761a4eb8561f2b7bbd",
+      "byte_match": true,
+      "official_trailing_blank_line": "Preserved. The final two bytes are LF LF; the git diff --check EOF warning is caused by the official source, not an added term. All other changed files pass git diff --check."
+    },
+    "terms": {
+      "noncommercial": "README uses the primarily-commercial-advantage-or-monetary-compensation definition from legal code section 1(k), without the former blanket business, advertising or sponsorship categories.",
+      "attribution": "README states appropriate attribution, license link, modification indication and reasonable manner, consistent with section 3(a). Copyright (2026 WitchCat contributors) and original project URL from the previous license are now supplied in README. The footer's existing WitchCat project credit remains; no exact interface-placement requirement is imposed.",
+      "sharealike": "README conditions ShareAlike on publicly sharing adaptations and permits the versions or compatible licenses allowed by section 3(b).",
+      "source_offer": "README explicitly states that CC does not impose complete software-source or network-service source delivery. The public-site sourceUrl suggestion is optional. Footer offers a source link but does not state it as a license condition.",
+      "current_references": "Root README, web README, backend documentation, pyproject SPDX metadata and footer accessible/visible labels consistently name CC BY-NC-SA 4.0. A tracked-text search outside immutable gate archives found no former LicenseRef, custom license title, mandatory full-source or source-sharing label."
+    },
+    "scope_preservation": {
+      "tracked_changes": [
+        "LICENSE",
+        "README.md",
+        "backend/docs/README.md",
+        "backend/pyproject.toml",
+        "web/README.md",
+        "web/src/components/Footer.tsx"
+      ],
+      "asset_files_compared": 89,
+      "asset_mismatches": [],
+      "method": "Reviewer compared each tracked file under web/public, web/src/assets and backend/data against the base Git blob using git hash-object with the tracked path. All 89 match. Full name-status and untracked-file inventory show only the six stated changes and the new correction gate directory.",
+      "third_party": "THIRD_PARTY_NOTICES.md and original Live2D author notice were read. Their exclusions remain consistent with README and legal-code section 1(i): CC grants only rights the licensor has authority to grant. No material, author notice or third-party license was changed.",
+      "privacy": "No private settings, personal-data files, authentication code, database files or prior privacy-cleanup changes occur in this diff. This is a scope comparison, not a new whole-repository privacy certification.",
+      "archives": "The historical public-release gate archive has no diff and was not modified. Its former license statements are historical evidence."
+    },
+    "risk_and_authorization": {
+      "risk_hits": ["public-api", "irreversible", "external-effects"],
+      "assessment": "The declared hits are consistent with changing public license grants and publishing the correction. No dependency, service, runtime API, schema or security-relevant behavior changes were found.",
+      "authorization": "Dispatch requirements and authorization.json record the user's explicit selection of CC BY-NC-SA 4.0 after disclosure of its source-delivery limitation, plus prior authorization to publish this existing public repository.",
+      "rollback": "rollback.json covers file restoration for all six changed tracked files and correctly states that a revert cannot revoke grants already received. No actual rollback or publication was performed by the reviewer."
+    },
+    "supplied_targeted_checks": "targeted-checks.json reports footer ESLint exit 0 and matching source hashes. Reviewer independently matched the hashes and reviewed the three label-only JSX replacements. No runtime logic changes, shared backend tests or test database were exercised by this reviewer.",
+    "gate_status_limit": "At review time the gate definition referenced planned static/test/coverage/platform evidence that had not yet been produced in this new task directory. This review approves the source correction; it does not certify the overall gate or the eventual published CI result. The implementer must complete and evaluate those checks."
+  },
+  "primary_sources": [
+    {
+      "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.txt",
+      "sections": ["1(i)", "1(k)", "2(a)(5)", "3(a)", "3(b)", "6(c)"],
+      "sha256": "e66c269d4819aaab34b49ef5220c4ddab6756f21bb5180761a4eb8561f2b7bbd"
+    },
+    {
+      "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "use": "Confirm published license name, attribution/noncommercial/ShareAlike and no additional restrictions."
+    },
+    {
+      "url": "https://creativecommons.org/faq/#can-i-apply-a-creative-commons-license-to-software",
+      "use": "Confirm CC recommends against software use and does not specify software source-code distribution obligations."
+    },
+    {
+      "url": "https://opensource.org/osd",
+      "use": "Verify README's statement that a noncommercial restriction does not satisfy the Open Source Definition, especially criteria 1 and 6."
+    }
+  ],
+  "reviewed_source_sha256": {
+    "LICENSE": "e66c269d4819aaab34b49ef5220c4ddab6756f21bb5180761a4eb8561f2b7bbd",
+    "README.md": "809ae8afb07783a59c3604e322768d2b3bf9243696e54c20a0165b7369457796",
+    "backend/docs/README.md": "3f1350958feb39a77d0eebb5a5bfbd17d7514798a32c8ea35722a597b5731fc5",
+    "backend/pyproject.toml": "1682a95b3ed407fe1ab03e3d0075193b77904a07f5dd453447fa7ed300984ce7",
+    "web/README.md": "d7c0cf011a7f7b4a7349e64592c2af842cca0531a7b813a3fdd8173ffd12577c",
+    "web/src/components/Footer.tsx": "754ff92560963fd1f6a4942cfee189556da3cc6ff7bacf12c37ebb939fa8ccfb",
+    "THIRD_PARTY_NOTICES.md": "cef632c8ba7b7926273e8772aa5e37c576552680bd2a7c6f5d8b1484fd92d97c",
+    "web/src/config/public-site.ts": "45b9fee329a997a8d881c65df76354ca572255e11f9271b352154457a1d1621d"
+  },
+  "limits": [
+    "CC's recommendation against software licensing and absence of a corresponding-source obligation are known, explicitly disclosed characteristics of the user's selected license.",
+    "This engineering review does not establish copyright ownership or certify third-party media redistribution rights. Existing exclusions and author notices are preserved.",
+    "No shared backend pytest, frontend build, live production integration, database mutation or external publication was performed by this reviewer.",
+    "Full gate execution and hosted CI for the final published correction are the implementer's remaining verification; prior public-release tests are historical evidence only.",
+    "Review covers the recorded file hashes. Later substantive changes require re-review."
+  ]
+}

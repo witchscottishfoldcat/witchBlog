@@ -1,0 +1,5 @@
+{
+  "approved_by": "user",
+  "reference": "用户原话：你怎么给我编造了一个许可你找一个公开的许可；用户选项回复：CC BY-NC-SA 4.0：保留非商业、署名、相同许可分享（推荐）。此前明确要求：然后放到github上。",
+  "scope": "Replace the custom license with unmodified official CC BY-NC-SA 4.0, update current documentation and UI labels, and publish the correction to the existing public repository. The user was informed that CC lacks full software source delivery obligations and chose it."
+}

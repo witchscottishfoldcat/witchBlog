@@ -1,0 +1,54 @@
+G1
+$ .venv/Scripts/python.exe scripts/static_checks.py
+--- stdout ---
+[compileall] PASS - 语法编译（app/tests/main.py）
+[black] PASS - black 格式检查
+[isort] PASS - isort 导入排序
+[flake8] PASS - flake8 lint
+[mypy-ratchet] PASS - mypy 棘轮门（app+tests+main.py）
+static_checks: PASS（全部静态检查通过）
+
+--- stderr ---
+
+G2
+$ .venv/Scripts/python.exe -m pytest tests/test_game_showcase_auth.py tests/test_site_config_revalidate.py tests/test_link_category_validation.py tests/test_links_random_route.py tests/test_error_envelope.py tests/test_project_stats_sync.py tests/test_auth.py tests/test_public_initialization.py tests/test_initialization_isolation.py --junitxml=docs/gates/latest/pytest.xml -p no:cacheprovider -W ignore::DeprecationWarning
+--- stdout ---
+........................................................................ [ 79%]
+...................                                                      [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  PROJECT_ROOT\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+app\core\config.py:100
+  PROJECT_ROOT\backend\app\core\config.py:100: RuntimeWarning: SECRET_KEY not set or is a placeholder. A random temporary key has been generated for development. Set SECRET_KEY environment variable for stable sessions.
+    SECRET_KEY: str = _get_secret_key()
+
+tests/test_game_showcase_auth.py::test_admin_still_reads_r18_game
+  PROJECT_ROOT\backend\tests\test_game_showcase_auth.py:144: SAWarning: Can't sort tables for DROP; an unresolvable foreign key dependency exists between tables: albums, photos; and backend does not support ALTER.  To restore at least a partial sort, apply use_alter=True to ForeignKey and ForeignKeyConstraint objects involved in the cycle to mark these as known cycles that will be ignored.
+    ModelsBase.metadata.drop_all(bind=engine)
+
+tests/test_site_config_revalidate.py::test_maps_network_error_to_502
+  PROJECT_ROOT\backend\tests\test_site_config_revalidate.py:101: SAWarning: Can't sort tables for DROP; an unresolvable foreign key dependency exists between tables: albums, photos; and backend does not support ALTER.  To restore at least a partial sort, apply use_alter=True to ForeignKey and ForeignKeyConstraint objects involved in the cycle to mark these as known cycles that will be ignored.
+    ModelsBase.metadata.drop_all(bind=engine)
+
+tests/test_links_random_route.py::test_get_link_by_id_still_resolves
+  PROJECT_ROOT\backend\tests\test_links_random_route.py:52: SAWarning: Can't sort tables for DROP; an unresolvable foreign key dependency exists between tables: albums, photos; and backend does not support ALTER.  To restore at least a partial sort, apply use_alter=True to ForeignKey and ForeignKeyConstraint objects involved in the cycle to mark these as known cycles that will be ignored.
+    ModelsBase.metadata.drop_all(bind=engine)
+
+tests/test_initialization_isolation.py::test_startup_information_describes_success_and_failure
+  PROJECT_ROOT\backend\tests\conftest.py:92: SAWarning: Can't sort tables for DROP; an unresolvable foreign key dependency exists between tables: albums, photos; and backend does not support ALTER.  To restore at least a partial sort, apply use_alter=True to ForeignKey and ForeignKeyConstraint objects involved in the cycle to mark these as known cycles that will be ignored.
+    Base.metadata.drop_all(bind=engine)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: PROJECT_ROOT\backend\docs\gates\latest\pytest.xml -
+91 passed, 6 warnings in 5.41s
+
+--- stderr ---
+
+G3
+$ .venv/Scripts/python.exe scripts/coverage_gate.py
+--- stdout ---
+coverage_gate PASS: 当前 41.82% >= 基线 41.57%
+
+--- stderr ---

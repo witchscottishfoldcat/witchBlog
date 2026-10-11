@@ -1,0 +1,16 @@
+{
+  "repository": "https://github.com/witchscottishfoldcat/witchBlog",
+  "source_revision": "7c5c797dfc364b7006a8da85b9f9eea2eb771875",
+  "license_url": "https://github.com/witchscottishfoldcat/witchBlog/blob/main/LICENSE",
+  "official_license_bytes_match": true,
+  "license_sha256": "e66c269d4819aaab34b49ef5220c4ddab6756f21bb5180761a4eb8561f2b7bbd",
+  "description": "witchcat个人博客：Next.js 前台、React 管理后台、FastAPI 后端。CC BY-NC-SA 4.0：署名、非商业、相同方式共享。",
+  "visibility": "public",
+  "license_detection": {
+    "key": "other",
+    "name": "Other",
+    "spdx_id": "NOASSERTION",
+    "url": null,
+    "node_id": "MDc6TGljZW5zZTA="
+  }
+}

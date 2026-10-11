@@ -1,0 +1,20 @@
+{
+  "footer_eslint": {
+    "command": "node node_modules/eslint/bin/eslint.js src/components/Footer.tsx",
+    "cwd": "web",
+    "exit_code": 0
+  },
+  "metadata_spdx": "CC-BY-NC-SA-4.0",
+  "current_license_references_consistent": true,
+  "non_license_diff_whitespace_check": true,
+  "official_license_whitespace": "The final blank line is part of the official unmodified legal text, retained deliberately.",
+  "source_files": {
+    "LICENSE": "e66c269d4819aaab34b49ef5220c4ddab6756f21bb5180761a4eb8561f2b7bbd",
+    "README.md": "809ae8afb07783a59c3604e322768d2b3bf9243696e54c20a0165b7369457796",
+    "web/src/components/Footer.tsx": "754ff92560963fd1f6a4942cfee189556da3cc6ff7bacf12c37ebb939fa8ccfb",
+    "backend/pyproject.toml": "1682a95b3ed407fe1ab03e3d0075193b77904a07f5dd453447fa7ed300984ce7",
+    "backend/docs/README.md": "3f1350958feb39a77d0eebb5a5bfbd17d7514798a32c8ea35722a597b5731fc5",
+    "web/README.md": "d7c0cf011a7f7b4a7349e64592c2af842cca0531a7b813a3fdd8173ffd12577c"
+  },
+  "scope": "No runtime logic, dependencies, private settings, database, third-party materials or historical gate artifacts were changed."
+}

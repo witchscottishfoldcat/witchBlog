@@ -1,0 +1,52 @@
+{
+  "assessments": {
+    "migration": {
+      "hit": false,
+      "note": "No database schema or migration changes."
+    },
+    "public-api": {
+      "hit": true,
+      "note": "The public licensing terms change to the published CC BY-NC-SA 4.0 at user request; no API or CLI behavior changes."
+    },
+    "auth-privacy": {
+      "hit": false,
+      "note": "No personal information, authentication, permissions or payment changes in this correction."
+    },
+    "prod-config": {
+      "hit": false,
+      "note": "No deployment configuration or production feature flag changes."
+    },
+    "irreversible": {
+      "hit": true,
+      "note": "Published license grants cannot be recalled from recipients who comply with their terms."
+    },
+    "external-effects": {
+      "hit": true,
+      "note": "The user requested replacing the existing public GitHub repository license and selected CC BY-NC-SA 4.0."
+    },
+    "untrusted-input": {
+      "hit": false,
+      "note": "No new externally controlled input handler or parser."
+    },
+    "supply-chain": {
+      "hit": false,
+      "note": "No dependencies, lockfiles, action pins or base images change; Python license metadata changes only."
+    },
+    "secrets-crypto": {
+      "hit": false,
+      "note": "No credentials, certificates or cryptography changes."
+    },
+    "bulk-data": {
+      "hit": false,
+      "note": "No database, uploaded content or bulk data mutation."
+    },
+    "slo-capacity": {
+      "hit": false,
+      "note": "No performance or capacity-sensitive behavior changes."
+    },
+    "infra-exposure": {
+      "hit": false,
+      "note": "No service deployment, IAM, firewall or network exposure changes."
+    }
+  }
+}
