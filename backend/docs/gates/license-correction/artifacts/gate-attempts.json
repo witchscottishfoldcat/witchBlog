@@ -26,7 +26,8 @@
           "G2": "utf-8",
           "G3": "cp936"
         },
-        "redaction": "Repository absolute path replaced with PROJECT_ROOT in archived logs; outcomes unchanged."
+        "redaction": "Repository absolute path replaced with PROJECT_ROOT in archived logs; outcomes unchanged.",
+        "line_endings": "Normalized CRLF to LF for portable evidence; command output text and outcomes preserved."
       }
     }
   ]
