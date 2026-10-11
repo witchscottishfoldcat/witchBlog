@@ -2,7 +2,7 @@ import { publicSiteConfig } from '@/config/public-site'
 
 export default function Footer() {
   return (
-    <footer className="mt-10 hidden px-4 pb-8 pt-4 md:block sm:mt-16">
+    <footer className="mt-10 px-4 pb-24 pt-4 sm:mt-16 md:pb-8">
       <div className="container mx-auto max-w-[1600px]">
         <div
           className="relative overflow-hidden rounded-2xl border px-6 py-6 text-center shadow-sm"
@@ -43,6 +43,15 @@ export default function Footer() {
                   WC
                 </span>
                 非商业 · 署名 · 源码共享
+              </a>
+
+              <a
+                href={publicSiteConfig.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full px-2.5 py-1 transition-colors hover:text-[var(--theme-primary-700)]"
+              >
+                查看本站源码
               </a>
 
               <span className="hidden h-3 w-px bg-[var(--theme-card-border)] sm:block" aria-hidden="true" />

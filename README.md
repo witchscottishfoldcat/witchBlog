@@ -149,7 +149,7 @@ npm run dev
 | 手动日志 / 照片测试 | 设置 `TEST_ADMIN_USERNAME`、`TEST_ADMIN_PASSWORD` |
 | 批量导入文章 | `python scripts/maintenance/upload_new_posts.py --posts-dir ./new-posts --owner-id YOUR_USER_ID` |
 
-真实 `.env`、密钥、数据库、上传文件、日志和依赖目录已配置忽略。部署自己的修改版时，保留 WitchCat 项目署名，并提供对应版本的公开源码链接。
+真实 `.env`、密钥、数据库、上传文件、日志和依赖目录已配置忽略。部署自己的修改版时，保留 WitchCat 项目署名，并将 `public-site.ts` 中的 `sourceUrl` 指向对应版本的公开源码。
 
 ## 构建与部署
 
