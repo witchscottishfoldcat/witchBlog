@@ -10,7 +10,7 @@ authors = [
     {name = "WitchCat Team"}
 ]
 readme = "docs/README.md"
-license = "LicenseRef-WitchCat-NC-Attribution-ShareAlike-1.0"
+license = "CC-BY-NC-SA-4.0"
 requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 4 - Beta",

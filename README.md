@@ -12,7 +12,7 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-Python-009688?style=flat-square&logo=fastapi&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white)
 ![CI](https://github.com/witchscottishfoldcat/witchBlog/actions/workflows/verify.yml/badge.svg)
-![License](https://img.shields.io/badge/License-NC%20%C2%B7%20Attribution%20%C2%B7%20Source%20Sharing-a78bfa?style=flat-square)
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-a78bfa?style=flat-square)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 [功能](#功能) · [快速开始](#快速开始) · [个性化](#个性化与占位配置) · [项目结构](#项目结构) · [许可](#许可与素材)
 
@@ -43,7 +43,7 @@ witchBlog/
 │   ├── scripts/          # 检查与维护脚本
 │   └── docs/             # API、部署与开发文档
 ├── docs/assets/          # README 图形
-├── LICENSE               # 非商业 · 必须署名 · 源码共享
+├── LICENSE               # CC BY-NC-SA 4.0 官方许可原文
 └── THIRD_PARTY_NOTICES.md # 第三方依赖与素材边界
 ```
 
@@ -150,7 +150,7 @@ npm run dev
 | 手动日志 / 照片测试 | 设置 `TEST_ADMIN_USERNAME`、`TEST_ADMIN_PASSWORD` |
 | 批量导入文章 | `python scripts/maintenance/upload_new_posts.py --posts-dir ./new-posts --owner-id YOUR_USER_ID` |
 
-真实 `.env`、密钥、数据库、上传文件、日志和依赖目录已配置忽略。部署自己的修改版时，保留 WitchCat 项目署名，并将 `public-site.ts` 中的 `sourceUrl` 指向对应版本的公开源码。
+真实 `.env`、密钥、数据库、上传文件、日志和依赖目录已配置忽略。署名方式请参照下方许可说明。若希望在页脚分享自己修改版的源码，可将 `public-site.ts` 中的 `sourceUrl` 指向对应仓库。
 
 ## 构建与部署
 
@@ -171,13 +171,15 @@ npm run build
 
 ## 许可与素材
 
-项目原创代码与文档采用 **[WitchCat 非商业署名源码共享许可 1.0](./LICENSE)**：
+项目原创代码与文档采用公开发布的 **[Creative Commons 署名—非商业性使用—相同方式共享 4.0 国际许可协议（CC BY-NC-SA 4.0）](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)**。版权声明：© 2026 WitchCat contributors；原项目：[WitchCat Blog](https://github.com/witchscottishfoldcat/witchBlog)。
 
-- **不可商用**：商业产品、收费服务、商业运营与广告或赞助变现等需另行取得许可。
-- **必须署名**：保留版权、许可、原项目链接与修改说明；部署界面保留 WitchCat 署名。
-- **必须共享源码**：分发或向他人提供网络服务时，免费公开对应完整源码，修改版沿用同一许可。
+- **非商业性使用**：不得用于主要旨在获取商业优势或金钱报酬的用途。
+- **署名**：提供适当署名、许可链接，并注明修改；可以采用合理方式署名，不表示原作者为你的使用背书。
+- **相同方式共享**：公开分享改作时，采用 CC BY-NC-SA 4.0，或该许可允许的后续版本／兼容许可。
 
-这是带非商业限制的**源码公开许可**，不属于 OSI 定义的开放源代码许可。以上为简要说明，完整英文 [LICENSE](./LICENSE) 为准。
+仓库 [LICENSE](./LICENSE) 是 [Creative Commons 官方英文原文](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.txt) 的完整副本；以上仅为摘要，不增加额外限制。
+
+**相同方式共享不等于强制交付完整软件源码**：该许可没有软件源码交付或网络服务源码提供条款。[Creative Commons 官方不建议将 CC 许可用于软件](https://creativecommons.org/faq/#can-i-apply-a-creative-commons-license-to-software)。本项目按作者选择使用 CC BY-NC-SA 4.0，因非商业限制，不属于 [OSI 定义的开放源代码许可](https://opensource.org/osd)。
 
 第三方音乐、插画、Live2D 模型与运行时保留原作者权利，遵循各自原许可；本项目许可不授予这些素材的再分发权。详见 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)。
 

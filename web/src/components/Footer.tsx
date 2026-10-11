@@ -33,16 +33,16 @@ export default function Footer() {
                 target="_blank"
                 rel="license noopener noreferrer"
                 className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-medium transition-colors hover:bg-[var(--theme-primary-100)] hover:text-[var(--theme-primary-700)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary-400)]"
-                aria-label="WitchCat noncommercial attribution share-alike license"
+                aria-label="Project code and documentation licensed under CC BY-NC-SA 4.0"
               >
                 <span
                   className="rounded border px-1 py-px text-[9px] font-bold leading-none"
                   style={{ borderColor: 'var(--theme-primary-300)' }}
                   aria-hidden="true"
                 >
-                  WC
+                  CC
                 </span>
-                非商业 · 署名 · 源码共享
+                CC BY-NC-SA 4.0
               </a>
 
               <a

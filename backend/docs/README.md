@@ -329,7 +329,7 @@ curl http://localhost:8000/health
 
 ## 📄 许可证
 
-项目原创代码采用 [WitchCat 非商业署名源码共享许可 1.0](../../LICENSE)。第三方依赖与素材遵循各自原许可，见 [第三方说明](../../THIRD_PARTY_NOTICES.md)。
+项目原创代码与文档采用 [CC BY-NC-SA 4.0](../../LICENSE)（署名、非商业性使用、相同方式共享）。该许可不强制交付完整软件源码，完整说明见 [项目 README](../../README.md#许可与素材)。第三方依赖与素材遵循各自原许可，见 [第三方说明](../../THIRD_PARTY_NOTICES.md)。
 
 ## 📞 支持
 
