@@ -1,0 +1,18 @@
+{
+  "url": "https://github.com/witchscottishfoldcat/witchBlog",
+  "visibility": "PUBLIC",
+  "default_branch": "main",
+  "checked_at_utc": "2026-10-11T15:47:38.672366+00:00",
+  "initial_public_head": "dda21d6c52feca5f11a8143cb9f8fa98e6baf621",
+  "tested_source_sha": "608f858d13494da46de9df8d5784d9ddcdc267d6",
+  "anonymous_api_verified": true,
+  "verified_files": [
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    ".github/workflows/verify.yml",
+    "backend/docs/gates/public-release/artifacts/verdict.txt"
+  ],
+  "commit_identity": "WitchCat contributors <171129055+witchscottishfoldcat@users.noreply.github.com>",
+  "note": "Follow-up commit records publication verification only; source code was already validated by the final gate and both CI platforms."
+}

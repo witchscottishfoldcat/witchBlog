@@ -22,8 +22,8 @@
     },
     {
       "id": "publish",
-      "verified": false,
-      "evidence": "Explicit authorization recorded; public GitHub publication pending final review"
+      "verified": true,
+      "evidence": "Anonymous GitHub API confirms public repository and main branch; README, LICENSE, notices, workflow and quality verdict match local Git objects. See publication.json."
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "tracked_files_scanned": 1144,
+  "tracked_files_scanned": 1146,
   "pattern_categories": [
     "personal_email",
     "steam_account",
@@ -20,5 +20,5 @@
     ]
   },
   "history": "Repository began without commits; only sanitized export commits were created. Real env files, database, logs and dependencies ignored. Canonical GitHub owner URL is intentionally public project provenance; third-party authors retained.",
-  "text_files_scanned": 1065
+  "text_files_scanned": 1067
 }
