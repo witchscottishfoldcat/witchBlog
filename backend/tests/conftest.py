@@ -1,4 +1,5 @@
 import os
+from contextlib import asynccontextmanager
 
 import pytest
 from fastapi.testclient import TestClient
@@ -11,6 +12,22 @@ if not os.getenv("WITCHCAT_LIVE_TESTS"):
     os.environ["ENV_FILE"] = ".env.test"
     os.environ["ENVIRONMENT"] = "development"
     os.environ["DATABASE_URL"] = "sqlite:///./test.db"
+    os.environ["MINIO_ENDPOINT"] = "127.0.0.1:19000"
+    os.environ["MINIO_ACCESS_KEY"] = "test-only-access-key"
+    os.environ["MINIO_SECRET_KEY"] = "test-only-storage-secret"
+    os.environ["MINIO_BUCKET_NAME"] = "witchcat-tests"
+    os.environ["MINIO_SECURE"] = "false"
+    os.environ["REDIS_URL"] = "redis://127.0.0.1:16379/15"
+    os.environ["NETEASE_API_BASE"] = "http://127.0.0.1:13000"
+    for credential_name in (
+        "GLM_API_KEY",
+        "DEEPSEEK_API_KEY",
+        "KIMI_API_KEY",
+        "STEAM_API_KEY",
+        "GITHUB_TOKEN",
+        "SMTP_PASSWORD",
+    ):
+        os.environ[credential_name] = ""
 
 from app.core.database import Base, get_db
 from app.core.security import get_password_hash
@@ -40,6 +57,20 @@ def override_get_db():
 app.dependency_overrides[get_db] = override_get_db
 
 
+@asynccontextmanager
+async def offline_lifespan(_app):
+    """Route tests do not initialize storage policies or start background jobs."""
+    yield
+
+
+@pytest.fixture(scope="session", autouse=True)
+def isolate_offline_lifespan():
+    with pytest.MonkeyPatch.context() as patcher:
+        if not os.getenv("WITCHCAT_LIVE_TESTS"):
+            patcher.setattr(app.router, "lifespan_context", offline_lifespan)
+        yield
+
+
 def _discard_request_log(item):
     """测试流量不进入请求日志队列：后台消费者写的是 app 级数据库（真实库），
     入队会把测试请求记录污染进生产 request_logs"""
@@ -62,7 +93,7 @@ def db():
 
 
 @pytest.fixture(scope="module")
-def client(db):
+def client(db, isolate_offline_lifespan):
     """创建测试客户端"""
     with TestClient(app) as c:
         yield c

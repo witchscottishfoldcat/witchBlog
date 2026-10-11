@@ -11,6 +11,7 @@
 退出码: 0=未劣化; 1=劣化或执行失败。
 """
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -26,7 +27,7 @@ def run_suite() -> dict:
         junit = tmp.name
     try:
         try:
-            subprocess.run(
+            result = subprocess.run(
                 [
                     sys.executable,
                     "-m",
@@ -44,9 +45,14 @@ def run_suite() -> dict:
                 capture_output=True,
                 timeout=1800,
             )
+            if result.returncode != 0:
+                print(result.stdout.decode("utf-8", errors="replace")[-3000:])
         except subprocess.TimeoutExpired:
             print("测试棘轮门失败: 测试套件执行超过 30 分钟（可能有测试挂起）")
             sys.exit(1)
+        evidence = ROOT / "docs/gates/latest/full-pytest.xml"
+        evidence.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(junit, evidence)
         stats = ET.parse(junit).getroot().find("testsuite").attrib
     finally:
         Path(junit).unlink(missing_ok=True)

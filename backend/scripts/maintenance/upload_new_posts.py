@@ -3,6 +3,8 @@ import argparse
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
 from app.core.database import SessionLocal
 from app.schemas.md_file import MDFileCreate
 from app.services.md_file import MDFileService

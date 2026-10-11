@@ -166,6 +166,8 @@ npm run build
 
 开发与 API 说明见 [后端文档](./backend/docs/)、[前台文档](./web/README.md) 和 [管理后台](./admin/)。
 
+发布前的依赖扫描仍报告上游安全公告，详见 [依赖检查记录](./docs/dependency-status.md)。部署到公网前应完成相关依赖更新与运行环境验证。
+
 ## 许可与素材
 
 项目原创代码与文档采用 **[WitchCat 非商业署名源码共享许可 1.0](./LICENSE)**：

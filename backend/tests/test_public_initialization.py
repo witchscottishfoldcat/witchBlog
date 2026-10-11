@@ -3,9 +3,11 @@
 from argparse import Namespace
 
 import pytest
+from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
 from app.schemas.link import LinkUpdate
+from main import app, init_service
 from scripts.maintenance import create_admin_user, init_db
 
 
@@ -72,3 +74,18 @@ def test_link_image_update_accepts_storage_type():
 def test_link_image_update_rejects_unknown_storage_type():
     with pytest.raises(ValidationError):
         LinkUpdate(image_type="unsupported")
+
+
+def test_offline_client_does_not_initialize_external_services(monkeypatch):
+    async def forbidden_initialize():
+        pytest.fail("Offline route tests must not initialize external services")
+
+    monkeypatch.setattr(init_service, "initialize_all", forbidden_initialize)
+    with TestClient(app) as client:
+        assert client.get("/docs").status_code == 200
+
+
+def test_shared_client_uses_offline_lifespan(client):
+    assert app.router.lifespan_context.__name__ == "offline_lifespan"
+    assert client.get("/docs").status_code == 200
+    assert init_service._initialized is False
