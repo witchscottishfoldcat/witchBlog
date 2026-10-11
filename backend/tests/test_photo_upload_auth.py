@@ -3,12 +3,59 @@
 """
 import os
 from io import BytesIO
+from unittest.mock import Mock
 
+import pytest
 import requests
 from PIL import Image
 
 # API 基础URL
 BASE_URL = "http://127.0.0.1:8000"
+
+
+@pytest.fixture(autouse=True)
+def isolate_photo_upload_api(monkeypatch):
+    """Exercise the complete request sequence without operator credentials or I/O."""
+    if os.getenv("WITCHCAT_LIVE_TESTS"):
+        yield
+        return
+
+    username = "test-only-photo-user"
+    password = "TestOnly-Photo-Password"
+    token = "test-only-photo-token"
+    monkeypatch.setenv("TEST_ADMIN_USERNAME", username)
+    monkeypatch.setenv("TEST_ADMIN_PASSWORD", password)
+    operations = []
+
+    def post(url, **kwargs):
+        if url.endswith("/auth/login"):
+            assert kwargs["data"] == {"username": username, "password": password}
+            operations.append("login")
+            return Mock(status_code=200, json=lambda: {"access_token": token})
+        assert kwargs["headers"] == {"Authorization": f"Bearer {token}"}
+        if url.endswith("/albums/"):
+            assert kwargs["json"]["is_public"] is True
+            operations.append("album")
+            return Mock(status_code=201, json=lambda: {"id": 1})
+        assert url.endswith("/albums/1/photos")
+        filename, stream, mime = kwargs["files"]["file"]
+        assert filename == "test_image.jpg" and mime == "image/jpeg"
+        assert Image.open(stream).format == "JPEG"
+        operations.append("upload")
+        return Mock(status_code=201, json=lambda: {"id": 1})
+
+    def get(url):
+        if url.endswith("/albums/1"):
+            operations.append("detail")
+            return Mock(status_code=200, json=lambda: {"photo_count": 1})
+        assert url.endswith("/albums/1/photos")
+        operations.append("list")
+        return Mock(status_code=200, json=lambda: {"total": 1, "photos": [{"id": 1}]})
+
+    monkeypatch.setattr(requests, "post", post)
+    monkeypatch.setattr(requests, "get", get)
+    yield
+    assert operations == ["login", "album", "upload", "detail", "list"]
 
 
 def create_test_image():
