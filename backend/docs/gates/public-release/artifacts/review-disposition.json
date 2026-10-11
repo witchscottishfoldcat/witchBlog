@@ -1,0 +1,50 @@
+{
+  "rounds": [
+    {
+      "round": 1,
+      "findings": [
+        "REL-01: inherited external service credentials",
+        "REL-02: standalone maintenance import path"
+      ],
+      "action": "Isolated offline service config, lifecycle stubs, and maintenance package bootstrap."
+    },
+    {
+      "round": 2,
+      "findings": [
+        "REL-03: session/module fixture setup order"
+      ],
+      "action": "Moved isolation to session scope, made shared client depend on it, added shared-client regression."
+    },
+    {
+      "round": 3,
+      "verification": "Independent reviewer verified original reproductions and 13 route/initialization tests; original findings resolved."
+    },
+    {
+      "round": 4,
+      "findings": [
+        "Full suite required explicit credentials in previously network-dependent photo test"
+      ],
+      "action": "Kept test and added offline synthetic API fixture with payload/token/image assertions and request sequence assertion."
+    },
+    {
+      "round": 5,
+      "findings": [
+        "Sanitization placeholder damaged public JUnit XML structure"
+      ],
+      "action": "Replaced angle-bracket path placeholders with plain bracket labels; all public JSON and XML parse successfully; independent reviewer rechecked counts."
+    },
+    {
+      "round": 6,
+      "findings": [
+        "Linux type check found an unguarded Windows-only API",
+        "Coverage evidence predated the final startup isolation"
+      ],
+      "action": "Added explicit platform guard and regression; added isolated startup lifecycle/failure tests, retained all original G2/G3 tests and thresholds, appended authentication and initialization coverage. Fresh G3: 41.82% versus fixed 41.57% baseline."
+    },
+    {
+      "round": 7,
+      "verification": "Second hosted CI run 38151741801 passed on Ubuntu and Windows; both coverage checks 41.82% >= 41.57%, both frontend builds 85 pages. Final offline full suite: 321 passed, 0 failures/errors, 19 original optional skips. Canonical subset now 91 passed."
+    }
+  ],
+  "scope": "Privacy/source release, build compatibility and changed tests. Legacy runtime/dependency security gaps disclosed separately."
+}

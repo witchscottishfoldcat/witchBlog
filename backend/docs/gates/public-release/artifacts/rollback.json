@@ -1,0 +1,19 @@
+{
+  "revision": "b612d7c654e0180863fe440a37a712d19df0090c",
+  "steps": [
+    {
+      "action": "restore sanitized file from release revision in isolated temporary directory",
+      "file": "backend/.env.example",
+      "executed": true,
+      "hash_matches": true
+    },
+    {
+      "action": "restore sanitized file from release revision in isolated temporary directory",
+      "file": "web/src/config/public-site.ts",
+      "executed": true,
+      "hash_matches": true
+    }
+  ],
+  "restore_verified": true,
+  "limitations": "Local configuration recovery verified. Public disclosure cannot recall copies already downloaded; never restore personal data to a public commit."
+}

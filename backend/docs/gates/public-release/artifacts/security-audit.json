@@ -1,0 +1,278 @@
+{
+  "reviewer": "reviewer-subagent",
+  "base_revision": "4c2cab247a5b39183afa59e1ad87d953999d9193",
+  "verdict": "approve-with-notes",
+  "audit_round": 9,
+  "scope": "Full sanitized root export and working changes for public source publication; not production deployment or whole-application security certification.",
+  "findings": [
+    {
+      "id": "REL-01",
+      "severity": "medium",
+      "file": "backend/tests/conftest.py",
+      "line": 11,
+      "status": "CONFIRMED",
+      "explanation": "The first offline branch retained inherited MinIO credentials and Redis settings; entering the real application lifespan could rewrite an operator's bucket policy. Mocked reproduction invoked the actual policy-writing method against synthetic inherited settings without network access.",
+      "resolved": true,
+      "verified_fix": "Re-executed the original branch with synthetic operator environment variables. All five inherited MinIO/Redis values are now replaced with isolated test values."
+    },
+    {
+      "id": "REL-03",
+      "severity": "medium",
+      "file": "backend/tests/conftest.py",
+      "line": 66,
+      "status": "CONFIRMED",
+      "explanation": "The first lifespan fix used a function-scoped autouse lifespan replacement, but the shared client fixture was module-scoped and enters TestClient earlier. pytest --setup-plan confirmed client setup precedes isolate_offline_lifespan; shared-client tests therefore still initialized external services and background jobs.",
+      "resolved": true,
+      "verified_fix": "pytest --setup-plan now establishes session-scoped isolate_offline_lifespan before module client. Independently ran public-initialization and authentication tests: 13 passed, including the shared-client check that initialization remains untouched."
+    },
+    {
+      "id": "REL-05",
+      "severity": "medium",
+      "file": "backend/docs/gates/public-release/artifacts/full-pytest.xml",
+      "line": 1,
+      "status": "CONFIRMED",
+      "explanation": "Sanitizing skipped-test paths inserted a literal project placeholder with angle brackets into XML text. The public JUnit cannot be parsed: mismatched tag at line 1, column 6942. Raw final JUnit parses correctly and confirms test success, but the published machine evidence is structurally invalid.",
+      "resolved": true,
+      "verified_fix": "Reviewer independently parsed the XML-safe repair in the prior round and the final current-source public JUnit: 340 total, 321 passed, 0 failures/errors, 19 skipped. Generic hostname and plain placeholders remain; private-path pattern scan found no match."
+    }
+  ],
+  "threat_surface": {
+    "entry_points": "FastAPI public and authenticated HTTP routes, Next.js proxy/revalidation routes, uploads, initialization and maintenance CLIs, scheduled jobs.",
+    "identity": "Bcrypt-based password hashing, access JWTs and persisted refresh sessions; registration defaults off.",
+    "authorization": "Backend dependencies enforce superuser checks for user administration, scheduler and system logs. Restored frontend guard gives guidance while backend retains final authority.",
+    "secrets": "Environment files are ignored except examples; published values are placeholders, synthetic tests, or public project provenance.",
+    "data": "Database, logs, uploads and IP database excluded; public profile, payment QR, account links and deployment identifiers replaced.",
+    "dependencies": "npm locks, Python manifests and bundled Live2D runtime remain; their original licenses apply."
+  },
+  "verified": {
+    "secret_patterns": "Full tracked tree and only available root commit contain no configured live credential identified by review patterns. Private identifiers and machine paths are omitted from this record.",
+    "initialization": "Administrator password is operator-supplied, validated before table mutation and not echoed. Production configuration requires an explicit signing key.",
+    "privacy": "Payment QR images excluded and replaced by a non-scannable placeholder; retained third-party author identifiers are intentional attribution.",
+    "backend_dependency_health": "python -m pip check: no broken requirements.",
+    "offline_isolation": "Synthetic external settings replace inherited operator MinIO/Redis credentials. Session-scoped lifespan isolation runs before shared-client construction; public-initialization plus authentication tests independently passed 13/13.",
+    "history": "The full root commit's 1124 objects were scanned separately from the current working tree; no configured private-key, GitHub-token, personal-email, machine-path, Steam-ID or ICP residual was found.",
+    "public_evidence": "Public task JUnit uses generic hostname and sanitized paths; private-pattern scan passed.",
+    "photo_delta": "Reviewer exercised the actual offline photo fixture and workflow with a forbidden HTTP transport: zero network attempts and zero database connections. Synthetic credential payload, token header, JPEG content, complete operation sequence, failure teardown and restoration of inherited operator environment were checked.",
+    "full_suite": {
+      "evidence": "backend/docs/gates/public-release/artifacts/full-pytest.xml",
+      "source_sha": "608f858d13494da46de9df8d5784d9ddcdc267d6",
+      "total": 340,
+      "passed": 321,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 19,
+      "seconds": 356.661,
+      "verification": "Reviewer independently parsed the complete current-source sanitized JUnit, checked generic hostname/no local private-path pattern, and matched counts/source SHA/exit code with full-ratchet.json; reviewer did not run tests.",
+      "ratchet_exit_code": 0,
+      "ratchet_exit_source": "Published artifacts/full-ratchet.json; fixed baseline remains 289 passed / 0 failures / 0 errors / 12 skipped."
+    },
+    "workflow": {
+      "file": ".github/workflows/verify.yml",
+      "validation": "YAML parsed; matrix Ubuntu/Windows hosted runners with Python 3.11 and Node 22, contents read permission, persist-credentials false, no secret inputs, pinned action commits, correct working directories, backend static/tests/coverage and frontend/admin builds. No gate script or baseline was weakened. Latest diff only appends auth and isolated-startup tests; no privilege, secret or action-pin changes.",
+      "runtime_status": "Reviewer independently verified completed successful Ubuntu and Windows jobs and every step on the reviewed source SHA; both G3 logs report 41.82% >= 41.57%, both web builds generated 85 pages.",
+      "official_action_sources": [
+        "https://raw.githubusercontent.com/actions/checkout/3d3c42e5aac5ba805825da76410c181273ba90b1/action.yml",
+        "https://raw.githubusercontent.com/actions/setup-python/5fda3b95a4ea91299a34e894583c3862153e4b97/action.yml",
+        "https://raw.githubusercontent.com/actions/setup-node/949feb2413d6458794dcd2491c4babbbce0c15c1/action.yml"
+      ],
+      "source_check": "Pinned action manifests resolved in official upstream repositories and declare the configured inputs."
+    },
+    "public_full_suite": {
+      "evidence": "backend/docs/gates/public-release/artifacts/full-pytest.xml",
+      "source_sha": "608f858d13494da46de9df8d5784d9ddcdc267d6",
+      "counts": {
+        "tests": 340,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 19,
+        "passed": 321
+      },
+      "sha256": "0702b8d49367bdf63254e58dc8e88a155af80c403bea1e9088c56e371a900393",
+      "private_path_pattern_found": false,
+      "hostname": "local-test-runner"
+    },
+    "platform_initialization_delta": {
+      "revision": "608f858d13494da46de9df8d5784d9ddcdc267d6",
+      "direct_review": {
+        "method": "Imported the actual InitService and new test module against synthetic dependency modules; invoked the actual fixture and eight test scenarios directly with MonkeyPatch. Event loop was constructed before socket guards to avoid instrumenting Windows asyncio plumbing.",
+        "startup_scenarios_passed": 8,
+        "windows_guard_returns_before_ctypes_import": true,
+        "network_attempts": 0,
+        "database_connections": 0,
+        "shared_test_database_used": false,
+        "pytest_runner_used": false
+      },
+      "scope_comparison": {
+        "g2_added": [
+          "tests/test_auth.py",
+          "tests/test_public_initialization.py",
+          "tests/test_initialization_isolation.py"
+        ],
+        "g3_added": [
+          "tests/test_auth.py",
+          "tests/test_public_initialization.py",
+          "tests/test_initialization_isolation.py"
+        ],
+        "g2_removed": [],
+        "g3_removed": [],
+        "original_six_files_retained": true,
+        "other_gate_commands_unchanged": true,
+        "trusted_identities_unchanged": true,
+        "baseline_unchanged": 41.57,
+        "assessment": "Targeted coverage of release initialization/password/authentication behavior strengthens the trusted subset; no assertions or fixed thresholds were removed."
+      },
+      "coverage": {
+        "evidence": "backend/docs/gates/public-release/artifacts/coverage.json",
+        "baseline": 41.57,
+        "current": 41.82,
+        "verification": "Reviewer read matching local/public 41.82% coverage JSON and independently verified both successful hosted G3 logs at the unchanged 41.57% baseline.",
+        "superseded_evidence": "43.53% was measured before lifespan isolation and is not evidence for the current source.",
+        "first_hosted_windows_measurement": 40.8
+      },
+      "validation_status": {
+        "local_static": "All local static checks reported passing; both hosted static-check steps independently verified successful.",
+        "local_targeted": "Reviewer directly invoked eight startup scenarios and the platform guard without pytest; both hosted backend test steps independently verified successful.",
+        "latest_full_suite": "Current-source full suite completed: 340 total, 321 passed, 0 failures/errors, 19 skipped; JUnit and exit-0 ratchet independently verified.",
+        "hosted_ci": "Run 38151741801 completed successfully on the reviewed source SHA with both Ubuntu and Windows jobs and all steps successful; job logs independently verified."
+      },
+      "supply_chain_scope": "New workflow adds official pinned actions and hosted dependency installation; supply-chain risk classification is applicable even though manifests/locks were not changed. Workflow privileges, pins and install commands were reviewed."
+    },
+    "hosted_ci": {
+      "id": 38151741801,
+      "url": "https://github.com/witchscottishfoldcat/witchBlog/actions/runs/38151741801",
+      "status": "completed",
+      "conclusion": "success",
+      "source_sha": "608f858d13494da46de9df8d5784d9ddcdc267d6",
+      "jobs": [
+        {
+          "id": 114506436743,
+          "name": "Build and test (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/witchscottishfoldcat/witchBlog/actions/runs/38151741801/job/114506436743",
+          "startedAt": "2026-10-11T15:33:06Z",
+          "completedAt": "2026-10-11T15:40:16Z",
+          "all_steps_success": true
+        },
+        {
+          "id": 114506436898,
+          "name": "Build and test (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/witchscottishfoldcat/witchBlog/actions/runs/38151741801/job/114506436898",
+          "startedAt": "2026-10-11T15:33:06Z",
+          "completedAt": "2026-10-11T15:36:21Z",
+          "all_steps_success": true
+        }
+      ],
+      "verification": "Reviewer directly queried GitHub run/jobs through read-only gh run view and read both hosted job logs; source SHA, successful job/step conclusions, G3 values and 85-page frontend builds were independently confirmed.",
+      "log_checks": [
+        {
+          "job_id": 114506436743,
+          "coverage_current": 41.82,
+          "coverage_baseline": 41.57,
+          "web_static_pages": 85,
+          "log_sha256": "c87d5de42ae264bcbb0c4d9700906953e44489a7c0801941db9166925d2abb02",
+          "coverage_evidence_lines": [
+            "2026-10-11T15:35:40.3987781Z coverage_gate PASS: 当前 41.82% >= 基线 41.57%"
+          ],
+          "page_evidence_lines": [
+            "2026-10-11T15:38:43.1192643Z  ✓ Generating static pages (85/85)"
+          ]
+        },
+        {
+          "job_id": 114506436898,
+          "coverage_current": 41.82,
+          "coverage_baseline": 41.57,
+          "web_static_pages": 85,
+          "log_sha256": "4ecb0501f892f28cda1472d0e7e266c62ad6fe078b9fa58f9f305373d13daa01",
+          "coverage_evidence_lines": [
+            "2026-10-11T15:34:13.4716529Z coverage_gate PASS: 当前 41.82% >= 基线 41.57%"
+          ],
+          "page_evidence_lines": [
+            "2026-10-11T15:35:37.9871944Z  ✓ Generating static pages (85/85)"
+          ]
+        }
+      ],
+      "local_machine_paths_recorded": false
+    },
+    "canonical_g2": {
+      "evidence": "backend/docs/gates/public-release/artifacts/pytest.xml",
+      "counts": {
+        "tests": 91,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "sha256": "67830ee4bc096b2d2d3d4d8eb4e36f6f94f2c68211989c77116bffd4bc69d194",
+      "verification": "Reviewer independently parsed the current canonical G2 JUnit; 91 tests, no failures/errors/skips, no private local-path pattern. No test execution by reviewer."
+    }
+  },
+  "dependency_audit": {
+    "web": {
+      "command": "npm audit --omit=dev --json",
+      "exit_code": 1,
+      "packages": {
+        "high": 19,
+        "moderate": 26,
+        "low": 1,
+        "total": 46
+      }
+    },
+    "admin": {
+      "command": "npm audit --omit=dev --json",
+      "exit_code": 1,
+      "packages": {
+        "high": 4,
+        "moderate": 1,
+        "low": 1,
+        "total": 6
+      }
+    },
+    "classification": "These pre-existing manifest advisories are not proof of a reachable exploit and are not introduced by the export. No dependency-health or production-security approval is implied; assess and remediate before internet deployment.",
+    "python": "pip-audit is unavailable in the review virtual environment; vulnerability enumeration was not completed."
+  },
+  "limitations": [
+    "No production service calls or exploitation; proof uses synthetic environment values and mocked MinIO.",
+    "No comprehensive runtime review of every legacy endpoint, container deployment, load/concurrency test, or dependency exploit reachability.",
+    "Third-party redistribution rights and custom-license legal enforceability were not independently certified.",
+    "Binary media ownership and metadata were not comprehensively audited; SHA preservation was checked.",
+    "Photo delta proof uses mocked HTTP responses and does not certify the real backend photo-upload endpoint."
+  ],
+  "tools_run": [
+    "Python 3.11 AST/reproduction scripts",
+    "git tracked-tree/history inspection",
+    "ripgrep",
+    "pytest setup plan",
+    "pip check",
+    "npm audit",
+    "GitHub CLI read-only run/job/log inspection"
+  ],
+  "release_gate_note": "Current-source full-suite evidence confirms 340 total, 321 passed, 0 failures/errors and 19 skipped; full-ratchet records exit 0. Reviewer independently verified successful hosted Ubuntu and Windows jobs on 608f858d13494da46de9df8d5784d9ddcdc267d6, including 41.82% coverage against the unchanged 41.57% baseline and 85-page web builds. All review findings are resolved. This approve-with-notes verdict covers public source publication; dependency remediation, live/container deployment and third-party redistribution-rights certification remain outside its scope.",
+  "reviewed_source_sha256": {
+    ".github/workflows/verify.yml": "2ec7b4670bffa9cfb63876b69db7ca8780da8c7270580512561e36c0c193d8ab",
+    "LICENSE": "0e2677cdc1b845f5cd672349d774667793c9f0f500d005c31244df52616ce35d",
+    "README.md": "3d190b2ec7dd72dcd007286310600d4be3fec60e603948bb5dfcbd83e171e295",
+    "THIRD_PARTY_NOTICES.md": "cef632c8ba7b7926273e8772aa5e37c576552680bd2a7c6f5d8b1484fd92d97c",
+    "admin/src/components/SuperAdminRoute.tsx": "4539d3cc32d472be67d7c491d1b86ff27564fbb992c89c7c5d3b948e8b80ce4c",
+    "backend/app/schemas/link.py": "bbb0d82507453e2654db75f54b24c9275b326c837bc05ea091cfe60b84d173cb",
+    "backend/docs/gates/public-release/artifacts/coverage.json": "60238ac863d9dbc695374d07034ed6d0c72c565df637038554fa276bfbc8257d",
+    "backend/quality-gate.config.json": "93bb599f4ea6e65c830d4ca8d790970212c17605ca3ceb204728f388145915c0",
+    "backend/scripts/coverage_gate.py": "bcd9e82dbfe6236e546337c587d05923a57f1df72ab15436720cafef90dcac25",
+    "backend/scripts/maintenance/create_admin_user.py": "ba8f8cfa4ae68f7ff66a99a6913b565d71b3503ba3249a50e9300cc7f35bf2f7",
+    "backend/scripts/maintenance/upload_new_posts.py": "f17c6a6f875f441b77051decc03e311feb49870172fc62d803313a72d93280ce",
+    "backend/scripts/tests_gate.py": "72f9bba2d3720c1b2b79cfb47e03367373a605e0c177aa67207d05430ebfb233",
+    "backend/tests/conftest.py": "af198dc319942117df098bbc59828df8f9223f423c8c749474d25b4fa3c930e6",
+    "backend/tests/test_initialization_isolation.py": "b9c43597bf0b835f6df8e9df8d48325e936ebf769f21f47399d55db9faee8265",
+    "backend/tests/test_photo_upload_auth.py": "d71dd4004eafb93af61c4779129b639dbabc5ec35d53c243c89ce70cf35c5bcd",
+    "backend/tests/test_public_initialization.py": "4d2c8c3ff75b67ffac00d3f74b6cd78ffcc2148ea739ead0e1a85ce6094ff69c",
+    "docs/dependency-status.md": "0814c52208c37b7af3ee4ee19c6f4f22d5923872c554f26eedbfafcbb6c19724",
+    "web/src/components/Footer.tsx": "5f561f87a77f30c5afd662e9c46b85a5bd6ce2c3e32226f73a9c8c0ab91158cc",
+    "web/src/config/public-site.ts": "45b9fee329a997a8d881c65df76354ca572255e11f9271b352154457a1d1621d",
+    "backend/docs/gates/public-release/artifacts/full-pytest.xml": "0702b8d49367bdf63254e58dc8e88a155af80c403bea1e9088c56e371a900393",
+    "backend/docs/gates/public-release/artifacts/build-checks.json": "52156ccbbfe4abd542d0b6584af311bf6d5e2f4d2b1cfc4478320cf3dfd81d05",
+    "backend/docs/gates/public-release/artifacts/full-ratchet.json": "fa62dc2ce02bee01e83e088ddcb26573856d4f4b2a7736c4670881ffb8bb001d",
+    "backend/docs/gates/public-release/artifacts/pytest.xml": "67830ee4bc096b2d2d3d4d8eb4e36f6f94f2c68211989c77116bffd4bc69d194"
+  },
+  "reviewed_head_revision": "608f858d13494da46de9df8d5784d9ddcdc267d6"
+}

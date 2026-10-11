@@ -1,0 +1,29 @@
+QUALITY GATE: PASS   task: public-release   profile: base-v1   level: L   risk_hits: auth-privacy, external-effects, irreversible, prod-config, public-api, secrets-crypto, supply-chain   mode: run
+  G0                     PASS    artifacts/risk-assessment.json
+  G1                     PASS    artifacts/static.log
+  G2                     PASS    artifacts/pytest.xml
+  G3                     PASS    artifacts/coverage.json
+  G4                     N-A     No separate requirements brief or formal user acceptance criteria; task checks are recorded in artifacts/acceptance.json, with public publication verified after the release gate.
+  G5                     PASS    artifacts/e2e-smoke.json
+  G6                     N-A     No database schema or migration change.
+  G7                     PASS    artifacts/build-checks.json
+  G8                     N-A     No defined SLO or performance-sensitive runtime change.
+  G9                     PASS    artifacts/security-audit.json
+  G10_REVIEW             PASS    artifacts/review.json
+  G11_ROLLBACK           PASS    artifacts/rollback.json
+  G12_USER_AUTH          PASS    artifacts/authorization.json
+  · G0: evidence artifacts/risk-assessment.json (1777 bytes, sha256=14da4983cbcd1816…)
+  · G1: re-executed trusted command, exit=0, log=G1.log
+  · G1: evidence artifacts/static.log (96 bytes, sha256=e0613994cbf198c2…)
+  · G2: re-executed trusted command, exit=0, log=G2.log
+  · G2: evidence artifacts/pytest.xml (11701 bytes, sha256=67830ee4bc096b2d…)
+  · G3: evidence artifacts/coverage.json (74 bytes, sha256=60238ac863d9dbc6…)
+  · G3: coverage 41.82% vs baseline 41.57% — non-regression holds
+  · G5: evidence artifacts/e2e-smoke.json (764 bytes, sha256=4a5f5e3d56d81e5e…)
+  · G7: evidence artifacts/build-checks.json (1402 bytes, sha256=52156ccbbfe4abd5…)
+  · G7: CI sha not verifiable (no git repo/tool at project_root)
+  · G9: evidence artifacts/security-audit.json (18690 bytes, sha256=8a777b00e392ff77…)
+  · G10_REVIEW: evidence artifacts/review.json (21097 bytes, sha256=a469ba961df5c02d…)
+  · G10_REVIEW: base_revision not verifiable (no git repo/tool at project_root)
+  · G11_ROLLBACK: evidence artifacts/rollback.json (696 bytes, sha256=6a355e4a8b17394a…)
+  · G12_USER_AUTH: evidence artifacts/authorization.json (400 bytes, sha256=e2ad7ab0b05eaab7…)

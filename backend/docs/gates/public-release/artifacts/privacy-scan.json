@@ -1,0 +1,24 @@
+{
+  "tracked_files_scanned": 1144,
+  "pattern_categories": [
+    "personal_email",
+    "steam_account",
+    "cloud_instance",
+    "private_path",
+    "private_key",
+    "access_token",
+    "icp_number"
+  ],
+  "findings": [],
+  "media": {
+    "original_count": 79,
+    "changed": [],
+    "removed": [
+      "web/public/assets/support/alipay-qr-v2.jpg",
+      "web/public/assets/support/alipay-qr.jpg",
+      "web/public/assets/support/wechat-qr.jpg"
+    ]
+  },
+  "history": "Repository began without commits; only sanitized export commits were created. Real env files, database, logs and dependencies ignored. Canonical GitHub owner URL is intentionally public project provenance; third-party authors retained.",
+  "text_files_scanned": 1065
+}

@@ -1,0 +1,32 @@
+{
+  "checks": [
+    {
+      "path": "/zh",
+      "status": 200,
+      "checks": {
+        "placeholder": false,
+        "source_offer": true,
+        "project_credit": true
+      }
+    },
+    {
+      "path": "/zh/support",
+      "status": 200,
+      "checks": {
+        "placeholder": true,
+        "source_offer": true,
+        "project_credit": true
+      }
+    },
+    {
+      "path": "/assets/support/payment-placeholder.svg",
+      "status": 200,
+      "checks": {
+        "placeholder": true,
+        "source_offer": false,
+        "project_credit": false
+      }
+    }
+  ],
+  "scope": "Local production Next.js server; home, support page, source attribution and unscannable payment asset. No backend production connection."
+}

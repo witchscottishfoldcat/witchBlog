@@ -1,0 +1,5 @@
+{
+  "approved_by": "user",
+  "reference": "用户原话：请你全部移除，换成占位；只清理个人信息，保留第三方素材；并且请你做一个好看的README.md，然后设置一个不可商用必须署名必须开源的开源协议然后放到github上",
+  "scope": "Sanitize source, retain third-party materials, document/license, and publish public GitHub repository."
+}

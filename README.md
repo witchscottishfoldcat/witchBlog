@@ -11,6 +11,7 @@
 ![React 19](https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react&logoColor=111827)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Python-009688?style=flat-square&logo=fastapi&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white)
+![CI](https://github.com/witchscottishfoldcat/witchBlog/actions/workflows/verify.yml/badge.svg)
 ![License](https://img.shields.io/badge/License-NC%20%C2%B7%20Attribution%20%C2%B7%20Source%20Sharing-a78bfa?style=flat-square)
 
 [功能](#功能) · [快速开始](#快速开始) · [个性化](#个性化与占位配置) · [项目结构](#项目结构) · [许可](#许可与素材)

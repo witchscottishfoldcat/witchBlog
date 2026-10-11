@@ -1,0 +1,87 @@
+{
+  "task": "public-release",
+  "profile": "base-v1",
+  "level": "L",
+  "risk_hits": [
+    "public-api",
+    "auth-privacy",
+    "prod-config",
+    "irreversible",
+    "external-effects",
+    "secrets-crypto",
+    "supply-chain"
+  ],
+  "project_root": "../../..",
+  "items": [
+    {
+      "id": "G0",
+      "status": "PASS",
+      "evidence": "artifacts/risk-assessment.json"
+    },
+    {
+      "id": "G1",
+      "status": "PASS",
+      "evidence": "artifacts/static.log",
+      "exit_code": 0
+    },
+    {
+      "id": "G2",
+      "status": "PASS",
+      "evidence": "artifacts/pytest.xml",
+      "exit_code": 0
+    },
+    {
+      "id": "G3",
+      "status": "PASS",
+      "evidence": "artifacts/coverage.json",
+      "exit_code": 0
+    },
+    {
+      "id": "G4",
+      "status": "N-A",
+      "reason": "No separate requirements brief or formal user acceptance criteria; task checks are recorded in artifacts/acceptance.json, with public publication verified after the release gate."
+    },
+    {
+      "id": "G5",
+      "status": "PASS",
+      "evidence": "artifacts/e2e-smoke.json"
+    },
+    {
+      "id": "G6",
+      "status": "N-A",
+      "reason": "No database schema or migration change."
+    },
+    {
+      "id": "G7",
+      "status": "PASS",
+      "evidence": "artifacts/build-checks.json",
+      "note": "Actual successful hosted Ubuntu and Windows CI jobs on the recorded source SHA; production deployment remains outside this task."
+    },
+    {
+      "id": "G8",
+      "status": "N-A",
+      "reason": "No defined SLO or performance-sensitive runtime change."
+    },
+    {
+      "id": "G9",
+      "status": "PASS",
+      "evidence": "artifacts/security-audit.json"
+    },
+    {
+      "id": "G10_REVIEW",
+      "status": "PASS",
+      "evidence": "artifacts/review.json",
+      "note": "Independent separate agent review. Repo-committed config existed before export, but original repo had no history; reviewer identity authority is procedural until user reviews the config."
+    },
+    {
+      "id": "G11_ROLLBACK",
+      "status": "PASS",
+      "evidence": "artifacts/rollback.json"
+    },
+    {
+      "id": "G12_USER_AUTH",
+      "status": "PASS",
+      "evidence": "artifacts/authorization.json"
+    }
+  ]
+}

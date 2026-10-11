@@ -1,0 +1,29 @@
+{
+  "requirements": [
+    {
+      "id": "privacy",
+      "verified": true,
+      "evidence": "privacy-scan.json and independent security review"
+    },
+    {
+      "id": "preserve-assets",
+      "verified": true,
+      "evidence": "SHA-256 of retained media matches original manifest"
+    },
+    {
+      "id": "readme",
+      "verified": true,
+      "evidence": "Chinese README with locally rendered SVG banner, setup/configuration/feature/license sections"
+    },
+    {
+      "id": "license",
+      "verified": true,
+      "evidence": "LICENSE clauses 2, 3 and 4: noncommercial, attribution, source disclosure with same terms"
+    },
+    {
+      "id": "publish",
+      "verified": false,
+      "evidence": "Explicit authorization recorded; public GitHub publication pending final review"
+    }
+  ]
+}

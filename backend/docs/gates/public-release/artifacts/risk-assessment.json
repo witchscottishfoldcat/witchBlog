@@ -1,0 +1,52 @@
+{
+  "assessments": {
+    "migration": {
+      "hit": false,
+      "note": "No database schema migration."
+    },
+    "public-api": {
+      "hit": true,
+      "note": "Maintenance CLI arguments changed; optional image_type restored to LinkUpdate."
+    },
+    "auth-privacy": {
+      "hit": true,
+      "note": "Personal identifiers removed and default admin password eliminated."
+    },
+    "prod-config": {
+      "hit": true,
+      "note": "Public templates and deployment proxy defaults sanitized."
+    },
+    "irreversible": {
+      "hit": true,
+      "note": "Public GitHub disclosure cannot guarantee recall of downloaded copies."
+    },
+    "external-effects": {
+      "hit": true,
+      "note": "User requested publishing a public GitHub repository."
+    },
+    "untrusted-input": {
+      "hit": false,
+      "note": "No new externally supplied input handler or trust boundary."
+    },
+    "supply-chain": {
+      "hit": true,
+      "note": "Added hosted CI using official actions pinned to commit SHAs, read-only token permissions, disabled credential persistence and npm lifecycle scripts during install. Application dependency manifests and lockfiles unchanged; advisory gaps disclosed."
+    },
+    "secrets-crypto": {
+      "hit": true,
+      "note": "Admin initialization now requires a supplied password; no algorithm change."
+    },
+    "bulk-data": {
+      "hit": false,
+      "note": "No production data accessed; export does not include database or uploads."
+    },
+    "slo-capacity": {
+      "hit": false,
+      "note": "No SLO or runtime capacity change."
+    },
+    "infra-exposure": {
+      "hit": false,
+      "note": "Source repository publication only, no service or firewall deployment."
+    }
+  }
+}

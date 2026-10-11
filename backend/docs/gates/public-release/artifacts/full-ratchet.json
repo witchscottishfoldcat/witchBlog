@@ -1,0 +1,20 @@
+{
+  "command": "python scripts/tests_gate.py",
+  "exit_code": 0,
+  "counts": {
+    "tests": 340,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 19,
+    "passed": 321
+  },
+  "baseline": {
+    "passed": 289,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 12
+  },
+  "scope": "Final offline full suite. Existing optional live-service and IP-database skips retained; no live integration certification.",
+  "evidence": "full-pytest.xml",
+  "source_sha": "608f858d13494da46de9df8d5784d9ddcdc267d6"
+}

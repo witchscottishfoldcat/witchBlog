@@ -1,0 +1,31 @@
+{
+  "admin": {
+    "command": "npm run build",
+    "exit_code": 0,
+    "note": "TypeScript and Vite production build; preexisting CSS and bundle size warnings."
+  },
+  "web": {
+    "command": "node node_modules/next/dist/bin/next build",
+    "exit_code": 0,
+    "note": "Final production build passed with 85 generated pages; attribution/source offer delta included."
+  },
+  "scope": "Successful GitHub hosted Ubuntu and Windows jobs: backend static checks, authentication/initialization/route tests, coverage gate, asset checks and frontend/admin production builds. Docker deployment and production/live integrations are not certified.",
+  "sha": "608f858d13494da46de9df8d5784d9ddcdc267d6",
+  "url": "https://github.com/witchscottishfoldcat/witchBlog/actions/runs/38151741801",
+  "jobs": [
+    {
+      "name": "Build and test (windows-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/witchscottishfoldcat/witchBlog/actions/runs/38151741801/job/114506436743",
+      "startedAt": "2026-10-11T15:33:06Z",
+      "completedAt": "2026-10-11T15:40:16Z"
+    },
+    {
+      "name": "Build and test (ubuntu-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/witchscottishfoldcat/witchBlog/actions/runs/38151741801/job/114506436898",
+      "startedAt": "2026-10-11T15:33:06Z",
+      "completedAt": "2026-10-11T15:36:21Z"
+    }
+  ]
+}
