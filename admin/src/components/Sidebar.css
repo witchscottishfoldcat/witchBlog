@@ -1,0 +1,295 @@
+/* ============================================
+   WitchCat 侧边栏 (Sidebar) 核心样式
+   隐藏杂乱滚动条 · 悬浮伸缩按钮 · 精致图标居中
+   ============================================ */
+
+.sidebar-glass {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  bottom: 16px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  background: var(--bento-bg);
+  backdrop-filter: var(--bento-blur);
+  -webkit-backdrop-filter: var(--bento-blur);
+  border: 1px solid var(--bento-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  transition: width var(--transition-spring), background 0.3s ease, border-color 0.3s ease;
+  overflow: visible; /* 允许展开按钮悬浮在右侧边缘上 */
+}
+
+.sidebar-glass.expanded {
+  width: 240px;
+}
+
+.sidebar-glass.collapsed {
+  width: 64px;
+}
+
+/* 顶栏 Header */
+.sidebar-header {
+  position: relative;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--hairline);
+  flex-shrink: 0;
+}
+
+.sidebar-glass.collapsed .sidebar-header {
+  justify-content: center;
+  padding: 0;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.sidebar-brand-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  box-shadow: none;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.sidebar-brand:hover .sidebar-brand-icon {
+  transform: scale(1.08) rotate(-4deg);
+}
+
+.sidebar-site-icon-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  transition: transform var(--transition-fast);
+}
+
+.sidebar-brand:hover .sidebar-site-icon-img {
+  transform: scale(1.1);
+}
+
+.sidebar-brand-text {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.5px;
+}
+
+/* 侧边栏折叠/展开按钮 */
+.sidebar-toggle-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  background: var(--bg-hover);
+  color: var(--text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.sidebar-toggle-btn:hover {
+  background: var(--primary-500);
+  border-color: var(--primary-500);
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.sidebar-glass.expanded .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.sidebar-glass.collapsed .toggle-icon {
+  transform: rotate(0deg);
+}
+
+/* 收起状态下：伸缩按钮优雅定位在右侧中线边缘 */
+.sidebar-glass.collapsed .sidebar-toggle-btn {
+  position: absolute;
+  right: -14px;
+  top: 20px;
+  width: 26px;
+  height: 26px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+  z-index: 50;
+  opacity: 1;
+  color: var(--text-primary);
+}
+
+.sidebar-glass.collapsed .sidebar-toggle-btn:hover {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: #ffffff;
+  transform: scale(1.15);
+}
+
+/* 滚动区域：彻底隐藏原生与自定义滚动条，保持页面清爽 */
+.sidebar-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.sidebar-scroll-area::-webkit-scrollbar {
+  display: none; /* WebKit / Chrome / Safari */
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-group-title {
+  padding: 0 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.sidebar-group-divider {
+  height: 1px;
+  background: var(--hairline);
+  margin: 6px 14px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0 12px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-glass.collapsed .sidebar-menu {
+  padding: 0 8px;
+  align-items: center;
+}
+
+/* 菜单项 */
+.sidebar-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 42px;
+  padding: 0 12px;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  text-decoration: none;
+  position: relative;
+  transition: all var(--transition-fast);
+  overflow: hidden;
+}
+
+.sidebar-glass.collapsed .sidebar-menu-item {
+  width: 42px;
+  height: 42px;
+  justify-content: center;
+  padding: 0;
+  border-radius: var(--radius-md);
+}
+
+.menu-icon {
+  flex-shrink: 0;
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.menu-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sidebar-menu-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.sidebar-menu-item:hover .menu-icon {
+  transform: scale(1.12);
+  color: var(--primary-500);
+}
+
+.sidebar-menu-item.active {
+  color: #ffffff;
+  background: linear-gradient(
+    135deg,
+    hsla(var(--hue), 80%, 65%, 0.45),
+    hsla(calc(var(--hue) + 35), 85%, 65%, 0.42)
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid hsla(var(--hue), 85%, 70%, 0.45);
+  box-shadow: 0 4px 16px hsla(var(--hue), 80%, 60%, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+[data-theme='dark'] .sidebar-menu-item.active {
+  color: #ffffff;
+  background: linear-gradient(
+    135deg,
+    hsla(var(--hue), 65%, 22%, 0.68),
+    hsla(calc(var(--hue) + 35), 70%, 26%, 0.58)
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid hsla(var(--hue), 85%, 65%, 0.45);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 16px hsla(var(--hue), 85%, 65%, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-menu-item.active .menu-icon {
+  color: #ffffff;
+}
+
+.menu-active-indicator {
+  position: absolute;
+  right: 8px;
+  width: 4px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}

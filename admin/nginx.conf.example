@@ -1,0 +1,52 @@
+# Nginx 配置示例
+# 将前端和后端 API 都代理到同一域名下，避免 CORS 问题
+
+server {
+    listen 80;
+    server_name admin.example.com;
+
+    # 隐藏 Nginx 版本号
+    server_tokens off;
+
+    # 安全响应头
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+    # 启用 HTTPS 后建议追加：
+    # add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+    # 前端静态文件
+    root /path/to/your/dist;
+    index index.html;
+
+    # 前端路由（React Router）
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # API 代理 - 将 /api 请求代理到后端服务器
+    # 注意：前后端同源部署时无需 CORS；跨域策略交由后端 CORS 中间件
+    # 统一控制，不要在 nginx 层加 Access-Control-Allow-Origin: *
+    # 之类的通配头（会放行任意站点携带 Authorization 跨域调用 API）。
+    # ^~ 使 /api 前缀优先于下方静态资源正则 location，
+    # 否则以 .png/.jpg 等结尾的代理图片 URL（如 /api/v1/proxy/oss/...）
+    # 会被正则劫持到静态目录而 404
+    location ^~ /api {
+        proxy_pass http://localhost:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # 请求体大小限制（与后端上传上限对齐）
+        client_max_body_size 12m;
+    }
+
+    # 静态资源缓存
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        add_header X-Content-Type-Options "nosniff" always;
+    }
+}

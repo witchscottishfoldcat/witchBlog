@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="660" viewBox="0 0 660 660" role="img" aria-labelledby="title description">
+  <title id="title">Payment image placeholder</title>
+  <desc id="description">No payment code is included. This image cannot be scanned for payment.</desc>
+  <rect width="660" height="660" rx="32" fill="#f1f5f9"/>
+  <rect x="60" y="60" width="540" height="540" rx="24" fill="white" stroke="#cbd5e1" stroke-width="4" stroke-dasharray="12 10"/>
+  <g fill="none" stroke="#94a3b8" stroke-width="12" stroke-linecap="round">
+    <path d="M240 240h-40v40m220-40h40v40M200 380v40h40m220-40v40h-40"/>
+    <path d="M280 300h100m-100 40h100m-100 40h60"/>
+  </g>
+  <text x="330" y="490" text-anchor="middle" fill="#475569" font-family="sans-serif" font-size="26">Payment QR placeholder</text>
+  <text x="330" y="532" text-anchor="middle" fill="#64748b" font-family="sans-serif" font-size="20">No payment account configured</text>
+</svg>

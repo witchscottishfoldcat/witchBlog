@@ -1,0 +1,175 @@
+node {
+    env.PROJECT_NAME = 'witchcatweb-frontend'
+    env.DOCKER_IMAGE = "witchcat/${env.PROJECT_NAME}"
+    env.DOCKER_TAG = "${env.BUILD_NUMBER}"
+    env.CONTAINER_NAME = 'witchcatweb-frontend'
+    env.FRONTEND_PORT = '8888'
+    env.HOST_BIND_ADDRESS = '0.0.0.0'
+    env.API_BASE_URL = env.WITCHCAT_API_BASE_URL ?: 'http://localhost:8000'
+    env.HEALTH_CHECK_URL = "http://127.0.0.1:${env.FRONTEND_PORT}"
+    env.STARTUP_WAIT_SECONDS = '15'
+    // 构建时 npm 源；默认走国内镜像，避免 registry.npmjs.org 拉包过慢触发超时
+    env.NPM_REGISTRY = env.WITCHCAT_NPM_REGISTRY ?: 'https://registry.npmmirror.com'
+    // Trivy 需要访问 mirror.gcr.io 拉取漏洞库，容器内直连不通，走宿主机代理
+    env.TRIVY_PROXY = env.WITCHCAT_TRIVY_PROXY ?: ''
+    // 图片服务器白名单（服务端）：生成 next/image 的 remotePatterns 与 /api/proxy-image 校验
+    env.IMAGE_SERVER_HOSTS = env.WITCHCAT_IMAGE_SERVER_HOSTS ?: 'minio.example.com:9000'
+    // 客户端图片代理主机（会内联进浏览器包）
+    env.NEXT_PUBLIC_IMAGE_PROXY_HOSTS = env.WITCHCAT_IMAGE_PROXY_HOSTS ?: 'minio.example.com'
+    // 前台缓存刷新密钥：后端（归档/站点配置保存）携带它调用 /api/site-config/revalidate；
+    // 留空则前台拒绝所有刷新请求（与后端 FRONTEND_REVALIDATE_SECRET 保持一致）
+    env.REVALIDATE_SECRET = env.WITCHCAT_REVALIDATE_SECRET ?: ''
+
+    properties([
+        buildDiscarder(logRotator(numToKeepStr: '10')),
+        disableConcurrentBuilds()
+    ])
+
+    timestamps {
+        timeout(time: 30, unit: 'MINUTES') {
+            try {
+                checkoutSource()
+                buildDockerImage()
+                scanDockerImage()
+                deployApplication()
+                notifySuccess()
+            } catch (err) {
+                notifyFailure()
+                throw err
+            } finally {
+                cleanupDockerImage()
+            }
+        }
+    }
+}
+
+def checkoutSource() {
+    stage('Checkout') {
+        echo 'Checking out code...'
+        checkout scm
+
+        env.GIT_COMMIT_SHORT = sh(
+            script: 'git rev-parse --short HEAD',
+            returnStdout: true
+        ).trim()
+
+        env.GIT_AUTHOR = sh(
+            script: 'git log -1 --pretty=format:"%an"',
+            returnStdout: true
+        ).trim()
+
+        echo "Checkout completed - Commit: ${env.GIT_COMMIT_SHORT}, Author: ${env.GIT_AUTHOR}"
+    }
+}
+
+def buildDockerImage() {
+    stage('Build Docker Image') {
+        echo 'Building Docker image...'
+
+        sh """
+            docker build \\
+                --build-arg NEXT_PUBLIC_API_URL=${env.API_BASE_URL} \\
+                --build-arg NPM_REGISTRY=${env.NPM_REGISTRY} \\
+                --build-arg IMAGE_SERVER_HOSTS=${env.IMAGE_SERVER_HOSTS} \\
+                --build-arg NEXT_PUBLIC_IMAGE_PROXY_HOSTS=${env.NEXT_PUBLIC_IMAGE_PROXY_HOSTS} \\
+                -t ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} \\
+                .
+        """
+        sh "docker tag ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} ${env.DOCKER_IMAGE}:latest"
+
+        if (env.GIT_COMMIT_SHORT) {
+            sh "docker tag ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} ${env.DOCKER_IMAGE}:${env.GIT_COMMIT_SHORT}"
+        }
+
+        echo 'Docker image built successfully'
+    }
+}
+
+def scanDockerImage() {
+    stage('Image Security Scan') {
+        echo 'Scanning image for vulnerabilities...'
+
+        sh """
+            HTTPS_PROXY=${env.TRIVY_PROXY} HTTP_PROXY=${env.TRIVY_PROXY} \\
+            trivy image --timeout 10m --exit-code 1 --severity HIGH,CRITICAL ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}
+        """
+    }
+}
+
+def deployApplication() {
+    stage('Deploy') {
+        echo 'Deploying frontend locally...'
+
+        sh(
+            script: """
+                set -eu
+
+                echo "1. Removing old frontend container if present..."
+                docker rm -f "${env.CONTAINER_NAME}" || true
+
+                echo "2. Starting frontend container from local image..."
+                docker run -d \\
+                    --name "${env.CONTAINER_NAME}" \\
+                    --restart unless-stopped \\
+                    -p "${env.FRONTEND_PORT}:${env.FRONTEND_PORT}" \\
+                    -e NODE_ENV=production \\
+                    -e PORT="${env.FRONTEND_PORT}" \\
+                    -e HOSTNAME="${env.HOST_BIND_ADDRESS}" \\
+                    -e NEXT_PUBLIC_API_URL="${env.API_BASE_URL}" \\
+                    -e IMAGE_SERVER_HOSTS="${env.IMAGE_SERVER_HOSTS}" \\
+                    -e REVALIDATE_SECRET="${env.REVALIDATE_SECRET}" \\
+                    "${env.DOCKER_IMAGE}:latest"
+
+                echo "3. Checking frontend health..."
+                sleep "${env.STARTUP_WAIT_SECONDS}"
+                docker exec "${env.CONTAINER_NAME}" wget -qO- "${env.HEALTH_CHECK_URL}" >/dev/null
+
+                echo "4. Cleaning unused Docker images..."
+                docker image prune -f
+
+                echo "Deployment successful"
+            """.stripIndent()
+        )
+    }
+}
+
+def cleanupDockerImage() {
+    echo 'Cleaning up workspace Docker images...'
+
+    sh """
+        docker rmi ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} || true
+        docker image prune -f || true
+    """
+}
+
+def notifySuccess() {
+    echo 'Build successful!'
+
+    echo """
+        Build Success Notification
+
+        Project: ${env.PROJECT_NAME}
+        Build: #${env.BUILD_NUMBER}
+        Branch: ${env.BRANCH_NAME ?: 'N/A'}
+        Commit: ${env.GIT_COMMIT_SHORT ?: 'N/A'}
+        Author: ${env.GIT_AUTHOR ?: 'N/A'}
+        Image: ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}
+        URL: http://localhost:${env.FRONTEND_PORT}
+    """
+}
+
+def notifyFailure() {
+    echo 'Build failed!'
+
+    echo """
+        Build Failure Notification
+
+        Project: ${env.PROJECT_NAME}
+        Build: #${env.BUILD_NUMBER}
+        Branch: ${env.BRANCH_NAME ?: 'N/A'}
+        Commit: ${env.GIT_COMMIT_SHORT ?: 'N/A'}
+        Author: ${env.GIT_AUTHOR ?: 'N/A'}
+
+        Check build log: ${env.BUILD_URL}
+    """
+}

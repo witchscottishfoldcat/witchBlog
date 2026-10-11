@@ -1,0 +1,73 @@
+/* 日记列表 —— WitchCat 风格（页面专属样式） */
+@import '../styles/witchcat-admin.css';
+
+/* 页面容器：本页专属尺寸约束 */
+.diaries-page {
+  max-width: 1180px;
+  padding-bottom: 3rem;
+}
+
+/* 日记卡：纵向排布 */
+.diary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+/* 标题行：标题 + 公开/私有徽标 + 操作按钮 */
+.diary-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.diary-card-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  min-width: 0;
+}
+
+.diary-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* 日记图片缩略图行（最多 3 张 + “+N”角标） */
+.diary-images {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.diary-image-thumbnail {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--hairline);
+  cursor: pointer;
+  background: var(--bg-card-raised);
+}
+
+.diary-image-more {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-hover);
+  border: 1px dashed var(--primary-400);
+  border-radius: var(--radius-md);
+  color: var(--primary-600);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+[data-theme='dark'] .diary-image-more {
+  color: var(--primary-300);
+}

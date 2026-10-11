@@ -1,0 +1,1 @@
+{"Version":3,"FileReferences":{"Moc":"Sherry - Model.moc3","Textures":["Sherry - Model.2048/texture_00.png","Sherry - Model.2048/texture_01.png"],"Physics":"Sherry - Model.physics3.json"},"Groups":[{"Target":"Parameter","Name":"LipSync","Ids":[]},{"Target":"Parameter","Name":"EyeBlink","Ids":[]}]}

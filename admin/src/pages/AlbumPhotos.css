@@ -1,0 +1,71 @@
+@import '../styles/witchcat-admin.css';
+
+/* 相册照片管理页专属样式（其余复用 wc-* 共享类） */
+
+.albums-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.albums-photo-empty {
+  grid-column: 1 / -1;
+}
+
+.albums-photo-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(127, 127, 127, 0.22);
+  background: rgba(127, 127, 127, 0.06);
+}
+
+.albums-photo-card > img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.albums-photo-actions {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.albums-photo-card:hover .albums-photo-actions,
+.albums-photo-card:focus-within .albums-photo-actions {
+  opacity: 1;
+}
+
+.albums-photo-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  font-size: 12px;
+  min-height: 30px;
+}
+
+.albums-photo-cover-badge {
+  flex-shrink: 0;
+}
+
+.albums-photo-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.albums-photo-edit-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+}

@@ -1,0 +1,33 @@
+# Web框架
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# 数据验证和设置
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# 数据库
+sqlalchemy==2.0.23
+alembic==1.13.1
+PyMySQL==1.1.0
+
+# 认证和安全
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# HTTP客户端
+httpx==0.25.2
+
+# 工具库
+python-dotenv==1.0.0
+click==8.1.7
+
+# MinIO存储
+minio==7.2.0
+
+# 监控和日志
+prometheus-client==0.19.0
+structlog==23.2.0
+# 时区数据（zoneinfo 定时任务时区解析）
+tzdata==2026.4

@@ -1,0 +1,6 @@
+@import '../styles/witchcat-admin.css';
+
+/* 编辑页容器收窄 */
+.user-edit {
+  max-width: 980px;
+}

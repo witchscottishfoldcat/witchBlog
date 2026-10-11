@@ -1,0 +1,212 @@
+@import '../styles/witchcat-admin.css';
+
+/* 实时日志 —— WitchCat 主站风格（页面专属样式） */
+
+.live-logs-page {
+  padding-bottom: 3rem;
+}
+
+.live-logs-page .wc-card {
+  margin-top: 1.5rem;
+}
+
+/* ---------- 状态指示 ---------- */
+
+.ll-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid var(--hairline);
+}
+
+.ll-live-pill.is-live {
+  color: #16a34a;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.ll-live-pill.is-paused {
+  color: var(--text-secondary);
+  background: var(--bg-hover);
+}
+
+.ll-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.ll-live-pill.is-live .ll-live-dot {
+  animation: ll-pulse 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ll-live-pill.is-live .ll-live-dot {
+    animation: none;
+  }
+}
+
+@keyframes ll-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.ll-updated {
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+}
+
+/* ---------- 表格 ---------- */
+
+.ll-table-body {
+  padding: 0;
+}
+
+.ll-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+
+.ll-table th,
+.ll-table td {
+  padding: 0.55rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid var(--hairline, rgba(128, 128, 128, 0.14));
+  white-space: nowrap;
+}
+
+.ll-table th {
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.78rem;
+  position: sticky;
+  top: 0;
+  background: var(--bg-inset);
+  z-index: 1;
+}
+
+.ll-table tbody tr:hover {
+  background: var(--hairline, rgba(128, 128, 128, 0.06));
+}
+
+/* 新到日志短暂高亮，随后由定时器移除 is-new */
+.ll-table tbody tr.is-new {
+  animation: ll-row-in 2.5s ease-out;
+}
+
+@keyframes ll-row-in {
+  0% {
+    background: rgba(124, 108, 240, 0.22);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ll-table tbody tr.is-new {
+    animation: none;
+    background: rgba(124, 108, 240, 0.1);
+  }
+}
+
+.col-time {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+  width: 6.5rem;
+}
+
+.col-method {
+  width: 5rem;
+}
+
+.col-ip {
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+
+.col-path,
+.col-referrer {
+  max-width: 22rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.col-referrer {
+  color: var(--text-secondary);
+  max-width: 14rem;
+}
+
+/* 方法徽章 */
+.ll-method-badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+
+.ll-method-badge.is-get {
+  color: #16a34a;
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.ll-method-badge.is-post {
+  color: #2563eb;
+  background: rgba(59, 130, 246, 0.12);
+}
+
+.ll-method-badge.is-put {
+  color: #d97706;
+  background: rgba(245, 158, 11, 0.14);
+}
+
+.ll-method-badge.is-delete {
+  color: #dc2626;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.ll-method-badge.is-other {
+  color: var(--text-secondary);
+  background: var(--bg-hover);
+}
+
+/* ---------- 状态 ---------- */
+
+.ll-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 4rem 0;
+  color: var(--text-tertiary);
+}
+
+.ll-empty p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.ll-error {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ll-error-text {
+  margin: 0;
+  color: var(--danger, #ef4444);
+  font-size: 0.9rem;
+}

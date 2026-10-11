@@ -1,0 +1,20 @@
+# Trivy 门禁豁免清单（witchcat-api 镜像扫描）
+# 一行一条 CVE/GHSA；每条必须带理由和复核日期，定期清理已失效条目。
+
+# msgpack 1.1.2 (GHSA-6v7p-g79w-8964)：pip 26.x 的 vendored 副本（pip/_vendor/msgpack），
+# 非应用安装依赖，应用 venv 内无 msgpack；待 pip 自带版本 >= 1.2.1 后删除本条。
+# 复核：2026-09-09
+GHSA-6v7p-g79w-8964
+
+# setuptools 70.3.0 (CVE-2025-47273)：基础镜像旧版的层残留误报——
+# Dockerfile 运行层已显式升级 setuptools 至 84.0.0，最终文件系统已验证不存在 70.3.0。
+# 复核：2026-09-09
+CVE-2025-47273
+
+# urllib3 2.7.0 (CVE-2026-97687 / CVE-2026-97689)：pip 26.2.1 的 vendored 副本
+# （pip/_vendor/urllib3，venv 与系统 pip 各一份）；应用 venv 实际安装的 urllib3
+# 已是 2.8.0（构建日志与镜像内 dist-info 均已验证）。vendored 副本无法独立升级，
+# 应用运行时不经 pip 发起网络请求。待 pip 自带 vendored urllib3 >= 2.8.0 后删除本两条。
+# 复核：2026-10-02
+CVE-2026-97687
+CVE-2026-97689

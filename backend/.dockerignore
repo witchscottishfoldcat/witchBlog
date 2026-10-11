@@ -1,0 +1,37 @@
+# 密钥与本地配置：严禁进入镜像
+.env
+.env.*
+!.env.example
+
+# 版本控制与 CI
+.git
+.gitignore
+.gitattributes
+Jenkinsfile
+
+# Python 运行产物
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+
+# 日志与用户上传（运行时挂载，不打进镜像）
+logs
+uploads
+*.log
+
+# IDE / 工具
+.idea
+.vscode
+.claude
+.codebuddy
+.trae
+
+# 其他不需要的产物
+dist
+build
+node_modules
+rss_output.xml
+demo-files
+test-scripts

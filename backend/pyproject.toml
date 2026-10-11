@@ -1,0 +1,118 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "witchcat-enterprise-api"
+version = "1.0.0"
+description = "企业级文字处理API框架"
+authors = [
+    {name = "WitchCat Team"}
+]
+readme = "docs/README.md"
+license = "LicenseRef-WitchCat-NC-Attribution-ShareAlike-1.0"
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Framework :: FastAPI",
+]
+
+[project.urls]
+Homepage = "https://github.com/witchscottishfoldcat/witchBlog"
+Repository = "https://github.com/witchscottishfoldcat/witchBlog.git"
+Documentation = "https://github.com/witchscottishfoldcat/witchBlog/tree/main/backend/docs"
+
+# 仅打包应用代码，避免 flat-layout 把 alembic/tests 等一并发现为顶层包
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+exclude = ["alembic*", "tests*", "scripts*", "test-scripts*", "deploy-scripts*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["app"]
+
+# mypy 增量采用策略：
+# - 全局为现实可执行的检查水平（代码已使用 py3.10+ 的 X|Y 语法，运行时为 3.11）
+# - 现存类型错误总数由 scripts/mypy_gate.py + scripts/mypy_baseline.txt 棘轮管控，只允许减少
+# - 新代码建议补全注解，清零某模块后可在下方为其增加严格 override
+[tool.mypy]
+python_version = "3.10"
+plugins = ["sqlalchemy.ext.mypy.plugin", "pydantic.mypy"]
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = [
+    "alembic.*",
+    "celery.*",
+    "redis.*",
+    "uvicorn.*",
+    "bs4.*",
+    "frontmatter.*",
+    "jose.*",
+    "minio.*",
+    "psutil.*",
+    "pymysql.*",
+    "requests.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+
+[tool.coverage.run]
+source = ["app"]
+omit = [
+    "*/tests/*",
+    "*/migrations/*",
+    "*/__pycache__/*",
+    "*/venv/*",
+    "*/env/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]

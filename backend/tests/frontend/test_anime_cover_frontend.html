@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动漫封面自动上传测试</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .anime-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .anime-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .anime-cover {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .anime-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .anime-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            background-color: #f0f0f0;
+            margin-bottom: 5px;
+        }
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>动漫封面自动上传测试</h1>
+        <p>这个页面用于测试添加追番链接时自动获取并存储封面图片到MinIO的功能。</p>
+        
+        <div id="message-container"></div>
+        
+        <h2>添加新追番</h2>
+        <form id="anime-form">
+            <div class="form-group">
+                <label for="title">标题</label>
+                <input type="text" id="title" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="url">观看链接</label>
+                <input type="url" id="url" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cover_image_url">封面图片URL</label>
+                <input type="url" id="cover_image_url">
+                <small>如果填写，系统会自动下载并存储到MinIO；如果留空，系统会尝试从观看链接获取图片。</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">简介</label>
+                <textarea id="description" rows="3"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="category">分类</label>
+                <select id="category">
+                    <option value="anime">动漫</option>
+                    <option value="drama">剧集</option>
+                    <option value="other">其他</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="tags">标签</label>
+                <input type="text" id="tags" placeholder="多个标签用逗号分隔">
+            </div>
+            
+            <div class="form-group">
+                <label for="status">状态</label>
+                <select id="status">
+                    <option value="want_watch">想看</option>
+                    <option value="watching">在看</option>
+                    <option value="completed">已看完</option>
+                    <option value="dropped">已弃</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="is_favorite">收藏</label>
+                <input type="checkbox" id="is_favorite">
+            </div>
+            
+            <button type="submit">添加追番</button>
+        </form>
+    </div>
+    
+    <div class="container">
+        <h2>追番列表</h2>
+        <button id="refresh-btn">刷新列表</button>
+        <div id="anime-list" class="anime-list">
+            <!-- 追番列表将在这里显示 -->
+        </div>
+    </div>
+    
+    <script>
+        // API基础URL
+        const API_BASE = 'http://localhost:8000/api/v1/anime-watchlist';
+        
+        // 显示消息
+        function showMessage(message, isError = false) {
+            const messageContainer = document.getElementById('message-container');
+            messageContainer.innerHTML = `<div class="message ${isError ? 'error' : 'success'}">${message}</div>`;
+            
+            // 3秒后自动清除消息
+            setTimeout(() => {
+                messageContainer.innerHTML = '';
+            }, 3000);
+        }
+        
+        // 获取表单数据
+        function getFormData() {
+            return {
+                title: document.getElementById('title').value,
+                url: document.getElementById('url').value,
+                cover_image_url: document.getElementById('cover_image_url').value,
+                description: document.getElementById('description').value,
+                category: document.getElementById('category').value,
+                tags: document.getElementById('tags').value,
+                status: document.getElementById('status').value,
+                is_favorite: document.getElementById('is_favorite').checked,
+                is_active: true
+            };
+        }
+        
+        // 清空表单
+        function clearForm() {
+            document.getElementById('anime-form').reset();
+        }
+        
+        // 获取封面URL
+        async function getCoverUrl(animeId) {
+            try {
+                const response = await fetch(`${API_BASE}/${animeId}/cover-url`);
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.cover_url;
+                }
+            } catch (error) {
+                console.error('获取封面URL失败:', error);
+            }
+            return null;
+        }
+        
+        // 渲染追番列表
+        async function renderAnimeList() {
+            try {
+                const response = await fetch(API_BASE);
+                if (!response.ok) throw new Error('获取列表失败');
+                
+                const animeList = await response.json();
+                const listContainer = document.getElementById('anime-list');
+                
+                if (animeList.length === 0) {
+                    listContainer.innerHTML = '<p>暂无追番记录</p>';
+                    return;
+                }
+                
+                // 为每个动漫项获取封面URL
+                const animeWithCovers = await Promise.all(
+                    animeList.map(async (anime) => {
+                        const coverUrl = await getCoverUrl(anime.id);
+                        return { ...anime, coverUrl };
+                    })
+                );
+                
+                listContainer.innerHTML = animeWithCovers.map(anime => `
+                    <div class="anime-item">
+                        <img src="${anime.coverUrl || anime.cover_image_url || 'https://via.placeholder.com/300x200?text=No+Image'}" 
+                             alt="${anime.title}" 
+                             class="anime-cover"
+                             onerror="this.src='https://via.placeholder.com/300x200?text=Image+Load+Failed'">
+                        <div class="anime-title">${anime.title}</div>
+                        <div class="anime-status">${anime.status}</div>
+                        <div>分类: ${anime.category}</div>
+                        ${anime.tags ? `<div>标签: ${anime.tags}</div>` : ''}
+                        ${anime.cover_image_object_name ? `<div>✅ 已存储到MinIO</div>` : ''}
+                        <div>创建时间: ${new Date(anime.created_at).toLocaleDateString()}</div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('渲染列表失败:', error);
+                showMessage('获取列表失败: ' + error.message, true);
+            }
+        }
+        
+        // 添加追番
+        document.getElementById('anime-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            try {
+                const animeData = getFormData();
+                
+                const response = await fetch(API_BASE, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(animeData)
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || '添加失败');
+                }
+                
+                const newAnime = await response.json();
+                showMessage(`成功添加追番: ${newAnime.title}`);
+                clearForm();
+                renderAnimeList();
+                
+            } catch (error) {
+                console.error('添加追番失败:', error);
+                showMessage('添加失败: ' + error.message, true);
+            }
+        });
+        
+        // 刷新列表
+        document.getElementById('refresh-btn').addEventListener('click', renderAnimeList);
+        
+        // 页面加载时获取列表
+        window.addEventListener('DOMContentLoaded', renderAnimeList);
+    </script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+{
+  "nav": {
+    "home": "Home",
+    "archive": "Archive",
+    "links": "Links",
+    "music": "Music",
+    "my": "My",
+    "about": "About",
+    "dashboard": "Dashboard",
+    "others": "Others",
+    "search": "Search",
+    "themeColor": "Theme Color",
+    "anime": "Anime List",
+    "diary": "Diary",
+    "friendLinks": "Friend Links",
+    "support": "Support",
+    "projects": "Projects",
+    "skills": "Skills",
+    "timeline": "Timeline",
+    "games": "Games",
+    "switchToEnglish": "Switch to English",
+    "switchToChinese": "切换到中文"
+  },
+  "common": {
+    "readMore": "Read More",
+    "words": "words",
+    "characters": "characters",
+    "search": "Search",
+    "language": "Language",
+    "theme": "Theme",
+    "backToHome": "Back to Home",
+    "backToArchive": "Back to Archive",
+    "readingTime": "minutes",
+    "readingTimeLabel": "Reading Time",
+    "list": "List",
+    "grid": "Grid",
+    "daysAgo": "days ago"
+  },
+  "blog": {
+    "title": "Beautiful Mizuki!",
+    "subtitle": "Carousel Focus: User Experience",
+    "noPosts": "No posts yet",
+    "encrypted": "Encrypted Article",
+    "allPosts": "My Blog Posts",
+    "announcement": "Announcement",
+    "categories": "Categories",
+    "tags": "Tags",
+    "learnMore": "Learn More",
+    "playing": "Now Playing",
+    "pinned": "Pinned",
+    "musicTooltip": "Hello, want to listen to music?",
+    "latestProjects": "Latest Projects",
+    "latestTimeline": "Latest Timeline",
+    "viewAll": "View All"
+  },
+  "sidebar": {
+    "announcement": "Announcement",
+    "categories": "Categories",
+    "tags": "Tags",
+    "resourceLinks": "Resource Links",
+    "calendar": "Calendar",
+    "learnMore": "Learn More",
+    "welcomeMessage": "Welcome to my blog! This is a sample announcement.",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "goToToday": "Go to today",
+    "today": "Today",
+    "archiveYears": "Browse by Year",
+    "recentPosts": "Recent Posts",
+    "viewAllPosts": "View All Posts",
+    "categoryPosts": "Posts in Category",
+    "currentCategory": "Current category",
+    "backToParentCategory": "Back to parent category",
+    "noCategoryPosts": "No posts in this category",
+    "secondaryCategories": "Subcategories",
+    "tagPosts": "Posts with Tag",
+    "currentTag": "Current tag",
+    "noTagPosts": "No posts with this tag",
+    "projectOverview": "Project Overview",
+    "siteOverview": "Site Overview",
+    "aboutFiles": "Related Files",
+    "linkTags": "Link Tags",
+    "timelineOverview": "Timeline Overview",
+    "skillCategories": "Skill Categories",
+    "albumList": "Albums",
+    "viewAllAlbums": "View All Albums",
+    "articleInfo": "Article Info",
+    "mySpace": "My Space",
+    "quickLinks": "Quick Links",
+    "solarTerms": "24 Solar Terms",
+    "dateTitle": "Date",
+    "weekdayTitle": "Weekday",
+    "seasonTitle": "Season",
+    "season": {
+      "spring": "Spring",
+      "summer": "Summer",
+      "autumn": "Autumn",
+      "winter": "Winter"
+    },
+    "rssTitle": "RSS Subscribe",
+    "rssDescription": "Subscribe to RSS feed to get the latest updates",
+    "copyLink": "Copy link",
+    "copied": "Copied",
+    "copy": "Copy"
+  },
+  "archive": {
+    "title": "Archive Timeline",
+    "subtitle": "Relive every post with a dreamy anime vibe.",
+    "postsCount": "{count} posts in total",
+    "yearPosts": "{count} posts",
+    "empty": "No posts have been archived yet.",
+    "timelineHint": "Scroll down the magical trail and rediscover highlights."
+  },
+  "myPage": {
+    "title": "My Anime List",
+    "subtitle": "Record my anime journey",
+    "filters": {
+      "all": "All",
+      "watching": "Watching",
+      "completed": "Completed",
+      "planned": "Planned",
+      "dropped": "Dropped"
+    },
+    "statusBadges": {
+      "watching": "Watching",
+      "completed": "Completed",
+      "planned": "Planned",
+      "dropped": "Dropped"
+    },
+    "ratingLabel": "Rating",
+    "progressLabel": "Progress",
+    "description": "Daily updates on shows I love, those I am watching, and the ones planned for cozy nights.",
+    "categoryLabels": {
+      "anime": "Anime",
+      "drama": "Drama",
+      "other": "Other"
+    }
+  },
+  "posts": {
+    "myBlogPosts": "My Blog Posts",
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page",
+      "of": "of"
+    }
+  },
+  "search": {
+    "noResults": "No posts found",
+    "tryOtherKeywords": "Try different keywords",
+    "startTyping": "Start typing to search",
+    "hint": "Search by title, content, tags, or category",
+    "foundResults": "Found {count} results"
+  },
+  "diary": {
+    "title": "Diary",
+    "subtitle": "Share life anytime, anywhere",
+    "entriesLabel": "diary entries",
+    "timeAgoLabel": "days ago",
+    "noDiaries": "No diaries yet",
+    "noDiariesFiltered": "No diaries match the current filters",
+    "archiveTitle": "Browse",
+    "archiveAll": "All entries",
+    "archiveByYear": "By year",
+    "archiveByTag": "By tag",
+    "archiveSampleHint": "Counts are based on the latest 100 public entries.",
+    "filterYear": "Filter: {year}",
+    "filterTag": "Filter: tag \u201c{tag}\u201d",
+    "filterYearTag": "Filter: {year} \u00b7 \u201c{tag}\u201d",
+    "readMore": "Read More",
+    "backToDiaryList": "Back to Diary List",
+    "withPhotos": "With Photos",
+    "yearFilter": "Year",
+    "popularTags": "Popular Tags",
+    "moodStats": "Stats",
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page",
+      "of": "of"
+    }
+  },
+  "gallery": {
+    "title": "Album",
+    "subtitle": "Record beautiful moments in life",
+    "noPhotos": "No photos",
+    "noAlbums": "No albums",
+    "noCover": "No Cover",
+    "loadImageFailed": "Failed to load image",
+    "photos": "photos",
+    "views": "views",
+    "gallery": "Gallery",
+    "albumsLabel": "albums",
+    "totalViews": "Total Views",
+    "popularTags": "Popular Tags",
+    "backToGallery": "Back to Gallery",
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "showing": "Showing",
+      "of": "of",
+      "results": "albums"
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "description": "This website is built with the Astro framework using the Mizuki theme.",
+    "repoDescription": "Next-generation Material Design 3 blog theme (Astro driven)",
+    "featuresTitle": "Theme Features",
+    "designSection": "Design & User Experience",
+    "features": [
+      "Modern & Elegant Design - Clean, minimalist interface with beautiful typography",
+      "Fully Responsive - Optimized for all devices from mobile to desktop",
+      "Dark/Light Mode - Automatic theme switching with smooth transitions",
+      "Beautiful Typography - Enhanced readability with JetBrains Mono font",
+      "Smooth Animations - Fluid page transitions and interactive elements"
+    ],
+    "relatedFiles": "Related Files",
+    "filesCount": "files",
+    "noFiles": "No files available",
+    "backToAbout": "Back to About",
+    "unableToLoad": "Unable to load file content",
+    "images": "Images",
+    "imagesCount": "items",
+    "documents": "Documents",
+    "documentsCount": "files",
+    "loadFailed": "Load Failed"
+  },
+  "friendLinks": {
+    "title": "Friend Links",
+    "subtitle": "Links to friends and resources",
+    "noFriendLinks": "No friend links yet"
+  },
+  "projects": {
+    "title": "Project Showcase",
+    "subtitle": "My development project portfolio",
+    "stats": {
+      "total": "Total Projects",
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "techStack": "Tech Stack Statistics",
+      "languages": "Languages"
+    },
+    "status": {
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "planned": "Planned"
+    },
+    "buttons": {
+      "visitProject": "Visit Project",
+      "github": "GitHub"
+    },
+    "sections": {
+      "featured": "Featured Projects",
+      "allProjects": "All Projects",
+      "webApps": "Web Applications",
+      "mobileApps": "Mobile Applications",
+      "other": "Other Projects",
+      "techStack": "Tech Stack Statistics"
+    },
+    "tagStats": "Tag Statistics",
+    "statusOverview": "Project Status",
+    "sourceStats": "Platforms & Tags",
+    "tagStatsLoading": "Loading...",
+    "tagStatsEmpty": "No tag statistics",
+    "tagStatsCount": "Projects",
+    "languageStats": "Programming Language Statistics",
+    "languageCoverage": "Language Project Coverage",
+    "created": "Created",
+    "updated": "Updated",
+    "dominantLanguage": "Primary language",
+    "languageCount": "({count} languages)"
+  },
+  "skills": {
+    "title": "Skills Display",
+    "subtitle": "My technical skills and expertise",
+    "experience": "Experience",
+    "averageExperience": "Avg. Experience (Years)",
+    "totalSkills": "Total Skills",
+    "byLevel": "By Level",
+    "byCategory": "By Category",
+    "skillMatrix": "Skill Matrix",
+    "allSkills": "All Skills",
+    "knowledgeBrain": "Knowledge Brain",
+    "mapHint": "Select a branch to explore",
+    "expandAll": "Expand All",
+    "backToMindMap": "Back to Mind Map",
+    "learningOverview": "Learning Overview",
+    "cumulativeLearning": "Total Learning Days",
+    "longestExperience": "Longest Experience",
+    "projectOverview": "Project Coverage",
+    "projectLinks": "Project Links",
+    "coveredSkills": "Covered Skills",
+    "backToSkills": "Back to Skills",
+    "category": "Category",
+    "learningDays": "Learning Days",
+    "days": "days",
+    "year": "year",
+    "years": "years",
+    "month": "month",
+    "months": "months",
+    "zeroMonths": "0 months",
+    "lessThanMonth": "< 1 month",
+    "present": "Present",
+    "learningPeriods": "Learning Periods",
+    "relatedProjects": "Related Projects",
+    "viewProject": "View Project",
+    "created": "Created",
+    "updated": "Updated",
+    "dateFormat": "MMM dd, yyyy",
+    "levels": {
+      "expert": "Expert",
+      "advanced": "Advanced",
+      "intermediate": "Intermediate",
+      "beginner": "Beginner"
+    },
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "database": "Database",
+      "tools": "Tools",
+      "other": "Other"
+    },
+    "status": {
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "planned": "Planned"
+    },
+    "projects": "Projects"
+  },
+  "timeline": {
+    "title": "Timeline",
+    "subtitle": "My growth journey and important milestones",
+    "currentStatus": "Current Status",
+    "currentStatusCount": "in progress",
+    "scrollToHistory": "Scroll down to view history",
+    "history": "History",
+    "search": "Search",
+    "tags": "Tags",
+    "filter": "Filter",
+    "clear": "Clear",
+    "tagsPlaceholder": "e.g., React, TypeScript",
+    "tagsHint": "(comma-separated)",
+    "searchPlaceholder": "Enter keywords to search...",
+    "stats": {
+      "total": "Total",
+      "workExperience": "Work Experience",
+      "projects": "Projects",
+      "achievements": "Achievements"
+    },
+    "types": {
+      "work": "Work Experience",
+      "project": "Project Experience",
+      "education": "Education",
+      "achievement": "Achievements"
+    },
+    "duration": "Duration",
+    "location": "Location"
+  },
+  "components": {
+    "noResourceLinks": "No resource links",
+    "noCategories": "No categories",
+    "noTags": "No tags"
+  },
+  "dashboard": {
+    "title": "Site Dashboard",
+    "subtitle": "View site runtime and content statistics",
+    "uptime": "Uptime",
+    "uptimeDescription": "Total running time since startup",
+    "totalRequests": "Total Requests",
+    "todayRequests": "Requests today: {count}",
+    "totalVisitors": "Total Visitors",
+    "todayVisitors": "Visitors today: {count}",
+    "albums": "Albums",
+    "albumsDescription": "Total number of albums",
+    "photos": "Photos",
+    "photosDescription": "Total number of photos in all albums",
+    "diaries": "Diaries",
+    "diariesDescription": "Total number of published diaries",
+    "memoryUsage": "Memory Usage",
+    "memoryUsageDescription": "Current memory usage of the application",
+    "dbConnections": "DB Connections",
+    "dbConnectionsDescription": "Current number of database connections",
+    "contentOverview": "Content Overview",
+    "systemOverview": "Today & System",
+    "runtimeOverview": "Runtime Status",
+    "todayOverview": "Today's Traffic",
+    "onlineStatus": "Online",
+    "running": "Running",
+    "todayRequestsLabel": "Requests Today",
+    "todayVisitorsLabel": "Visitors Today",
+    "pageVisits": "{count} visits",
+    "topPages": "Top Pages",
+    "noTopPages": "No top page data yet",
+    "loadFailed": "Failed to load site statistics"
+  },
+  "others": {
+    "title": "Others",
+    "subtitle": "More features and content",
+    "pages": {
+      "projects": {
+        "title": "Projects",
+        "description": "My development project portfolio"
+      },
+      "skills": {
+        "title": "Skills",
+        "description": "My technical skills and expertise"
+      },
+      "timeline": {
+        "title": "Timeline",
+        "description": "My growth journey and important milestones"
+      }
+    },
+    "viewDetails": "View Details"
+  }
+}
+

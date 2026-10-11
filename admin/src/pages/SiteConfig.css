@@ -1,0 +1,104 @@
+@import '../styles/witchcat-admin.css';
+
+/* 网站配置 —— WitchCat 主站风格（页面专属样式） */
+
+.site-config-page {
+  padding-bottom: 3rem;
+}
+
+/* 分组卡片间距 */
+.site-config-page .wc-card + .wc-card {
+  margin-top: 1.5rem;
+}
+
+.site-config-loading {
+  min-height: 12rem;
+}
+
+/* 只读值文本 */
+.sc-value {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1.5;
+}
+
+.sc-pre {
+  white-space: pre-wrap;
+}
+
+/* “其他信息”定义列表行：标签 + 值两端对齐 */
+.sc-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.875rem 0;
+}
+
+.sc-meta-row + .sc-meta-row {
+  border-top: 1px solid var(--hairline);
+}
+
+.sc-meta-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.sc-meta-value {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 图片上传区与发光拖拽框 (Glow Drag-Drop Zone) */
+.sc-image-section {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: var(--radius-lg);
+  background: var(--bento-bg);
+  backdrop-filter: var(--bento-blur);
+  -webkit-backdrop-filter: var(--bento-blur);
+  border: 2px dashed var(--bento-border);
+  transition: all var(--transition-fast);
+}
+
+.sc-image-section:hover {
+  border-color: var(--primary-400);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.18);
+}
+
+.sc-image-preview {
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-inset);
+  transition: transform var(--transition-fast);
+}
+
+.sc-image-preview:hover {
+  transform: scale(1.08);
+}
+
+.sc-image-large {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-full);
+}
+
+.sc-image-controls {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}

@@ -1,0 +1,82 @@
+# Web Framework
+# 0.141.1 允许 starlette 1.x；starlette 1.3.1+ 修复 CVE-2026-48818/CVE-2026-54283
+fastapi==0.141.1
+# app 直接使用 starlette 中间件/异常/线程池 API，显式钉版本
+starlette==1.6.0
+uvicorn[standard]==0.24.0
+
+# Data Validation
+# 2.13.5 为 fastapi 0.141.1 解析所得版本
+pydantic==2.13.5
+pydantic-settings==2.1.0
+email-validator==2.1.0
+
+# Database
+sqlalchemy==2.0.23
+alembic==1.13.1
+psycopg2-binary==2.9.9
+# 1.1.1 修复 CVE-2024-36039（SQL 注入）
+PyMySQL==1.1.1
+# 50.0.1 修复 CVE-2026-26007/CVE-2026-69249/CVE-2026-69247 及内置 OpenSSL（GHSA-537c-gmf6-5ccf）
+cryptography==50.0.1
+
+# Auth and Security
+# 3.4.0 修复 CVE-2024-33663/33664；3.5.0 放开 pyasn1<0.5.0 上限（pyasn1 0.6.4 修复 4 个 DoS CVE）
+python-jose[cryptography]==3.5.0
+# python-jose 的传递依赖，显式钉版防止回退到 0.4.x
+pyasn1==0.6.4
+passlib[bcrypt]==1.7.4
+bcrypt==3.2.2
+# 0.0.30 修复 CVE-2024-53981/CVE-2026-24486/CVE-2026-42561/CVE-2026-53539
+python-multipart==0.0.30
+
+# Cache and Message Queue
+redis==5.0.1
+celery==5.3.4
+
+# HTTP Client
+httpx==0.25.2
+# 2.32.0+ 修复 CVE-2024-35195
+requests==2.32.3
+
+# HTML Parser
+beautifulsoup4==4.12.2
+# 6.1.3 修复 CVE-2026-41066（不可信 XML 输入信息泄露）
+lxml==6.1.3
+
+# Utils
+python-dotenv==1.0.0
+click==8.1.7
+rich==13.7.0
+
+# MinIO Storage
+minio==7.2.0
+
+# Image Processing
+# 12.3.0 修复 CVE-2026-25990/CVE-2026-40192/CVE-2026-54058 等图像处理漏洞
+Pillow==12.3.0
+
+# Dev and Test
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
+autoflake==2.2.1
+mypy==1.7.1
+
+# Monitoring and Logging
+prometheus-client==0.19.0
+structlog==23.2.0
+loguru==0.7.2
+psutil==5.9.6
+
+# Front-Matter Parser
+python-frontmatter==1.0.0
+
+# IP 归属地离线解析（访客统计用，数据文件 data/qqwry.dat 见 metowolf/qqwry.dat 镜像）
+qqwry-py3==1.2.1
+
+# 时区数据（zoneinfo 在 Windows 开发机与精简容器内需要）
+tzdata==2026.4

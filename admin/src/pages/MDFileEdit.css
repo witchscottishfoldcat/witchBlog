@@ -1,0 +1,307 @@
+@import '../styles/witchcat-admin.css';
+
+/* ============================================
+   Notion 风格分屏沉浸式编辑器 (Live Split-Screen Editor)
+   ============================================ */
+
+.md-file-edit-page {
+  padding-bottom: 3rem;
+}
+
+/* 编辑卡片：.wc-card 默认无内边距，编辑页表单需要充足留白 */
+.edit-card-wrap {
+  padding: 1.75rem 2rem 2rem;
+}
+
+.sticky-edit-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--bento-bg);
+  backdrop-filter: var(--bento-blur);
+  -webkit-backdrop-filter: var(--bento-blur);
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
+}
+
+.header-article-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-left: 0.4rem;
+}
+
+.md-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.md-stats-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.md-stat-pill {
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-hover);
+  border: 1px solid var(--hairline);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.md-shortcut-pill {
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card-raised);
+  border: 1px solid var(--hairline);
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+}
+
+.view-mode-tabs {
+  padding: 0.15rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-hover);
+}
+
+/* ============ 分屏编辑器核心 Workspace ============ */
+.md-split-workspace {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+  min-height: 480px;
+}
+
+.md-split-workspace.mode-split {
+  grid-template-columns: 1fr 1fr;
+}
+
+.md-split-workspace.mode-edit {
+  grid-template-columns: 1fr;
+}
+
+.md-split-workspace.mode-preview {
+  grid-template-columns: 1fr;
+}
+
+.md-split-pane {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  background: var(--bento-bg);
+  backdrop-filter: var(--bento-blur);
+  -webkit-backdrop-filter: var(--bento-blur);
+  border: 1px solid var(--bento-border);
+  overflow: hidden;
+  height: 540px;
+}
+
+/* 编辑窗格：编辑区 + 右侧标题大纲栏（水平排列） */
+.md-editor-pane {
+  flex-direction: row;
+}
+
+.md-split-textarea {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  padding: 1.2rem 1.4rem;
+  font-family: var(--font-mono), var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  resize: none;
+  outline: none;
+}
+
+/* ============ 标题大纲栏（目录） ============ */
+.md-outline-rail {
+  width: 200px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 0.75rem 0.5rem;
+  border-left: 1px solid var(--hairline);
+  background: var(--bg-hover);
+}
+
+.md-outline-title {
+  margin: 0 0 0.35rem;
+  padding: 0 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  letter-spacing: 0.05em;
+}
+
+.md-outline-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.md-outline-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.3rem 0.5rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.md-outline-item:hover {
+  background: var(--bg-active);
+  color: var(--text-primary);
+}
+
+.md-outline-item.active {
+  background: var(--bg-active);
+  color: var(--primary-600);
+  font-weight: 600;
+}
+
+/* 缩进体现层级：#/##/###/#### */
+.md-outline-item.level-1 {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.md-outline-item.level-3 {
+  padding-left: 1.1rem;
+}
+
+.md-outline-item.level-4 {
+  padding-left: 1.7rem;
+}
+
+/* 窄屏：大纲栏变为编辑区上方的横向滑动条 */
+@media (max-width: 900px) {
+  .md-editor-pane {
+    flex-direction: column;
+  }
+
+  .md-outline-rail {
+    order: -1;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-left: none;
+    border-bottom: 1px solid var(--hairline);
+    padding: 0.5rem;
+  }
+
+  .md-outline-title {
+    display: none;
+  }
+
+  .md-outline-list {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .md-outline-item {
+    width: auto;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .md-outline-item.level-3,
+  .md-outline-item.level-4 {
+    padding-left: 0.5rem;
+  }
+}
+
+.md-preview-pane {
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1.25rem;
+  background: var(--bg-hover);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.preview-title-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.preview-words {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+}
+
+.preview-body {
+  flex: 1;
+  padding: 1.25rem 1.5rem;
+  overflow-y: auto;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+
+.preview-heading {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 1rem 0 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.preview-para {
+  margin-bottom: 0.85rem;
+  color: var(--text-primary);
+}
+
+.preview-list {
+  padding-left: 1.25rem;
+  margin-bottom: 0.85rem;
+}
+
+.preview-code-block {
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-code);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  overflow-x: auto;
+  margin-bottom: 0.85rem;
+}
+
+.md-file-edit-category-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--primary-600);
+}

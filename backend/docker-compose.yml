@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  app:
+    image: witchcat/witchcat-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # 禁用代理，防止构建报错
+      args:
+        http_proxy: ''
+        https_proxy: ''
+        HTTP_PROXY: ''
+        HTTPS_PROXY: ''
+    container_name: witchcat-api
+    restart: unless-stopped
+
+    # 【核心】Host 模式
+    # 1. 让 Redis 的 localhost 指向宿主机
+    # 2. 让 App 直接访问外网 IP (MySQL 和 MinIO)
+    network_mode: "host"
+
+    # 直接加载 .env.example 文件里的所有变量
+    env_file:
+      - .env.example
+
+    # 显式传递关键变量 (让 Docker 知道要用 .env.example 里的值)
+    environment:
+    - DATABASE_URL=${DATABASE_URL}
+    - REDIS_URL=${REDIS_URL}
+    - MINIO_ENDPOINT=${MINIO_ENDPOINT}
+    - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+    - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+    - MINIO_BUCKET_NAME=${MINIO_BUCKET_NAME}
+    - MINIO_SECURE=${MINIO_SECURE}
+    - ENVIRONMENT=${ENVIRONMENT}
+    - TZ=${TZ:-Asia/Shanghai}
+    - SCHEDULER_TIMEZONE=${SCHEDULER_TIMEZONE:-Asia/Shanghai}
+
+    volumes:
+    - ./logs:/app/logs
+    - ./uploads:/app/uploads
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

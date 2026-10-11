@@ -1,0 +1,6 @@
+@import '../styles/witchcat-admin.css';
+
+/* 用户 ID 等宽字体 */
+.users-page .user-id {
+  font-family: var(--font-mono);
+}

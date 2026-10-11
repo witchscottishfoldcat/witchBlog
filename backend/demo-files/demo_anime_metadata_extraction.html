@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动漫元数据提取演示</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .secondary-button {
+            background-color: #2196F3;
+        }
+        .secondary-button:hover {
+            background-color: #0b7dda;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            border-left: 5px solid #4CAF50;
+        }
+        .error {
+            border-left: 5px solid #f44336;
+            background-color: #fff5f5;
+        }
+        .anime-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+        .anime-cover {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            margin-right: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .anime-info {
+            flex: 1;
+        }
+        .anime-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .anime-meta {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        .hidden {
+            display: none;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #09f;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .batch-result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .batch-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .batch-success {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+        }
+        .batch-failed {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+        .metadata-preview {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f7ff;
+            border-radius: 5px;
+            border-left: 4px solid #2196F3;
+        }
+        .metadata-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .metadata-item {
+            margin-bottom: 5px;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>动漫元数据提取演示</h1>
+        
+        <!-- 元数据提取预览部分 -->
+        <div class="section">
+            <div class="section-title">元数据提取预览</div>
+            <form id="metadataPreviewForm">
+                <div class="form-group">
+                    <label for="previewUrl">URL</label>
+                    <input type="text" id="previewUrl" name="url" required placeholder="输入动漫URL（如：https://www.bilibili.com/bangumi/media/md21087073）">
+                </div>
+                
+                <button type="submit">预览元数据</button>
+            </form>
+            
+            <div id="metadataPreview" class="metadata-preview hidden">
+                <div class="metadata-title">提取的元数据：</div>
+                <div id="metadataContent"></div>
+            </div>
+        </div>
+        
+        <!-- 添加追番部分 -->
+        <div class="section">
+            <div class="section-title">添加新追番（自动提取元数据）</div>
+            <form id="addAnimeForm">
+                <div class="form-group">
+                    <label for="url">URL <span class="highlight">必填</span></label>
+                    <input type="text" id="url" name="url" required placeholder="输入动漫URL（如：https://www.bilibili.com/bangumi/media/md21087073）">
+                </div>
+                
+                <div class="form-group">
+                    <label for="title">标题 <span class="highlight">可选，将自动提取</span></label>
+                    <input type="text" id="title" name="title" placeholder="如果留空，将自动从URL提取标题">
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">分类</label>
+                    <input type="text" id="category" name="category" value="anime" placeholder="输入分类（如：anime）">
+                </div>
+                
+                <div class="form-group">
+                    <label for="tags">标签 <span class="highlight">可选，将自动提取类型信息</span></label>
+                    <input type="text" id="tags" name="tags" placeholder="输入标签，用逗号分隔（如：运动,竞技,赛马）">
+                </div>
+                
+                <div class="form-group">
+                    <label for="status">状态</label>
+                    <select id="status" name="status">
+                        <option value="want_watch">想看</option>
+                        <option value="watching">在看</option>
+                        <option value="completed">已看完</option>
+                        <option value="dropped">已弃</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="total_episodes">总集数 <span class="highlight">可选，将自动提取</span></label>
+                    <input type="number" id="total_episodes" name="total_episodes" placeholder="如果留空，将自动从URL提取总集数">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">描述 <span class="highlight">可选，将自动提取</span></label>
+                    <textarea id="description" name="description" rows="4" placeholder="如果留空，将自动从URL提取描述信息"></textarea>
+                </div>
+                
+                <button type="submit">添加追番</button>
+            </form>
+            
+            <div id="addResult" class="result hidden"></div>
+        </div>
+        
+        <!-- 批量更新部分 -->
+        <div class="section">
+            <div class="section-title">批量更新元数据</div>
+            <button id="batchUpdateBtn" class="secondary-button">批量更新动漫元数据</button>
+            
+            <div id="loadingDiv" class="loading hidden">
+                <div class="spinner"></div>
+                <p>正在批量更新元数据，请稍候...</p>
+            </div>
+            
+            <div id="batchResult" class="batch-result hidden"></div>
+        </div>
+        
+        <!-- 追番列表部分 -->
+        <div class="section">
+            <div class="section-title">追番列表</div>
+            <button id="refreshListBtn" class="secondary-button">刷新列表</button>
+            
+            <div id="loadingListDiv" class="loading hidden">
+                <div class="spinner"></div>
+                <p>正在加载追番列表...</p>
+            </div>
+            
+            <div id="animeList"></div>
+        </div>
+    </div>
+
+    <script>
+        // 基础URL
+        const API_BASE = 'http://localhost:8000/api/v1';
+        
+        // 预览元数据
+        document.getElementById('metadataPreviewForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const previewDiv = document.getElementById('metadataPreview');
+            const contentDiv = document.getElementById('metadataContent');
+            const url = document.getElementById('previewUrl').value;
+            
+            if (!url) return;
+            
+            try {
+                // 这里我们使用一个临时脚本提取元数据
+                // 在实际应用中，可能需要创建一个专门的API端点
+                contentDiv.innerHTML = '<p>正在提取元数据...</p>';
+                previewDiv.classList.remove('hidden');
+                
+                // 模拟提取元数据的过程
+                setTimeout(() => {
+                    contentDiv.innerHTML = `
+                        <div class="metadata-item"><strong>标题:</strong> 葬送的芙莉莲</div>
+                        <div class="metadata-item"><strong>封面图片:</strong> https://i0.hdslb.com/bfs/bangumi/image/f3ebb500b701a387f5abde67516c5c96bbd2faff.png</div>
+                        <div class="metadata-item"><strong>描述:</strong> 寿命逾千年的魔法使芙莉莲，以曾经共同战胜魔王的勇者辛美尔之死为契机，踏上了了解人类的旅途...</div>
+                        <div class="metadata-item"><strong>总集数:</strong> 28</div>
+                        <div class="metadata-item"><strong>类型:</strong> 漫画改, 奇幻, 治愈, 冒险</div>
+                        <div class="metadata-item"><strong>地区:</strong> 日本</div>
+                        <div class="metadata-item"><strong>评分:</strong> 9.9 (64838人评价)</div>
+                    `;
+                }, 1000);
+            } catch (error) {
+                contentDiv.innerHTML = `<p>提取失败: ${error.message}</p>`;
+            }
+        });
+        
+        // 添加追番
+        document.getElementById('addAnimeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const resultDiv = document.getElementById('addResult');
+            resultDiv.classList.add('hidden');
+            resultDiv.classList.remove('error');
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            // 设置默认值
+            data.progress = 0.0;
+            data.current_episode = 0;
+            data.rating = 0.0;
+            data.is_favorite = false;
+            data.is_active = true;
+            data.sort_order = 0;
+            
+            try {
+                const response = await fetch(`${API_BASE}/anime-watchlist/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    resultDiv.innerHTML = `
+                        <h3>添加成功!</h3>
+                        <p><strong>ID:</strong> ${result.id}</p>
+                        <p><strong>标题:</strong> ${result.title}</p>
+                        <p><strong>URL:</strong> ${result.url}</p>
+                        <p><strong>封面图片URL:</strong> ${result.cover_image_url || '无'}</p>
+                        <p><strong>总集数:</strong> ${result.total_episodes || '无'}</p>
+                        <p><strong>描述:</strong> ${result.description || '无'}</p>
+                        <p><strong>标签:</strong> ${result.tags || '无'}</p>
+                    `;
+                    resultDiv.classList.remove('hidden');
+                    
+                    // 重置表单
+                    e.target.reset();
+                    document.getElementById('category').value = 'anime';
+                    document.getElementById('status').value = 'want_watch';
+                    
+                    // 刷新列表
+                    loadAnimeList();
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.detail || '添加失败');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<h3>添加失败</h3><p>${error.message}</p>`;
+                resultDiv.classList.add('error');
+                resultDiv.classList.remove('hidden');
+            }
+        });
+        
+        // 批量更新元数据
+        document.getElementById('batchUpdateBtn').addEventListener('click', async () => {
+            const loadingDiv = document.getElementById('loadingDiv');
+            const resultDiv = document.getElementById('batchResult');
+            
+            loadingDiv.classList.remove('hidden');
+            resultDiv.classList.add('hidden');
+            
+            try {
+                const response = await fetch(`${API_BASE}/anime-watchlist/batch-update-metadata`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    
+                    loadingDiv.classList.add('hidden');
+                    
+                    let html = `
+                        <h3>批量更新完成</h3>
+                        <p><strong>总项目数:</strong> ${result.total}</p>
+                        <p><strong>成功更新:</strong> ${result.success}</p>
+                        <p><strong>更新失败:</strong> ${result.failed}</p>
+                    `;
+                    
+                    if (result.results && result.results.length > 0) {
+                        html += '<h4>详细结果:</h4>';
+                        result.results.forEach(item => {
+                            const statusClass = item.status === 'success' ? 'batch-success' : 'batch-failed';
+                            html += `
+                                <div class="batch-item ${statusClass}">
+                                    <strong>ID:</strong> ${item.id}, 
+                                    <strong>标题:</strong> ${item.title}<br>
+                                    <strong>状态:</strong> ${item.status}<br>
+                                    <strong>消息:</strong> ${item.message}
+                                </div>
+                            `;
+                        });
+                    }
+                    
+                    resultDiv.innerHTML = html;
+                    resultDiv.classList.remove('hidden');
+                    
+                    // 刷新列表
+                    loadAnimeList();
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.detail || '批量更新失败');
+                }
+            } catch (error) {
+                loadingDiv.classList.add('hidden');
+                resultDiv.innerHTML = `<h3>批量更新失败</h3><p>${error.message}</p>`;
+                resultDiv.classList.add('error');
+                resultDiv.classList.remove('hidden');
+            }
+        });
+        
+        // 加载追番列表
+        async function loadAnimeList() {
+            const loadingDiv = document.getElementById('loadingListDiv');
+            const listDiv = document.getElementById('animeList');
+            
+            loadingDiv.classList.remove('hidden');
+            listDiv.innerHTML = '';
+            
+            try {
+                const response = await fetch(`${API_BASE}/anime-watchlist/?limit=10`);
+                
+                if (response.ok) {
+                    const items = await response.json();
+                    
+                    loadingDiv.classList.add('hidden');
+                    
+                    if (items.length === 0) {
+                        listDiv.innerHTML = '<p>暂无追番项目</p>';
+                        return;
+                    }
+                    
+                    let html = '';
+                    items.forEach(item => {
+                        const coverUrl = item.cover_image_url || 'https://via.placeholder.com/150x200?text=无封面';
+                        html += `
+                            <div class="anime-item">
+                                <img src="${coverUrl}" alt="${item.title}" class="anime-cover" onerror="this.src='https://via.placeholder.com/150x200?text=加载失败'">
+                                <div class="anime-info">
+                                    <div class="anime-title">${item.title}</div>
+                                    <div class="anime-meta"><strong>分类:</strong> ${item.category || '无'}</div>
+                                    <div class="anime-meta"><strong>状态:</strong> ${getStatusText(item.status)}</div>
+                                    <div class="anime-meta"><strong>进度:</strong> ${item.progress || 0}%</div>
+                                    <div class="anime-meta"><strong>总集数:</strong> ${item.total_episodes || '未知'}</div>
+                                    <div class="anime-meta"><strong>URL:</strong> <a href="${item.url}" target="_blank">${item.url}</a></div>
+                                    <div class="anime-meta"><strong>描述:</strong> ${truncateText(item.description || '无', 100)}</div>
+                                    <div class="anime-meta"><strong>标签:</strong> ${item.tags || '无'}</div>
+                                    <div class="anime-meta"><strong>添加时间:</strong> ${new Date(item.created_at).toLocaleString()}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    listDiv.innerHTML = html;
+                } else {
+                    throw new Error('加载追番列表失败');
+                }
+            } catch (error) {
+                loadingDiv.classList.add('hidden');
+                listDiv.innerHTML = `<p>加载追番列表失败: ${error.message}</p>`;
+            }
+        }
+        
+        // 获取状态文本
+        function getStatusText(status) {
+            const statusMap = {
+                'want_watch': '想看',
+                'watching': '在看',
+                'completed': '已看完',
+                'dropped': '已弃'
+            };
+            return statusMap[status] || status;
+        }
+        
+        // 截断文本
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+        
+        // 刷新列表按钮
+        document.getElementById('refreshListBtn').addEventListener('click', loadAnimeList);
+        
+        // 页面加载时自动加载列表
+        document.addEventListener('DOMContentLoaded', loadAnimeList);
+    </script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日记API测试页面</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+        input, select, textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .error {
+            background-color: #ffebee;
+            border-left: 6px solid #f44336;
+        }
+        .success {
+            background-color: #e8f5e9;
+            border-left: 6px solid #4CAF50;
+        }
+        .diary-list {
+            margin-top: 20px;
+        }
+        .diary-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+        .diary-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .diary-meta {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .diary-content {
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        .tabs {
+            display: flex;
+            background-color: #f1f1f1;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+        }
+        .tab {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+        .tab:hover {
+            background-color: #ddd;
+        }
+        .tab.active {
+            background-color: #ccc;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>日记API测试页面</h1>
+
+    <div class="tabs">
+        <button class="tab active" onclick="openTab(event, 'create-diary')">创建日记</button>
+        <button class="tab" onclick="openTab(event, 'list-diaries')">日记列表</button>
+        <button class="tab" onclick="openTab(event, 'api-info')">API信息</button>
+    </div>
+
+    <div id="create-diary" class="tab-content active">
+        <div class="container">
+            <h2>创建新日记</h2>
+            <form id="diary-form">
+                <label for="title">标题:</label>
+                <input type="text" id="title" name="title" required placeholder="输入日记标题...">
+
+                <label for="content">内容:</label>
+                <textarea id="content" name="content" required placeholder="输入日记内容，支持Markdown格式..."># 美好的一天
+
+今天是个阳光明媚的好日子，心情也格外愉快。
+
+## 早晨
+
+早上醒来，阳光透过窗户洒进房间，感觉整个人都充满了活力。
+
+## 下午
+
+和朋友一起喝茶聊天，度过了一个愉快的下午。</textarea>
+
+                <label for="weather">天气:</label>
+                <select id="weather" name="weather">
+                    <option value="晴天">☀️ 晴天</option>
+                    <option value="多云">☁️ 多云</option>
+                    <option value="阴天">☁️ 阴天</option>
+                    <option value="雨天">🌧️ 雨天</option>
+                    <option value="雪天">❄️ 雪天</option>
+                </select>
+
+                <label for="mood">心情:</label>
+                <select id="mood" name="mood">
+                    <option value="开心">😊 开心</option>
+                    <option value="平静">😌 平静</option>
+                    <option value="难过">😢 难过</option>
+                    <option value="兴奋">🤩 兴奋</option>
+                    <option value="愤怒">😠 愤怒</option>
+                    <option value="焦虑">😰 焦虑</option>
+                </select>
+
+                <label for="tags">标签:</label>
+                <input type="text" id="tags" name="tags" placeholder="输入标签，用逗号分隔...">
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="is_public" name="is_public" checked>
+                    <label for="is_public">公开日记</label>
+                </div>
+
+                <button type="submit">创建日记</button>
+            </form>
+            <div id="create-result" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div id="list-diaries" class="tab-content">
+        <div class="container">
+            <h2>日记列表</h2>
+            <button id="refresh-list" style="margin-bottom: 15px;">刷新列表</button>
+            <div id="diary-list" class="diary-list">
+                <p>点击"刷新列表"获取日记</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="api-info" class="tab-content">
+        <div class="container">
+            <h2>API信息</h2>
+            <p><strong>基础URL:</strong> http://localhost:8001/api/v1</p>
+            <p><strong>API文档:</strong> <a href="http://localhost:8001/docs" target="_blank">http://localhost:8001/docs</a></p>
+            <p><strong>ReDoc:</strong> <a href="http://localhost:8001/redoc" target="_blank">http://localhost:8001/redoc</a></p>
+            
+            <h3>主要端点:</h3>
+            <ul>
+                <li><strong>GET /diaries/</strong> - 获取日记列表</li>
+                <li><strong>POST /diaries/</strong> - 创建新日记</li>
+                <li><strong>GET /diaries/{id}</strong> - 获取单篇日记</li>
+                <li><strong>PUT /diaries/{id}</strong> - 更新日记 (需要认证)</li>
+                <li><strong>DELETE /diaries/{id}</strong> - 删除日记 (需要认证)</li>
+                <li><strong>GET /diaries/{id}/images/upload-urls</strong> - 获取图片上传URL</li>
+                <li><strong>POST /diaries/{id}/images</strong> - 保存图片信息</li>
+            </ul>
+            
+            <h3>说明:</h3>
+            <p>1. 所有公开日记都可以匿名访问</p>
+            <p>2. 创建、更新和删除日记需要身份验证</p>
+            <p>3. 日记内容支持Markdown格式</p>
+            <p>4. 支持上传图片到MinIO存储</p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8001/api/v1';
+        
+        // 标签页切换
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+        
+        // 显示结果
+        function showResult(elementId, message, isError = false) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+            
+            if (isError) {
+                element.classList.add('error');
+                element.classList.remove('success');
+            } else {
+                element.classList.add('success');
+                element.classList.remove('error');
+            }
+            
+            // 5秒后隐藏结果
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+        
+        // 创建日记
+        document.getElementById('diary-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const diaryData = {
+                title: formData.get('title'),
+                content: formData.get('content'),
+                weather: formData.get('weather'),
+                mood: formData.get('mood'),
+                is_public: formData.has('is_public'),
+                tags: formData.get('tags') ? formData.get('tags').split(',').map(tag => tag.trim()) : []
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/diaries/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(diaryData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('create-result', `日记创建成功！\n\nID: ${data.id}\n标题: ${data.title}\n创建时间: ${data.created_at}`);
+                    // 重置表单
+                    this.reset();
+                    // 自动切换到列表标签页
+                    document.querySelector('.tab:nth-child(2)').click();
+                    // 自动刷新列表
+                    fetchDiaryList();
+                } else {
+                    showResult('create-result', `创建失败: ${data.detail || '未知错误'}`, true);
+                }
+            } catch (error) {
+                showResult('create-result', `请求错误: ${error.message}`, true);
+            }
+        });
+        
+        // 获取日记列表
+        async function fetchDiaryList() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/diaries/?skip=0&limit=10&public_only=true`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    displayDiaryList(data.diaries);
+                } else {
+                    document.getElementById('diary-list').innerHTML = `<p>获取日记列表失败: ${data.detail || '未知错误'}</p>`;
+                }
+            } catch (error) {
+                document.getElementById('diary-list').innerHTML = `<p>请求错误: ${error.message}</p>`;
+            }
+        }
+        
+        // 显示日记列表
+        function displayDiaryList(diaries) {
+            const diaryList = document.getElementById('diary-list');
+            
+            if (diaries.length === 0) {
+                diaryList.innerHTML = '<p>暂无日记</p>';
+                return;
+            }
+            
+            let html = '';
+            diaries.forEach(diary => {
+                const tags = diary.tags && diary.tags.length > 0 
+                    ? diary.tags.map(tag => `<span style="background-color: #e0e0e0; padding: 2px 6px; border-radius: 4px; font-size: 12px; margin-right: 5px;">${tag}</span>`).join('')
+                    : '';
+                
+                html += `
+                    <div class="diary-item">
+                        <div class="diary-title">${diary.title}</div>
+                        <div class="diary-meta">
+                            <span>🌤️ ${diary.weather || '未知'}</span> | 
+                            <span>😊 ${diary.mood || '未知'}</span> | 
+                            <span>📅 ${new Date(diary.created_at).toLocaleString()}</span>
+                        </div>
+                        ${tags ? `<div>${tags}</div>` : ''}
+                        <div class="diary-content">${diary.content.replace(/\\n/g, '<br>').substring(0, 200)}${diary.content.length > 200 ? '...' : ''}</div>
+                    </div>
+                `;
+            });
+            
+            diaryList.innerHTML = html;
+        }
+        
+        // 刷新列表按钮
+        document.getElementById('refresh-list').addEventListener('click', fetchDiaryList);
+        
+        // 页面加载时尝试获取日记列表
+        window.addEventListener('load', function() {
+            // 尝试获取日记列表，但不显示错误
+            fetch(`${API_BASE_URL}/diaries/?skip=0&limit=5&public_only=true`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Server not available');
+                })
+                .then(data => {
+                    // 只在第一个标签页显示列表预览
+                    if (data.diaries && data.diaries.length > 0) {
+                        const preview = document.createElement('div');
+                        preview.style.marginTop = '20px';
+                        preview.style.padding = '10px';
+                        preview.style.backgroundColor = '#f9f9f9';
+                        preview.style.borderRadius = '4px';
+                        preview.innerHTML = `<small><strong>最新日记预览：</strong> ${data.diaries[0].title} (${new Date(data.diaries[0].created_at).toLocaleDateString()})</small>`;
+                        document.getElementById('diary-form').appendChild(preview);
+                    }
+                })
+                .catch(err => {
+                    console.log('服务器未运行，这是正常的');
+                });
+        });
+    </script>
+</body>
+</html>

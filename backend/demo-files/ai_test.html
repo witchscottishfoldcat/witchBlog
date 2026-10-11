@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI服务测试页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        select, input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus, input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .row .form-group {
+            flex: 1;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .response {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+            min-height: 100px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .response pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .tab:hover {
+            color: #667eea;
+        }
+        
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI服务测试页面</h1>
+            <p>测试GLM-4.6V-Flash等AI模型接口</p>
+        </div>
+        
+        <div class="content">
+            <div class="tabs">
+                <div class="tab active" data-tab="chat">聊天对话</div>
+                <div class="tab" data-tab="completion">文本补全</div>
+                <div class="tab" data-tab="stream">流式输出</div>
+                <div class="tab" data-tab="vision">视觉理解</div>
+            </div>
+            
+            <div id="chat" class="tab-content active">
+                <div class="section">
+                    <h2>聊天对话</h2>
+                    <div class="form-group">
+                        <label for="chat-provider">AI提供商</label>
+                        <select id="chat-provider">
+                            <option value="">使用默认</option>
+                            <option value="glm">GLM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="chat-model">模型</label>
+                        <select id="chat-model">
+                            <option value="">使用默认</option>
+                            <option value="GLM-4.6V-Flash">GLM-4.6V-Flash</option>
+                            <option value="GLM-4-Flash">GLM-4-Flash</option>
+                            <option value="GLM-4">GLM-4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="chat-message">消息</label>
+                        <textarea id="chat-message" placeholder="输入你的问题...">你好，请简单介绍一下自己</textarea>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="chat-temperature">温度</label>
+                            <input type="number" id="chat-temperature" value="0.7" min="0" max="2" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="chat-max-tokens">最大Token数</label>
+                            <input type="number" id="chat-max-tokens" value="100" min="1">
+                        </div>
+                    </div>
+                    <button onclick="testChat()">发送</button>
+                    <div class="loading" id="chat-loading">
+                        <div class="spinner"></div>
+                        <p>AI正在思考...</p>
+                    </div>
+                    <div class="response" id="chat-response"></div>
+                </div>
+            </div>
+            
+            <div id="completion" class="tab-content">
+                <div class="section">
+                    <h2>文本补全</h2>
+                    <div class="form-group">
+                        <label for="completion-provider">AI提供商</label>
+                        <select id="completion-provider">
+                            <option value="">使用默认</option>
+                            <option value="glm">GLM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="completion-prompt">提示词</label>
+                        <textarea id="completion-prompt" placeholder="输入提示词...">人工智能的未来发展趋势是</textarea>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="completion-temperature">温度</label>
+                            <input type="number" id="completion-temperature" value="0.7" min="0" max="2" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="completion-max-tokens">最大Token数</label>
+                            <input type="number" id="completion-max-tokens" value="50" min="1">
+                        </div>
+                    </div>
+                    <button onclick="testCompletion()">补全</button>
+                    <div class="loading" id="completion-loading">
+                        <div class="spinner"></div>
+                        <p>AI正在补全...</p>
+                    </div>
+                    <div class="response" id="completion-response"></div>
+                </div>
+            </div>
+            
+            <div id="stream" class="tab-content">
+                <div class="section">
+                    <h2>流式输出</h2>
+                    <div class="form-group">
+                        <label for="stream-provider">AI提供商</label>
+                        <select id="stream-provider">
+                            <option value="">使用默认</option>
+                            <option value="glm">GLM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="stream-message">消息</label>
+                        <textarea id="stream-message" placeholder="输入你的问题...">请简单介绍一下FastAPI框架</textarea>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="stream-temperature">温度</label>
+                            <input type="number" id="stream-temperature" value="0.7" min="0" max="2" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="stream-max-tokens">最大Token数</label>
+                            <input type="number" id="stream-max-tokens" value="200" min="1">
+                        </div>
+                    </div>
+                    <button onclick="testStream()">发送</button>
+                    <div class="loading" id="stream-loading">
+                        <div class="spinner"></div>
+                        <p>AI正在生成...</p>
+                    </div>
+                    <div class="response" id="stream-response"></div>
+                </div>
+            </div>
+            
+            <div id="vision" class="tab-content">
+                <div class="section">
+                    <h2>视觉理解</h2>
+                    <div class="form-group">
+                        <label for="vision-model">模型</label>
+                        <select id="vision-model">
+                            <option value="GLM-4.6V-Flash" selected>GLM-4.6V-Flash (支持视觉)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vision-text">文本描述</label>
+                        <textarea id="vision-text" placeholder="输入对图片的描述或问题...">请描述这张图片的内容</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="vision-image-url">图片URL</label>
+                        <input type="text" id="vision-image-url" placeholder="输入图片URL..." value="https://via.placeholder.com/300x200.png?text=Test+Image">
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="vision-temperature">温度</label>
+                            <input type="number" id="vision-temperature" value="0.7" min="0" max="2" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="vision-max-tokens">最大Token数</label>
+                            <input type="number" id="vision-max-tokens" value="200" min="1">
+                        </div>
+                    </div>
+                    <button onclick="testVision()">分析图片</button>
+                    <div class="loading" id="vision-loading">
+                        <div class="spinner"></div>
+                        <p>AI正在分析...</p>
+                    </div>
+                    <div class="response" id="vision-response"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE_URL = 'http://localhost:8000/api/v1';
+        
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+                if (content.id === tabName) {
+                    content.classList.add('active');
+                }
+            });
+        }
+        
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchTab(tab.dataset.tab);
+            });
+        });
+        
+        async function testChat() {
+            const provider = document.getElementById('chat-provider').value || undefined;
+            const model = document.getElementById('chat-model').value || undefined;
+            const message = document.getElementById('chat-message').value;
+            const temperature = parseFloat(document.getElementById('chat-temperature').value);
+            const maxTokens = parseInt(document.getElementById('chat-max-tokens').value);
+            const responseDiv = document.getElementById('chat-response');
+            const loadingDiv = document.getElementById('chat-loading');
+            
+            if (!message) {
+                alert('请输入消息');
+                return;
+            }
+            
+            loadingDiv.classList.add('active');
+            responseDiv.innerHTML = '';
+            
+            try {
+                const requestBody = {
+                    messages: [{ role: 'user', content: message }],
+                    temperature: temperature,
+                    max_tokens: maxTokens
+                };
+                
+                if (provider) requestBody.provider = provider;
+                if (model) requestBody.model = model;
+                
+                const response = await fetch(`${API_BASE_URL}/ai/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    responseDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    responseDiv.innerHTML = `<div class="error">错误: ${data.detail || response.statusText}</div>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<div class="error">网络错误: ${error.message}</div>`;
+            }
+            
+            loadingDiv.classList.remove('active');
+        }
+        
+        async function testCompletion() {
+            const provider = document.getElementById('completion-provider').value || undefined;
+            const prompt = document.getElementById('completion-prompt').value;
+            const temperature = parseFloat(document.getElementById('completion-temperature').value);
+            const maxTokens = parseInt(document.getElementById('completion-max-tokens').value);
+            const responseDiv = document.getElementById('completion-response');
+            const loadingDiv = document.getElementById('completion-loading');
+            
+            if (!prompt) {
+                alert('请输入提示词');
+                return;
+            }
+            
+            loadingDiv.classList.add('active');
+            responseDiv.innerHTML = '';
+            
+            try {
+                const requestBody = {
+                    prompt: prompt,
+                    temperature: temperature,
+                    max_tokens: maxTokens
+                };
+                
+                if (provider) requestBody.provider = provider;
+                
+                const response = await fetch(`${API_BASE_URL}/ai/completion`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    responseDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    responseDiv.innerHTML = `<div class="error">错误: ${data.detail || response.statusText}</div>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<div class="error">网络错误: ${error.message}</div>`;
+            }
+            
+            loadingDiv.classList.remove('active');
+        }
+        
+        async function testStream() {
+            const provider = document.getElementById('stream-provider').value || undefined;
+            const message = document.getElementById('stream-message').value;
+            const temperature = parseFloat(document.getElementById('stream-temperature').value);
+            const maxTokens = parseInt(document.getElementById('stream-max-tokens').value);
+            const responseDiv = document.getElementById('stream-response');
+            const loadingDiv = document.getElementById('stream-loading');
+            
+            if (!message) {
+                alert('请输入消息');
+                return;
+            }
+            
+            loadingDiv.classList.add('active');
+            responseDiv.innerHTML = '';
+            
+            try {
+                const requestBody = {
+                    messages: [{ role: 'user', content: message }],
+                    temperature: temperature,
+                    max_tokens: maxTokens
+                };
+                
+                if (provider) requestBody.provider = provider;
+                
+                const response = await fetch(`${API_BASE_URL}/ai/chat/stream`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                if (response.ok) {
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let result = '';
+                    
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        
+                        const chunk = decoder.decode(value);
+                        result += chunk;
+                        responseDiv.innerHTML = `<pre>${result}</pre>`;
+                    }
+                } else {
+                    const data = await response.json();
+                    responseDiv.innerHTML = `<div class="error">错误: ${data.detail || response.statusText}</div>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<div class="error">网络错误: ${error.message}</div>`;
+            }
+            
+            loadingDiv.classList.remove('active');
+        }
+        
+        async function testVision() {
+            const model = document.getElementById('vision-model').value;
+            const text = document.getElementById('vision-text').value;
+            const imageUrl = document.getElementById('vision-image-url').value;
+            const temperature = parseFloat(document.getElementById('vision-temperature').value);
+            const maxTokens = parseInt(document.getElementById('vision-max-tokens').value);
+            const responseDiv = document.getElementById('vision-response');
+            const loadingDiv = document.getElementById('vision-loading');
+            
+            if (!text || !imageUrl) {
+                alert('请输入文本描述和图片URL');
+                return;
+            }
+            
+            loadingDiv.classList.add('active');
+            responseDiv.innerHTML = '';
+            
+            try {
+                const requestBody = {
+                    model: model,
+                    messages: [{
+                        role: 'user',
+                        content: [
+                            { type: 'text', text: text },
+                            { type: 'image_url', image_url: { url: imageUrl } }
+                        ]
+                    }],
+                    temperature: temperature,
+                    max_tokens: maxTokens
+                };
+                
+                const response = await fetch(`${API_BASE_URL}/ai/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    responseDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    responseDiv.innerHTML = `<div class="error">错误: ${data.detail || response.statusText}</div>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<div class="error">网络错误: ${error.message}</div>`;
+            }
+            
+            loadingDiv.classList.remove('active');
+        }
+    </script>
+</body>
+</html>

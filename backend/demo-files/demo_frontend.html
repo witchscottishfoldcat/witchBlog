@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>追番API和图片代理演示</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .anime-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 15px;
+            background-color: #f9f9f9;
+        }
+        .anime-cover {
+            width: 120px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .anime-info {
+            flex: 1;
+        }
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .status.want-watch { background-color: #e3f2fd; color: #1976d2; }
+        .status.watching { background-color: #fff8e1; color: #ff8f00; }
+        .status.completed { background-color: #e8f5e9; color: #388e3c; }
+        .status.dropped { background-color: #fce4ec; color: #c2185b; }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: #d32f2f;
+            background-color: #ffebee;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .success {
+            color: #388e3c;
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .demo-section {
+            margin-bottom: 30px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .code-block {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: white;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .image-demo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .image-demo img {
+            max-width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>追番API和图片代理演示</h1>
+    
+    <div class="container">
+        <h2>解决方案总结</h2>
+        <p>我们已经成功解决了您遇到的两个主要问题：</p>
+        <ol>
+            <li><strong>CORS跨域问题</strong> - 通过后端图片代理解决</li>
+            <li><strong>500内部服务器错误</strong> - 通过改进错误处理解决</li>
+        </ol>
+        
+        <h3>前后端任务分配建议</h3>
+        <p><strong>推荐方案：后端负责图片处理，前端只负责显示</strong></p>
+        <ul>
+            <li><strong>后端任务</strong>：抓取和保存图片URL、提供图片代理接口</li>
+            <li><strong>前端任务</strong>：获取数据并使用代理URL显示图片</li>
+        </ul>
+    </div>
+    
+    <div class="container">
+        <div class="tab-container">
+            <div class="tab active" onclick="showTab('api-demo')">API演示</div>
+            <div class="tab" onclick="showTab('code-example')">代码示例</div>
+            <div class="tab" onclick="showTab('solution-detail')">解决方案详情</div>
+        </div>
+        
+        <div id="api-demo" class="tab-content active">
+            <h3>API演示</h3>
+            <button onclick="testAnimeAPI()">测试追番API</button>
+            <button onclick="createTestAnime()">创建测试数据</button>
+            <button onclick="testImageProxy()">测试图片代理</button>
+            <div id="apiResult"></div>
+            
+            <div class="image-demo">
+                <h4>图片代理示例</h4>
+                <img id="proxyImage" src="" alt="代理图片" style="display: none;">
+            </div>
+            
+            <h4>追番列表</h4>
+            <div id="animeList"></div>
+        </div>
+        
+        <div id="code-example" class="tab-content">
+            <h3>代码示例</h3>
+            
+            <h4>1. 前端JavaScript代码</h4>
+            <div class="code-block">
+// 获取追番列表
+async function getAnimeWatchlist() {
+    const response = await fetch('http://localhost:8000/api/v1/anime-watchlist/');
+    const animeList = await response.json();
+    return animeList;
+}
+
+// 使用图片代理显示图片
+function getProxyImageUrl(originalUrl) {
+    return `http://localhost:8000/api/proxy/image?url=${encodeURIComponent(originalUrl)}`;
+}
+
+// 在HTML中使用
+// &lt;img src="${getProxyImageUrl(anime.cover_image_url)}" alt="${anime.title}" /&gt;
+            </div>
+            
+            <h4>2. 前端React组件示例</h4>
+            <div class="code-block">
+import React, { useState, useEffect } from 'react';
+
+function AnimeWatchlist() {
+    const [animeList, setAnimeList] = useState([]);
+    
+    useEffect(() => {
+        const fetchAnime = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/anime-watchlist/');
+                const data = await response.json();
+                setAnimeList(data);
+            } catch (error) {
+                console.error('获取追番列表失败:', error);
+            }
+        };
+        
+        fetchAnime();
+    }, []);
+    
+    return (
+        &lt;div&gt;
+            &lt;h2&gt;追番列表&lt;/h2&gt;
+            {animeList.map(anime =&gt; (
+                &lt;div key={anime.id} className="anime-card"&gt;
+                    &lt;img 
+                        src={`http://localhost:8000/api/proxy/image?url=${encodeURIComponent(anime.cover_image_url)}`} 
+                        alt={anime.title} 
+                        className="anime-cover"
+                    /&gt;
+                    &lt;div className="anime-info"&gt;
+                        &lt;h3&gt;{anime.title}&lt;/h3&gt;
+                        &lt;p&gt;{anime.description}&lt;/p&gt;
+                        &lt;span className={`status ${anime.status}`}&gt;{getStatusText(anime.status)}&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            ))}
+        &lt;/div&gt;
+    );
+}
+
+function getStatusText(status) {
+    const statusMap = {
+        'want_watch': '想看',
+        'watching': '在看',
+        'completed': '已看完',
+        'dropped': '已弃'
+    };
+    return statusMap[status] || status;
+}
+            </div>
+            
+            <h4>3. 后端代理实现</h4>
+            <div class="code-block">
+@app.get("/api/proxy/image")
+async def proxy_image(url: str):
+    """全局图片代理端点 - 解决前端跨域获取图片的问题"""
+    import httpx
+    from fastapi.responses import StreamingResponse
+    from fastapi import HTTPException
+    
+    try:
+        # 验证URL
+        if not url or not url.startswith(('http://', 'https://')):
+            raise HTTPException(status_code=400, detail="Invalid image URL")
+        
+        # 使用异步客户端获取图片，添加常见浏览器头信息
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36...',
+            'Accept': 'image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+        }
+        
+        async with httpx.AsyncClient(timeout=30.0, follow_redirects=True, headers=headers) as client:
+            response = await client.get(url)
+            response.raise_for_status()
+            
+            # 获取内容类型
+            content_type = response.headers.get("content-type", "image/jpeg")
+            
+            # 验证是图片类型
+            if not content_type.startswith("image/"):
+                raise HTTPException(status_code=400, detail="URL does not point to an image")
+            
+            # 返回图片流
+            return StreamingResponse(
+                response.iter_bytes(),
+                media_type=content_type,
+                headers={
+                    "Cache-Control": "public, max-age=86400",
+                    "Access-Control-Allow-Origin": "*",
+                }
+            )
+            
+    except httpx.HTTPError as e:
+        raise HTTPException(status_code=404, detail=f"Failed to fetch image: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+            </div>
+        </div>
+        
+        <div id="solution-detail" class="tab-content">
+            <h3>解决方案详情</h3>
+            
+            <h4>1. CORS跨域问题</h4>
+            <p><strong>问题</strong>：前端运行在 http://localhost:3001，尝试从 Netflix CDN (https://occ-0-2794-2219.1.nflxso.net) 加载图片时被浏览器阻止。</p>
+            <p><strong>解决方案</strong>：通过后端代理图片请求，使浏览器认为是从同源获取图片。</p>
+            <p><strong>实现</strong>：添加 /api/proxy/image 端点，前端通过此代理访问外部图片。</p>
+            
+            <h4>2. 500内部服务器错误</h4>
+            <p><strong>问题</strong>：追番链接API返回500错误，导致前端无法获取数据。</p>
+            <p><strong>解决方案</strong>：改进错误处理和日志记录，确保API返回有意义的错误信息。</p>
+            
+            <h4>3. 图片抓取任务分配</h4>
+            <p><strong>推荐方案</strong>：后端负责图片处理，前端只负责显示。</p>
+            <ul>
+                <li><strong>优势</strong>：安全性高，后端可控制可访问的图片源</li>
+                <li><strong>性能</strong>：后端可实现图片缓存和优化</li>
+                <li><strong>统一性</strong>：所有图片请求通过后端，便于监控和管理</li>
+            </ul>
+            
+            <h4>4. 注意事项</h4>
+            <ul>
+                <li>某些图片源（如Netflix）可能有严格的防爬虫机制，即使通过代理也可能无法访问</li>
+                <li>建议后端定期检查图片URL的有效性</li>
+                <li>可考虑实现图片缓存机制，减少对外部图片源的重复请求</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://localhost:8000/api/v1';
+        const PROXY_BASE = 'http://localhost:8000/api/proxy/image';
+        
+        // 显示结果
+        function showResult(elementId, message, isError = false) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="${isError ? 'error' : 'success'}">${message}</div>`;
+        }
+        
+        // 显示追番列表
+        function displayAnimeList(animeList) {
+            const listElement = document.getElementById('animeList');
+            if (!animeList || animeList.length === 0) {
+                listElement.innerHTML = '<p>暂无追番数据</p>';
+                return;
+            }
+            
+            listElement.innerHTML = animeList.map(anime => `
+                <div class="anime-card">
+                    <img 
+                        src="${anime.cover_image_url ? `${PROXY_BASE}?url=${encodeURIComponent(anime.cover_image_url)}` : 'https://picsum.photos/seed/default-anime/120/160.jpg'}" 
+                        alt="${anime.title}" 
+                        class="anime-cover"
+                        onerror="this.src='https://picsum.photos/seed/error-anime/120/160.jpg'"
+                    />
+                    <div class="anime-info">
+                        <h3>${anime.title}</h3>
+                        <p>${anime.description || '暂无描述'}</p>
+                        <div>
+                            <span class="status ${anime.status}">${getStatusText(anime.status)}</span>
+                            ${anime.rating ? `<span>评分: ${anime.rating}</span>` : ''}
+                            ${anime.progress ? `<span>进度: ${anime.progress}%</span>` : ''}
+                        </div>
+                        <p>标签: ${anime.tags || '无'}</p>
+                        <p>分类: ${anime.category}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 获取状态文本
+        function getStatusText(status) {
+            const statusMap = {
+                'want_watch': '想看',
+                'watching': '在看',
+                'completed': '已看完',
+                'dropped': '已弃'
+            };
+            return statusMap[status] || status;
+        }
+        
+        // 标签切换
+        function showTab(tabId) {
+            // 隐藏所有标签内容
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // 移除所有标签的活动状态
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // 显示选中的标签内容
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // 测试追番API
+        async function testAnimeAPI() {
+            try {
+                const response = await fetch(`${API_BASE}/anime-watchlist/`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('apiResult', `✅ 追番API正常工作，返回 ${data.length} 条记录`);
+                    displayAnimeList(data);
+                } else {
+                    showResult('apiResult', `❌ 追番API错误: ${response.status} - ${JSON.stringify(data)}`, true);
+                }
+            } catch (error) {
+                showResult('apiResult', `❌ 追番API请求失败: ${error.message}`, true);
+            }
+        }
+        
+        // 创建测试数据
+        async function createTestAnime() {
+            try {
+                const testAnime = {
+                    title: '测试动漫',
+                    url: 'https://example.com/anime/1',
+                    cover_image_url: 'https://picsum.photos/seed/test-anime/300/400.jpg',
+                    description: '这是一个测试动漫，用于验证图片代理功能',
+                    category: 'anime',
+                    tags: '测试,动画',
+                    status: 'want_watch',
+                    progress: 0.0,
+                    rating: 8.5,
+                    is_favorite: false,
+                    is_active: true,
+                    sort_order: 10
+                };
+                
+                const response = await fetch(`${API_BASE}/anime-watchlist/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testAnime)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('apiResult', `✅ 创建测试数据成功，ID: ${data.id}`);
+                    // 刷新列表
+                    testAnimeAPI();
+                } else {
+                    showResult('apiResult', `❌ 创建测试数据失败: ${response.status} - ${JSON.stringify(data)}`, true);
+                }
+            } catch (error) {
+                showResult('apiResult', `❌ 创建测试数据请求失败: ${error.message}`, true);
+            }
+        }
+        
+        // 测试图片代理
+        async function testImageProxy() {
+            try {
+                const testImageUrl = 'https://picsum.photos/seed/test-proxy/300/200.jpg';
+                const response = await fetch(`${PROXY_BASE}?url=${encodeURIComponent(testImageUrl)}`);
+                
+                if (response.ok) {
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.startsWith('image/')) {
+                        showResult('apiResult', `✅ 图片代理正常工作，内容类型: ${contentType}`);
+                        
+                        // 显示图片
+                        const blob = await response.blob();
+                        const imageUrl = URL.createObjectURL(blob);
+                        const imgElement = document.getElementById('proxyImage');
+                        imgElement.src = imageUrl;
+                        imgElement.style.display = 'block';
+                    } else {
+                        showResult('apiResult', `❌ 返回的不是图片内容，内容类型: ${contentType}`, true);
+                    }
+                } else {
+                    const errorText = await response.text();
+                    showResult('apiResult', `❌ 图片代理错误: ${response.status} - ${errorText}`, true);
+                }
+            } catch (error) {
+                showResult('apiResult', `❌ 图片代理请求失败: ${error.message}`, true);
+            }
+        }
+        
+        // 页面加载时自动测试API
+        window.onload = function() {
+            testAnimeAPI();
+        };
+    </script>
+</body>
+</html>

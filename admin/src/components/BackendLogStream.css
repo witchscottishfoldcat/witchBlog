@@ -1,0 +1,132 @@
+/* 后端日志终端流 —— 深色控制台风格，独立于明暗主题 */
+
+.ll-actions {
+  margin-top: 1.5rem;
+}
+
+.ll-console-card {
+  position: relative;
+  margin-top: 0;
+}
+
+.ll-console {
+  height: 560px;
+  overflow-y: auto;
+  background: #0b1020;
+  color: #cbd5e1;
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
+}
+
+.ll-console-empty {
+  color: #64748b;
+  text-align: center;
+  padding: 3rem 0;
+  font-size: 0.85rem;
+}
+
+.ll-log-line {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.08rem 0;
+  align-items: baseline;
+}
+
+.ll-log-line:hover {
+  background: rgba(148, 163, 184, 0.08);
+}
+
+.ll-log-time {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.ll-log-level {
+  flex-shrink: 0;
+  width: 4.2rem;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  padding: 0.05rem 0.25rem;
+}
+
+.ll-log-level.lv-info {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+}
+
+.ll-log-level.lv-warning {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.12);
+}
+
+.ll-log-level.lv-error,
+.ll-log-level.lv-critical {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.14);
+}
+
+.ll-log-level.lv-debug {
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.1);
+}
+
+.ll-log-name {
+  color: #a78bfa;
+  flex-shrink: 0;
+}
+
+.ll-log-msg {
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: #e2e8f0;
+}
+
+.ll-log-line.level-error .ll-log-msg,
+.ll-log-line.level-critical .ll-log-msg {
+  color: #fca5a5;
+}
+
+.ll-log-traceback {
+  margin-top: 0.25rem;
+}
+
+.ll-log-traceback summary {
+  cursor: pointer;
+  color: #f87171;
+  user-select: none;
+}
+
+.ll-log-traceback pre {
+  margin: 0.3rem 0 0;
+  padding: 0.5rem 0.75rem;
+  background: rgba(248, 113, 113, 0.06);
+  border: 1px solid rgba(248, 113, 113, 0.18);
+  border-radius: 6px;
+  overflow-x: auto;
+  white-space: pre;
+  font-size: 0.72rem;
+  color: #fda4af;
+}
+
+/* 回到底部按钮 */
+.ll-jump-bottom {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.75rem;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--primary-500, #7c6cf0);
+  color: #fff;
+  font-size: 0.75rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}

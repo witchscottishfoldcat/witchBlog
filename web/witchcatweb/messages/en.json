@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "home": "Home",
+    "archive": "Archive",
+    "links": "Links",
+    "my": "My",
+    "about": "About",
+    "others": "... Others"
+  },
+  "common": {
+    "readMore": "Read More",
+    "words": "words",
+    "characters": "characters",
+    "search": "Search",
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "blog": {
+    "title": "Beautiful Mizuki!",
+    "subtitle": "Carousel Focus: User Experience",
+    "noPosts": "No posts yet",
+    "encrypted": "Encrypted Article"
+  }
+}

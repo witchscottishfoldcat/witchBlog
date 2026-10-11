@@ -1,0 +1,8 @@
+@import '../styles/witchcat-admin.css';
+
+/* ProjectEdit - 页面样式均由 wc-* 共享类提供，仅保留容器宽度约束 */
+
+.project-edit {
+  max-width: 980px;
+  padding-bottom: 3rem;
+}

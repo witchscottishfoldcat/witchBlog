@@ -1,0 +1,84 @@
+/* 日记编辑 —— WitchCat 风格（页面专属样式） */
+@import '../styles/witchcat-admin.css';
+
+.diary-edit-page {
+  max-width: 980px;
+  padding-bottom: 3rem;
+}
+
+/* 富文本内容编辑器 */
+.diary-content-editor {
+  min-height: 16rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.8;
+  outline: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.diary-content-editor:focus {
+  border-color: var(--primary-400);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* 拖拽中状态 */
+.diary-content-editor-dragging {
+  border-color: var(--primary-400);
+  background: var(--bg-hover);
+}
+
+/* 编辑器内图片样式 */
+.diary-content-editor img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem 0;
+  border-radius: var(--radius-md);
+  cursor: move;
+}
+
+.diary-content-editor img:active {
+  cursor: grabbing;
+  opacity: 0.8;
+}
+
+.diary-content-editor [contenteditable='false'] {
+  user-select: none;
+}
+
+/* 上传图片一行：按钮 + 提示 */
+.diary-edit-image-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* 标签 chips 与输入行的间距 */
+.diary-edit-tags {
+  margin-top: 0.5rem;
+}
+
+/* 标签移除按钮 */
+.diary-edit-tag-remove {
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1;
+  padding: 0;
+  margin-left: 0.3rem;
+}
+
+.diary-edit-tag-remove:hover {
+  color: var(--state-error);
+}

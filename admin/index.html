@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 主题防闪烁：渲染前恢复用户选择的主题（浅色为默认）与色相 -->
+    <script>
+      try {
+        if (localStorage.getItem('witchcat-theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        var hue = localStorage.getItem('witchcat-hue');
+        // 配色升级：旧存储色相一次性迁移到玫红 350（与 utils/hue.ts 保持一致）
+        if (hue && !localStorage.getItem('witchcat-hue-migrated-v3')) {
+          hue = '350';
+          localStorage.setItem('witchcat-hue', hue);
+          localStorage.setItem('witchcat-hue-migrated-v3', '1');
+        }
+        if (hue) {
+          document.documentElement.style.setProperty('--hue', hue);
+        }
+      } catch (e) {}
+    </script>
+    <meta name="description" content="WitchCat博客后台管理系统" />
+
+    <title>WitchCat博客后台管理系统</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

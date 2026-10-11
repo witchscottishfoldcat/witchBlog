@@ -1,0 +1,78 @@
+@import '../styles/witchcat-admin.css';
+
+/* Projects - 页面专属样式（其余均由 wc-* 共享类提供） */
+
+/* 页面容器宽度（沿用旧版 1180px） */
+.projects-page {
+  max-width: 1180px;
+  padding-bottom: 3rem;
+}
+
+/* ===== 统计区 ===== */
+.projects-stats-section {
+  margin-bottom: 1.5rem;
+}
+
+.projects-stats-header {
+  margin-bottom: 1rem;
+}
+
+.projects-stats-header .wc-section-title {
+  margin-bottom: 0.25rem;
+}
+
+/* 平台/标签/语言 三栏 */
+.projects-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.projects-stat-card {
+  background: var(--bg-card-raised);
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--hairline);
+}
+
+.projects-stat-card h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.projects-stat-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.projects-stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--hairline);
+}
+
+.projects-stat-item:first-child {
+  border-top: none;
+}
+
+.projects-stat-count {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--primary-600);
+}
+
+[data-theme='dark'] .projects-stat-count {
+  color: var(--primary-300);
+}
+
+@media (max-width: 768px) {
+  .projects-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

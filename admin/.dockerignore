@@ -1,0 +1,27 @@
+# 本地配置与密钥
+.env
+.env.*
+!.env.*.example
+
+# 版本控制与 CI
+.git
+.gitignore
+Jenkinsfile
+
+# 依赖与构建产物（镜像内重新安装/构建）
+node_modules
+dist
+dist-ssr
+
+# 日志
+logs
+*.log
+
+# IDE / 工具
+.idea
+.vscode
+.codebuddy
+
+# 杂项
+*.ipynb
+design-md

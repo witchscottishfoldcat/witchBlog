@@ -1,0 +1,39 @@
+{
+  "commands": {
+    "G1": [
+      ".venv/Scripts/python.exe",
+      "scripts/static_checks.py"
+    ],
+    "G2": [
+      ".venv/Scripts/python.exe",
+      "-m",
+      "pytest",
+      "tests/test_game_showcase_auth.py",
+      "tests/test_site_config_revalidate.py",
+      "tests/test_link_category_validation.py",
+      "tests/test_links_random_route.py",
+      "tests/test_error_envelope.py",
+      "tests/test_project_stats_sync.py",
+      "--junitxml=docs/gates/latest/pytest.xml",
+      "-p",
+      "no:cacheprovider",
+      "-W",
+      "ignore::DeprecationWarning"
+    ],
+    "G3": [
+      ".venv/Scripts/python.exe",
+      "scripts/coverage_gate.py"
+    ],
+    "G2_FULL": [
+      ".venv/Scripts/python.exe",
+      "scripts/tests_gate.py"
+    ]
+  },
+  "approvers": [
+    "user"
+  ],
+  "reviewers": [
+    "reviewer-subagent",
+    "independent-subagent"
+  ]
+}

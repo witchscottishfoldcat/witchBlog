@@ -1,0 +1,205 @@
+node {
+    env.PROJECT_NAME = 'witchcat-api'
+    env.DOCKER_IMAGE = "witchcat/${env.PROJECT_NAME}"
+    env.DOCKER_TAG = "${env.BUILD_NUMBER}"
+    env.CONTAINER_NAME = 'witchcat-api'
+    env.DEPLOY_DIR = '/opt/witchcat'
+    env.HEALTH_CHECK_URL = 'http://localhost:8000/health'
+    env.STARTUP_WAIT_SECONDS = '15'
+
+    properties([
+        buildDiscarder(logRotator(numToKeepStr: '10')),
+        disableConcurrentBuilds()
+    ])
+
+    timestamps {
+        timeout(time: 30, unit: 'MINUTES') {
+            try {
+                checkoutSource()
+                lintFormatGate()
+                buildDockerImage()
+                scanDockerImage()
+                deployApplication()
+                notifySuccess()
+            } catch (err) {
+                notifyFailure()
+                throw err
+            } finally {
+                cleanupDockerImage()
+            }
+        }
+    }
+}
+
+def checkoutSource() {
+    stage('Checkout') {
+        echo 'Checking out code...'
+        checkout scm
+
+        env.GIT_COMMIT_SHORT = sh(
+            script: 'git rev-parse --short HEAD',
+            returnStdout: true
+        ).trim()
+
+        env.GIT_AUTHOR = sh(
+            script: 'git log -1 --pretty=format:"%an"',
+            returnStdout: true
+        ).trim()
+
+        echo "Checkout completed - Commit: ${env.GIT_COMMIT_SHORT}, Author: ${env.GIT_AUTHOR}"
+    }
+}
+
+def lintFormatGate() {
+    stage('Lint & Format Gate') {
+        echo 'Running format checks (black / isort / flake8)...'
+
+        // 门禁：格式规范强制检查。三项均为纯语法检查，无需安装项目依赖。
+        // mypy 棘轮门（scripts/mypy_gate.py）与单元测试依赖完整运行环境，由本地
+        // quality-gate.config.json（G2/G6）在提交前执行。
+        //
+        // Jenkins 以容器方式运行且复用宿主机 docker.sock：-v "$WORKSPACE" 会被宿主机
+        // 守护进程按宿主机路径解析，而工作区实际位于 Jenkins 容器内的 /var/jenkins_home，
+        // 挂载结果是宿主机上的空目录，black 报 "Path 'app' does not exist"。
+        // 因此改用 tar 流经 stdin 送入容器，不依赖任何卷挂载路径；
+        // .flake8 与 pyproject.toml 一并送入，保证工具读取到与本地一致的配置。
+        sh '''#!/bin/bash
+set -o pipefail
+tar -cf - app main.py .flake8 pyproject.toml | docker run --rm -i -w /src python:3.11-slim sh -c '
+    tar xf - &&
+    pip install -q --no-cache-dir black==23.11.0 isort==5.12.0 flake8==6.1.0 &&
+    black --check app main.py &&
+    isort --check-only app main.py &&
+    flake8 app main.py
+'
+'''
+
+        echo 'Format checks passed'
+    }
+}
+
+def buildDockerImage() {
+    stage('Build Docker Image') {
+        echo 'Building Docker image...'
+
+        sh "docker build -t ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} ."
+        sh "docker tag ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} ${env.DOCKER_IMAGE}:latest"
+
+        if (env.GIT_COMMIT_SHORT) {
+            sh "docker tag ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} ${env.DOCKER_IMAGE}:${env.GIT_COMMIT_SHORT}"
+        }
+
+        echo 'Docker image built successfully'
+    }
+}
+
+def scanDockerImage() {
+    stage('Image Security Scan') {
+        echo 'Scanning image for vulnerabilities...'
+
+        // 门禁：只阻断「有修复版本」的 HIGH/CRITICAL；上游无修复版的漏洞仅全量报告、不阻断。
+        // .trivyignore 记录经确认的豁免项（pip vendored msgpack/urllib3、基础镜像 setuptools
+        // 残留层误报），理由与复核日期见该文件。
+        // trivy 默认漏洞库源 mirror.gcr.io 从本机直连超时（#80 构建挂 7 分钟即此因），
+        // 需走宿主机 clash 代理下载 DB（与 Jenkins git 拉取同一代理）；DB 缓存于
+        // /var/jenkins_home/.cache/trivy，有效期内后续构建不再下载。
+        sh """
+            export HTTP_PROXY="${HTTP_PROXY:-}"
+            export HTTPS_PROXY="${HTTPS_PROXY:-}"
+            export NO_PROXY=localhost,127.0.0.1
+            trivy image --exit-code 1 --severity HIGH,CRITICAL --ignore-unfixed ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}
+        """
+
+        // 全量报告（不阻断、不套用豁免）：保留无修复版漏洞的审计可见性
+        sh """
+            export HTTP_PROXY="${HTTP_PROXY:-}"
+            export HTTPS_PROXY="${HTTPS_PROXY:-}"
+            export NO_PROXY=localhost,127.0.0.1
+            trivy image --exit-code 0 --severity HIGH,CRITICAL --ignorefile /dev/null ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} | tail -20 || true
+        """
+    }
+}
+
+def deployApplication() {
+    stage('Deploy') {
+        echo 'Deploying locally...'
+
+        sh(
+            script: """
+                set -eu
+
+                cd "\$WORKSPACE"
+
+                if [ ! -f ".env" ]; then
+                    echo "Environment file not found: \$WORKSPACE/.env"
+                    exit 1
+                fi
+
+                echo "1. Preparing deployment directories..."
+                mkdir -p "${env.DEPLOY_DIR}/logs" "${env.DEPLOY_DIR}/uploads"
+
+                echo "2. Removing old app container if present..."
+                docker rm -f "${env.CONTAINER_NAME}" || true
+
+                echo "3. Starting app container from local image..."
+                docker run -d \\
+                    --name "${env.CONTAINER_NAME}" \\
+                    --network host \\
+                    --restart unless-stopped \\
+                    --env-file ".env" \\
+                    -v "${env.DEPLOY_DIR}/logs:/app/logs" \\
+                    -v "${env.DEPLOY_DIR}/uploads:/app/uploads" \\
+                    "${env.DOCKER_IMAGE}:latest"
+
+                echo "4. Checking app health..."
+                sleep "${env.STARTUP_WAIT_SECONDS}"
+                docker exec "${env.CONTAINER_NAME}" curl -f "${env.HEALTH_CHECK_URL}"
+
+                echo "5. Cleaning unused Docker images..."
+                docker image prune -f
+
+                echo "Deployment successful"
+            """.stripIndent()
+        )
+    }
+}
+
+def cleanupDockerImage() {
+    echo 'Cleaning up workspace Docker images...'
+
+    sh """
+        docker rmi ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} || true
+        docker image prune -f || true
+    """
+}
+
+def notifySuccess() {
+    echo 'Build successful!'
+
+    echo """
+        Build Success Notification
+
+        Project: ${env.PROJECT_NAME}
+        Build: #${env.BUILD_NUMBER}
+        Branch: ${env.BRANCH_NAME ?: 'N/A'}
+        Commit: ${env.GIT_COMMIT_SHORT ?: 'N/A'}
+        Author: ${env.GIT_AUTHOR ?: 'N/A'}
+        Image: ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}
+    """
+}
+
+def notifyFailure() {
+    echo 'Build failed!'
+
+    echo """
+        Build Failure Notification
+
+        Project: ${env.PROJECT_NAME}
+        Build: #${env.BUILD_NUMBER}
+        Branch: ${env.BRANCH_NAME ?: 'N/A'}
+        Commit: ${env.GIT_COMMIT_SHORT ?: 'N/A'}
+        Author: ${env.GIT_AUTHOR ?: 'N/A'}
+
+        Check build log: ${env.BUILD_URL}
+    """
+}

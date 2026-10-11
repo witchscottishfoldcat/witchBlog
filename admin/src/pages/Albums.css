@@ -1,0 +1,26 @@
+@import '../styles/witchcat-admin.css';
+
+/* 相册列表页专属样式（其余复用 wc-* 共享类） */
+
+.albums-row-main {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.albums-cover-thumb {
+  width: 72px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.albums-cover-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted, #8a8f98);
+  background: rgba(127, 127, 127, 0.12);
+}

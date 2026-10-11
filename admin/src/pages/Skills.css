@@ -1,0 +1,41 @@
+/* 技能管理 - WitchCat 风格（页面特有样式） */
+@import '../styles/witchcat-admin.css';
+
+/* 统计折叠面板与列表间距 */
+.skills-page .skills-stats {
+  margin-bottom: 1.5rem;
+}
+
+/* 按分类 / 按等级分布 */
+.skills-page .skills-dist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.skills-page .skills-dist-card {
+  background: var(--bg-card-raised);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+}
+
+.skills-page .skills-dist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skills-page .skills-dist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+}

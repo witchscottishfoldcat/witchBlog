@@ -1,0 +1,38 @@
+@import '../styles/witchcat-admin.css';
+
+/* AnimeWatchlistEdit - 页面专属样式（表单布局均由 wc-* 共享类提供） */
+
+/* 页面容器宽度（沿用旧版 980px） */
+.anime-watchlist-edit {
+  max-width: 980px;
+  padding-bottom: 3rem;
+}
+
+/* 获取封面按钮：不撑满整行 */
+.awe-cover-btn {
+  align-self: flex-start;
+}
+
+/* 封面预览图 */
+.awe-cover-preview {
+  display: block;
+  max-width: 12rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--hairline);
+}
+
+/* 查看封面外链 */
+.awe-cover-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  align-self: flex-start;
+  font-size: 0.8125rem;
+}
+
+/* 封面加载失败提示 */
+.awe-cover-error {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--danger, #ef4444);
+}

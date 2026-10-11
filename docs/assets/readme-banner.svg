@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="370" viewBox="0 0 1200 370" role="img" aria-labelledby="title desc">
+  <title id="title">WitchCat Blog</title>
+  <desc id="desc">A violet night sky, a crescent moon and a cat with a witch hat. Stories, memories and things you love.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#131125"/><stop offset="1" stop-color="#302052"/></linearGradient>
+    <linearGradient id="text" x2="1" y2="0"><stop stop-color="#f5f0ff"/><stop offset="1" stop-color="#c4b5fd"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#a78bfa" stop-opacity=".2"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="370" rx="24" fill="url(#bg)"/>
+  <ellipse cx="990" cy="140" rx="310" ry="270" fill="url(#glow)"/>
+  <path d="M0 318Q260 290 470 329T910 321T1200 314V370H0Z" fill="#a78bfa" opacity=".07"/>
+  <g fill="#ddd6fe"><circle cx="62" cy="50" r="2"/><circle cx="703" cy="67" r="2"/><circle cx="1140" cy="62" r="2"/><circle cx="1109" cy="295" r="2"/><circle cx="709" cy="280" r="1.6"/><circle cx="825" cy="36" r="1.6"/></g>
+  <g stroke="#c4b5fd" stroke-width="2" opacity=".8"><path d="M778 108v14m-7-7h14"/><path d="M1085 137v16m-8-8h16"/><path d="M650 205v10m-5-5h10"/></g>
+  <path d="M1024 42a37 37 0 1 0 31 57 33 33 0 0 1-31-57Z" fill="#e9d5ff"/>
+  <g transform="translate(817 89)">
+    <path d="M155 213c66 26 97-9 84-34-8-17-31-17-40-1" fill="none" stroke="#c4b5fd" stroke-width="14" stroke-linecap="round"/>
+    <path d="M60 196c0-41 22-67 63-67s62 28 62 67v37H60Z" fill="#b9a3ef"/>
+    <path d="m50 110 3-63 43 28q26-10 50 0l45-27 2 65c0 35-29 61-72 61s-72-26-71-64Z" fill="#ddd1fa"/>
+    <path d="m65 73 2 29 19-18m66 1 26-13-1 31" fill="#bda6ed"/>
+    <path d="M83 115q8 8 16 0m44 0q8 8 16 0" fill="none" stroke="#34214d" stroke-width="4" stroke-linecap="round"/>
+    <path d="m115 129 7 5 7-5" fill="#6d4c92"/>
+    <path d="M122 134v6m0-1q-8 8-14 0m14 0q8 8 14 0" fill="none" stroke="#6d4c92" stroke-width="2.5" stroke-linecap="round"/>
+    <ellipse cx="81" cy="136" rx="10" ry="5" fill="#eea9cb" opacity=".6"/><ellipse cx="162" cy="136" rx="10" ry="5" fill="#eea9cb" opacity=".6"/>
+    <path d="m74 73 29-67 55 71Z" fill="#7c5fb4"/><path d="m92 33 11-27 29 19-14 12Z" fill="#9b7bd1"/>
+    <path d="m86 48 63 17 8 13-77-8Z" fill="#e9b6dc"/>
+    <ellipse cx="119" cy="78" rx="75" ry="14" fill="#8b6bc3"/>
+    <path d="m121 50 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1Z" fill="#fff0b3"/>
+    <path d="M68 207v26m17-22v22m74-22v22" stroke="#9475c7" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <text x="78" y="104" font-family="Arial,sans-serif" font-size="14" letter-spacing="5" fill="#c4b5fd">YOUR PERSONAL LITTLE WORLD</text>
+  <text x="74" y="183" font-family="Arial,sans-serif" font-size="70" font-weight="700" fill="url(#text)">WitchCat Blog</text>
+  <text x="78" y="235" font-family="Arial,sans-serif" font-size="20" fill="#bdb0d6">Stories, memories and things you love.</text>
+  <g font-family="Arial,sans-serif" font-size="12" fill="#ddd6fe" text-anchor="middle">
+    <rect x="78" y="268" width="95" height="28" rx="14" fill="#a78bfa" opacity=".14"/><text x="125" y="287">NEXT.JS</text>
+    <rect x="185" y="268" width="95" height="28" rx="14" fill="#a78bfa" opacity=".14"/><text x="232" y="287">FASTAPI</text>
+    <rect x="292" y="268" width="105" height="28" rx="14" fill="#a78bfa" opacity=".14"/><text x="344" y="287">REACT</text>
+  </g>
+</svg>

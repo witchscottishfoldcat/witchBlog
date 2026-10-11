@@ -1,0 +1,103 @@
+WitchCat Noncommercial Attribution Share-Alike License 1.0
+SPDX-License-Identifier: LicenseRef-WitchCat-NC-Attribution-ShareAlike-1.0
+
+Copyright (c) 2026 WitchCat contributors
+Original project: https://github.com/witchscottishfoldcat/witchBlog
+
+This is a custom source-available license, not an OSI-approved open-source
+license: commercial use is prohibited. This English text controls; summaries
+and translations are explanatory only.
+
+1. Definitions
+
+"Software" means the original project code and documentation offered under
+this license, including modifications. "Licensor" means a copyright holder
+offering their contribution under this license. "You" means a recipient
+exercising the granted rights.
+"Commercial Use" means use primarily intended for or directed toward
+commercial advantage or monetary compensation, including sale, paid access,
+paid hosting or services, advertising-supported or sponsored monetization,
+use to operate or promote a business, or incorporation in a commercial
+product or service. Nonprofit status alone does not make use noncommercial.
+"Corresponding Source" means the preferred form for modifying the Software,
+including all original and modified source code, scripts needed to build,
+install and run it, dependency manifests, and configuration templates. It
+excludes real credentials, private user data, general-purpose tools, and
+unmodified third-party dependencies available separately.
+
+2. Noncommercial grant
+
+Subject to every condition below, each Licensor grants You a worldwide,
+royalty-free, nonexclusive license to use, study, reproduce, modify, and
+distribute the Software for noncommercial purposes only. Commercial Use is
+not permitted: it requires separate written permission from the relevant
+copyright holders. No rights beyond those expressly stated are granted.
+Statutory exceptions and limitations remain intact.
+
+3. Attribution
+
+Retain copyright notices, this license, third-party rights notices, and the
+original project URL in every source distribution. Credit "WitchCat
+contributors", link to the original project, and identify material changes
+and their dates. Binary distributions must include the same information in
+accompanying documentation or an accessible legal/about page. A deployed web
+interface must retain a reasonably visible "Powered by WitchCat" credit
+linking to the original project in its footer or an equivalent about page.
+Credit must not suggest endorsement by a Licensor.
+
+4. Source disclosure and same license
+
+When distributing the Software or a modified version in any form, provide its
+complete Corresponding Source under this exact license. Binary distributions
+must include an easily discoverable link to a public repository or source
+archive corresponding to that exact version. Access must be free of charge,
+without login or other access restrictions.
+
+When deploying the Software, including a modified version, for others to
+interact with over a network, prominently offer those users the same free
+public access to the complete Corresponding Source of the deployed version.
+Link the source offer from the interface or an accessible about page; for an
+API-only service, include it in service documentation.
+
+Keep source available while distributing or operating that version and for
+at least three years after the last distribution or operation. Private
+modifications neither distributed nor deployed for others do not trigger
+publication. Publishing source does not authorize Commercial Use. Do not
+relicense the Software or Your modifications, impose additional restrictions,
+or use technical measures preventing recipients exercising these rights.
+Independent works merely aggregated with the Software retain their licenses.
+
+5. Third-party works and trademarks
+
+Third-party libraries, runtimes, fonts, images, music, models and other assets
+are excluded unless their copyright holder explicitly offers them under this
+license. Their original licenses and attribution or permission requirements
+apply; see THIRD_PARTY_NOTICES.md and notices in their files. This license
+cannot grant rights a Licensor does not own. It grants no trademark rights
+beyond identification necessary for attribution.
+
+6. Termination and reinstatement
+
+Rights automatically terminate on violation. Curing the violation within
+30 days after first becoming aware reinstates rights unless a Licensor has
+previously terminated Your rights for another violation. Otherwise written
+permission from the relevant Licensor is required for reinstatement.
+Termination does not terminate compliant recipients' rights or waive claims
+arising from a violation.
+
+7. Disclaimer and limitation of liability
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+TITLE OR NON-INFRINGEMENT. TO THE MAXIMUM EXTENT PERMITTED BY LAW, NO LICENSOR
+IS LIABLE FOR CLAIMS, DAMAGES OR OTHER LIABILITY, IN CONTRACT, TORT OR
+OTHERWISE, ARISING FROM THE SOFTWARE OR ITS USE. WHERE APPLICABLE LAW DOES
+NOT ALLOW AN EXCLUSION OR LIMITATION, IT APPLIES ONLY AS FAR AS LAW PERMITS.
+If a provision is unenforceable, the remaining provisions continue in effect
+to the extent permitted by law.
+
+8. Contributions
+
+Unless explicitly agreed otherwise in writing, a contribution intentionally
+submitted for inclusion is offered under this same license. Contributors
+must have the rights necessary to submit their contributions.

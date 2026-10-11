@@ -1,0 +1,36 @@
+@import '../styles/witchcat-admin.css';
+
+/* 时间线行副标题：胶囊底（与标题/描述条同族） */
+.timelines-page .tl-subtitle {
+  width: fit-content;
+  padding: 0.1rem 0.5rem;
+  background: var(--bg-card-raised);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* 时间线描述：取消两行截断，改为软底块 */
+.timelines-page .tl-desc {
+  display: block;
+  -webkit-line-clamp: unset;
+  margin-top: 0.5rem;
+  padding: 0.75rem 0.875rem;
+  background: var(--bg-card-raised);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  line-height: 1.5;
+}
+
+/* 技能小标签：info 色调，区别于普通 tag */
+.timelines-page .tl-skill-tag {
+  gap: 0.3rem;
+  background: var(--state-info-surface);
+  color: var(--state-info-foreground);
+}
+
+.timelines-page .tl-skill-row {
+  margin-top: 0.375rem;
+}

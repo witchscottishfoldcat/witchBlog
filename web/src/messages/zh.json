@@ -1,0 +1,417 @@
+{
+  "nav": {
+    "home": "主页",
+    "archive": "归档",
+    "links": "链接",
+    "music": "音乐馆",
+    "my": "我的",
+    "about": "关于",
+    "dashboard": "仪表盘",
+    "others": "其他",
+    "search": "搜索",
+    "themeColor": "主题色",
+    "anime": "追番",
+    "diary": "日记",
+    "friendLinks": "友链",
+    "support": "赞助",
+    "projects": "项目",
+    "skills": "技能",
+    "timeline": "时间线",
+    "games": "游戏",
+    "switchToEnglish": "Switch to English",
+    "switchToChinese": "切换到中文"
+  },
+  "common": {
+    "readMore": "阅读更多",
+    "words": "字",
+    "characters": "字",
+    "search": "搜索",
+    "language": "语言",
+    "theme": "主题",
+    "backToHome": "返回首页",
+    "backToArchive": "返回归档",
+    "readingTime": "分钟",
+    "readingTimeLabel": "阅读时间",
+    "list": "列表",
+    "grid": "网格",
+    "daysAgo": "天前"
+  },
+  "blog": {
+    "title": "Beautiful Mizuki!",
+    "subtitle": "Carousel Focus: User Experience",
+    "noPosts": "暂无文章",
+    "encrypted": "加密文章",
+    "allPosts": "我的博客文章",
+    "announcement": "公告",
+    "categories": "分类",
+    "tags": "标签",
+    "learnMore": "了解更多",
+    "playing": "正在播放",
+    "pinned": "置顶",
+    "musicTooltip": "你好 要听音乐吗",
+    "latestProjects": "最新项目",
+    "latestTimeline": "最新动态",
+    "viewAll": "查看全部"
+  },
+  "sidebar": {
+    "announcement": "公告",
+    "categories": "分类",
+    "tags": "标签",
+    "resourceLinks": "资源链接",
+    "calendar": "日历",
+    "learnMore": "了解更多",
+    "welcomeMessage": "欢迎来到我的博客！这是一个示例公告。",
+    "previousMonth": "上一个月",
+    "nextMonth": "下一个月",
+    "goToToday": "回到今天",
+    "today": "今天",
+    "archiveYears": "按年份浏览",
+    "recentPosts": "最新文章",
+    "viewAllPosts": "查看全部文章",
+    "categoryPosts": "当前分类文章",
+    "currentCategory": "当前分类",
+    "backToParentCategory": "返回一级分类",
+    "noCategoryPosts": "该分类暂无文章",
+    "secondaryCategories": "二级分类",
+    "tagPosts": "当前标签文章",
+    "currentTag": "当前标签",
+    "noTagPosts": "该标签暂无文章",
+    "projectOverview": "项目概览",
+    "siteOverview": "运行概览",
+    "aboutFiles": "相关文件",
+    "linkTags": "友链标签",
+    "timelineOverview": "经历概览",
+    "skillCategories": "技能分类",
+    "albumList": "相册目录",
+    "viewAllAlbums": "查看全部相册",
+    "articleInfo": "本文信息",
+    "mySpace": "我的空间",
+    "quickLinks": "快捷入口",
+    "solarTerms": "廿四节气",
+    "dateTitle": "日期",
+    "weekdayTitle": "星期",
+    "seasonTitle": "季节",
+    "season": {
+      "spring": "",
+      "summer": "夏",
+      "autumn": "秋",
+      "winter": "冬"
+    },
+    "rssTitle": "RSS 订阅",
+    "rssDescription": "订阅 RSS 源，及时获取最新文章更新",
+    "copyLink": "复制链接",
+    "copied": "已复制",
+    "copy": "复制"
+  },
+  "archive": {
+    "title": "归档时间线",
+    "subtitle": "按年份回顾每一篇文章，保留最温柔的记忆。",
+    "postsCount": "共 {count} 篇文章",
+    "yearPosts": "{count} 篇文章",
+    "empty": "暂时还没有归档内容。",
+    "timelineHint": "沿着时间线慢慢滑动，重温那些高光瞬间。"
+  },
+  "myPage": {
+    "title": "追番清单",
+    "subtitle": "记录我的番剧旅程",
+    "filters": {
+      "all": "全部",
+      "watching": "追番中",
+      "completed": "已看完",
+      "planned": "想看",
+      "dropped": "已弃"
+    },
+    "statusBadges": {
+      "watching": "追番中",
+      "completed": "已完成",
+      "planned": "想看",
+      "dropped": "已弃"
+    },
+    "ratingLabel": "评分",
+    "progressLabel": "进度",
+    "description": "记录我喜爱的番剧，正在追的番剧，以及计划在舒适夜晚观看的番剧。",
+    "categoryLabels": {
+      "anime": "动画",
+      "drama": "剧集",
+      "other": "其他"
+    }
+  },
+  "posts": {
+    "myBlogPosts": "我的博客文章",
+    "pagination": {
+      "previous": "上一页",
+      "next": "下一页",
+      "page": "第",
+      "of": "页，共"
+    }
+  },
+  "search": {
+    "noResults": "没有找到相关文章",
+    "tryOtherKeywords": "尝试使用其他关键词搜索",
+    "startTyping": "输入关键词开始搜索",
+    "hint": "搜索文章标题、内容、标签或分类",
+    "foundResults": "找到 {count} 个结果"
+  },
+  "diary": {
+    "title": "日记",
+    "subtitle": "随时随地分享生活",
+    "entriesLabel": "篇日记",
+    "timeAgoLabel": "天前",
+    "noDiaries": "暂无日记",
+    "noDiariesFiltered": "没有符合当前筛选条件的日记",
+    "archiveTitle": "日记归类",
+    "archiveAll": "全部日记",
+    "archiveByYear": "按年份",
+    "archiveByTag": "按标签",
+    "archiveSampleHint": "统计来自最近 100 篇公开日记；站点日记总数更多时，此处为抽样估算。",
+    "filterYear": "筛选：{year} 年",
+    "filterTag": "筛选：标签「{tag}」",
+    "filterYearTag": "筛选：{year} 年 · 「{tag}」",
+    "readMore": "阅读全文",
+    "backToDiaryList": "返回日记列表",
+    "withPhotos": "含照片",
+    "yearFilter": "年份",
+    "popularTags": "热门标签",
+    "moodStats": "记录统计",
+    "pagination": {
+      "previous": "上一页",
+      "next": "下一页",
+      "page": "第",
+      "of": "页，共"
+    }
+  },
+  "gallery": {
+    "title": "相册",
+    "subtitle": "记录生活中的美好瞬间",
+    "noPhotos": "暂无照片",
+    "noAlbums": "暂无相册",
+    "noCover": "暂无封面",
+    "loadImageFailed": "图片加载失败",
+    "photos": "张照片",
+    "views": "次浏览",
+    "gallery": "相册",
+    "albumsLabel": "个相册",
+    "totalViews": "总浏览",
+    "popularTags": "热门标签",
+    "backToGallery": "返回相册列表",
+    "pagination": {
+      "previous": "上一页",
+      "next": "下一页",
+      "showing": "显示",
+      "of": "共",
+      "results": "个相册"
+    }
+  },
+  "about": {
+    "title": "关于我们",
+    "description": "本网站使用 FastApi 框架和 React 框架构建。",
+    "repoDescription": "新一代博客主题",
+    "featuresTitle": "主题特性",
+    "designSection": "设计与用户体验",
+    "features": [
+      "现代优雅设计 - 简洁、极简的界面，配有精美的排版",
+      "完全响应式 - 针对从移动设备到桌面的所有设备进行优化",
+      "深色/浅色模式 - 自动主题切换，过渡流畅",
+      "精美排版 - 使用 JetBrains Mono 字体增强可读性",
+      "流畅动画 - 流畅的页面过渡和交互元素"
+    ],
+    "relatedFiles": "相关文件",
+    "filesCount": "个文件",
+    "noFiles": "暂无文件",
+    "backToAbout": "返回关于页面",
+    "unableToLoad": "无法加载文件内容",
+    "images": "图片展示",
+    "imagesCount": "张",
+    "documents": "文档",
+    "documentsCount": "个",
+    "loadFailed": "加载失败"
+  },
+  "friendLinks": {
+    "title": "友链",
+    "subtitle": "朋友和资源的链接",
+    "noFriendLinks": "暂无友链"
+  },
+  "projects": {
+    "title": "项目展示",
+    "subtitle": "我的开发项目作品集",
+    "stats": {
+      "total": "总项目数",
+      "completed": "已完成",
+      "inProgress": "进行中",
+      "techStack": "技术栈统计",
+      "languages": "编程语言数"
+    },
+    "status": {
+      "completed": "已完成",
+      "inProgress": "进行中",
+      "planned": "计划中"
+    },
+    "buttons": {
+      "visitProject": "访问项目",
+      "github": "GitHub"
+    },
+    "sections": {
+      "featured": "精选项目",
+      "allProjects": "全部项目",
+      "webApps": "Web 应用",
+      "mobileApps": "移动应用",
+      "other": "其他项目",
+      "techStack": "技术栈统计"
+    },
+    "tagStats": "标签统计",
+    "statusOverview": "项目状态",
+    "sourceStats": "平台与标签",
+    "tagStatsLoading": "加载中...",
+    "tagStatsEmpty": "暂无标签统计",
+    "tagStatsCount": "项目数",
+    "languageStats": "编程语言统计",
+    "languageCoverage": "语言项目覆盖",
+    "created": "创建时间",
+    "updated": "更新时间",
+    "dominantLanguage": "主要语言",
+    "languageCount": "（共 {count} 种）"
+  },
+  "skills": {
+    "title": "技能展示",
+    "subtitle": "我的技术技能和专业能力",
+    "experience": "经验",
+    "averageExperience": "平均经验（年）",
+    "totalSkills": "总技能数",
+    "byLevel": "按等级",
+    "byCategory": "按类别",
+    "skillMatrix": "技能矩阵",
+    "allSkills": "全部技能",
+    "knowledgeBrain": "知识大脑",
+    "mapHint": "点击分支探索技能",
+    "expandAll": "全部展开",
+    "backToMindMap": "返回脑图",
+    "learningOverview": "学习概览",
+    "cumulativeLearning": "累计学习天数",
+    "longestExperience": "最长经验",
+    "projectOverview": "项目关联",
+    "projectLinks": "关联项目数",
+    "coveredSkills": "覆盖技能",
+    "backToSkills": "返回技能列表",
+    "category": "分类",
+    "learningDays": "学习天数",
+    "days": "天",
+    "year": "年",
+    "years": "年",
+    "month": "月",
+    "months": "月",
+    "zeroMonths": "0个月",
+    "lessThanMonth": "不足1月",
+    "present": "至今",
+    "learningPeriods": "学习时间段",
+    "relatedProjects": "相关项目",
+    "viewProject": "查看项目",
+    "created": "创建时间",
+    "updated": "更新时间",
+    "dateFormat": "yyyy年MM月dd日",
+    "levels": {
+      "expert": "专家",
+      "advanced": "高级",
+      "intermediate": "中级",
+      "beginner": "初级"
+    },
+    "categories": {
+      "frontend": "前端",
+      "backend": "后端",
+      "database": "数据库",
+      "tools": "工具",
+      "other": "其他"
+    },
+    "status": {
+      "completed": "已完成",
+      "inProgress": "进行中",
+      "planned": "计划中"
+    },
+    "projects": "项目"
+  },
+  "timeline": {
+    "title": "时间线",
+    "subtitle": "我的成长历程和重要里程碑",
+    "currentStatus": "当前状态",
+    "currentStatusCount": "个进行中",
+    "scrollToHistory": "向下滚动查看历史经历",
+    "history": "历史",
+    "search": "搜索",
+    "tags": "标签",
+    "filter": "筛选",
+    "clear": "清除",
+    "tagsPlaceholder": "例如: React, TypeScript",
+    "tagsHint": "(用逗号分隔)",
+    "searchPlaceholder": "输入关键词搜索...",
+    "stats": {
+      "total": "总计",
+      "workExperience": "工作经历",
+      "projects": "项目展示",
+      "achievements": "成就"
+    },
+    "types": {
+      "work": "工作经历",
+      "project": "项目经历",
+      "education": "教育经历",
+      "achievement": "成就"
+    },
+    "duration": "持续时间",
+    "location": "地点"
+  },
+  "components": {
+    "noResourceLinks": "暂无资源链接",
+    "noCategories": "暂无分类",
+    "noTags": "暂无标签"
+  },
+  "dashboard": {
+    "title": "站点仪表盘",
+    "subtitle": "查看站点运行情况和内容统计",
+    "uptime": "运行时间",
+    "uptimeDescription": "自启动以来的累计运行时间",
+    "totalRequests": "总请求数",
+    "todayRequests": "今日请求：{count}",
+    "totalVisitors": "总访客数",
+    "todayVisitors": "今日访客：{count}",
+    "albums": "相册数量",
+    "albumsDescription": "已创建的相册总数",
+    "photos": "照片数量",
+    "photosDescription": "所有相册中的照片总数",
+    "diaries": "日记数量",
+    "diariesDescription": "已发布的日记总数",
+    "memoryUsage": "内存使用",
+    "memoryUsageDescription": "当前应用的内存占用情况",
+    "dbConnections": "数据库连接",
+    "dbConnectionsDescription": "当前数据库连接数",
+    "contentOverview": "内容概览",
+    "systemOverview": "今日与系统",
+    "runtimeOverview": "运行状态",
+    "todayOverview": "今日流量",
+    "onlineStatus": "在线状态",
+    "running": "运行中",
+    "todayRequestsLabel": "今日请求",
+    "todayVisitorsLabel": "今日访客",
+    "pageVisits": "{count} 次访问",
+    "topPages": "热门页面",
+    "noTopPages": "暂无热门页面数据",
+    "loadFailed": "无法加载站点统计数据"
+  },
+  "others": {
+    "title": "其他",
+    "subtitle": "更多功能和内容",
+    "pages": {
+      "projects": {
+        "title": "项目",
+        "description": "我的开发项目作品集"
+      },
+      "skills": {
+        "title": "技能",
+        "description": "我的技术技能和专业能力"
+      },
+      "timeline": {
+        "title": "时间线",
+        "description": "我的成长历程和重要里程碑"
+      }
+    },
+    "viewDetails": "查看详情"
+  }
+}
+

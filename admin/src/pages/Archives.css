@@ -1,0 +1,78 @@
+@import '../styles/witchcat-admin.css';
+
+/* MD 文件归档页：主从双栏布局（页面专属样式） */
+
+.archives-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .archives-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+/* 两列卡片等高对齐：组容器随网格行拉伸 */
+.archives-list-group,
+.archives-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 未选中归档时列表独占一行，铺满整宽；选中后自动回到双栏各半 */
+.archives-layout > section:only-child {
+  grid-column: 1 / -1;
+}
+
+.archives-list-body {
+  flex: 1;
+}
+
+/* 可点击的归档行：选中态 */
+.archives-row {
+  cursor: pointer;
+}
+
+.archives-row-active,
+.archives-row-active:hover {
+  background: var(--bg-active);
+  border-color: var(--primary-300);
+}
+
+/* 内容预览面板头部 */
+.archives-content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.125rem 1.5rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* 详情页头部元信息 */
+.archives-detail-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* 原文预览 */
+.archives-preview {
+  flex: 1;
+  margin: 1rem 1.5rem 1.5rem;
+  padding: 1.25rem;
+  overflow-y: auto;
+  min-height: 300px;
+  max-height: 70vh;
+  background: var(--bg-code);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: var(--text-primary);
+}

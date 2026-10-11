@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  witchcatweb-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: witchcatweb-frontend
+    ports:
+      - "8888:8888"
+    environment:
+      - NODE_ENV=production
+      - PORT=8888
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:?set NEXT_PUBLIC_API_URL}
+    restart: unless-stopped
+    networks:
+      - witchcat-network
+
+  # 如果您想将后端也容器化，可以取消以下注释
+  # witchcatweb-backend:
+  #   image: your-backend-image:latest
+  #   container_name: witchcatweb-backend
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - NODE_ENV=production
+  #     - PORT=8000
+  #   restart: unless-stopped
+  #   networks:
+  #     - witchcat-network
+
+networks:
+  witchcat-network:
+    driver: bridge

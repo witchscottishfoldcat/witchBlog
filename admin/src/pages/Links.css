@@ -1,0 +1,86 @@
+@import '../styles/witchcat-admin.css';
+
+/* 链接页专属样式（其余复用 wc-* 共享类） */
+
+/* 统计 / 随机 折叠面板间距 */
+.links-panel {
+  margin-bottom: 1rem;
+}
+
+/* 随机面板内的筛选控件行 */
+.links-panel-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.links-random-select {
+  width: auto;
+  min-width: 10rem;
+}
+
+/* 统计网格 */
+.links-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .links-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.links-stats-grid h4 {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 0.75rem 0;
+}
+
+.links-stat-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.links-stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  border-top: 1px solid var(--hairline);
+}
+
+.links-stat-item:first-child {
+  border-top: none;
+}
+
+.links-stat-count {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.links-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+/* 列表行中的 URL（等宽字体） */
+.links-url {
+  font-family: var(--font-mono);
+  word-break: break-all;
+}
+
+.links-empty-inline {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+}

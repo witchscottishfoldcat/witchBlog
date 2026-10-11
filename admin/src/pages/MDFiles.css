@@ -1,0 +1,19 @@
+@import '../styles/witchcat-admin.css';
+
+/* 博客文章页：页面专属样式 */
+
+.md-files-page {
+  max-width: 1180px;
+  padding-bottom: 3rem;
+}
+
+/* 上传折叠面板与下方工具栏间距 */
+.md-upload-panel {
+  margin-bottom: 1rem;
+}
+
+.md-upload-panel-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}

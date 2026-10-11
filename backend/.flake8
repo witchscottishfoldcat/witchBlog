@@ -1,0 +1,16 @@
+[flake8]
+# 与 pyproject.toml 的 black(isort) 保持一致：88 列
+# E203/W503 与 black 的切片空格、二元运算符换行规则冲突，为 black 官方推荐忽略项
+max-line-length = 88
+extend-ignore = E203, W503
+# main.py 必须先 init_logging 再导入 app 模块（统一日志格式），导入顺序是刻意的
+per-file-ignores =
+    main.py: E402
+extend-exclude =
+    .venv,
+    venv,
+    build,
+    dist,
+    .eggs,
+    __pycache__,
+    .pytest_cache

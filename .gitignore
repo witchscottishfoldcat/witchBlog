@@ -1,0 +1,52 @@
+# ===== 通用 =====
+*.log
+logs/
+.DS_Store
+Thumbs.db
+
+# ===== 密钥与环境（只允许 *.example 入库） =====
+.env*
+!.env.example
+!.env.local.example
+!.env.production.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.keystore
+
+# ===== IDE / 编辑器 / AI 工具 =====
+.idea/
+.vscode/
+.claude/
+.codebuddy/
+.trae/
+.cursor/
+
+# ===== backend (Python) =====
+backend/.venv*/
+backend/venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+backend/data/qqwry.dat
+backend/uploads/
+backend/test.db
+backend/*.sqlite3
+
+# ===== web / admin (Node) =====
+node_modules/
+.next/
+out/
+dist/
+*.tsbuildinfo
+.turbo/
+
+# ===== 构建产物 =====
+build/
+coverage/
+.coverage*
+backend/docs/gates/*/gate-artifacts/

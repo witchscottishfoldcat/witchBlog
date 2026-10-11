@@ -1,0 +1,93 @@
+@import '../styles/witchcat-admin.css';
+
+/* Games —— 页面专属样式：统计网格、封面占位、筛选行间距、弹窗提示 */
+
+/* 状态筛选行 */
+.games-filter {
+  margin-bottom: 1rem;
+}
+
+/* ===== 统计区 ===== */
+.games-stats {
+  margin-bottom: 1.5rem;
+}
+
+.games-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11.25rem, 1fr));
+  gap: 1rem;
+}
+
+.games-stat-card {
+  background: var(--bg-card-raised);
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--hairline);
+}
+
+.games-stat-card h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.games-stat-num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.games-stat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.games-stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  border-top: 1px solid var(--hairline);
+}
+
+.games-stat-item:first-child {
+  border-top: none;
+}
+
+.games-stat-count {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ===== 封面占位（无封面时蓝紫渐变底 + Gamepad2 图标） ===== */
+.games-cover-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-primary-br);
+  color: var(--text-on-primary);
+}
+
+/* ===== Steam 导入 / 同步弹窗提示 ===== */
+.games-modal-hint {
+  margin: 0 0 1rem 0;
+}
+
+/* ===== R18 成人内容标记 ===== */
+.games-r18-badge {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.games-chip-r18.wc-chip-active {
+  border-color: var(--state-error-foreground, #ef4444);
+  color: var(--state-error-foreground, #ef4444);
+  background: var(--state-error-surface, transparent);
+}

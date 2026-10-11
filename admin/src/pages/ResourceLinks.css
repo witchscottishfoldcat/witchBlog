@@ -1,0 +1,79 @@
+@import '../styles/witchcat-admin.css';
+
+/* 资源链接页专属样式（其余复用 wc-* 共享类） */
+
+/* 分类 / 标签 折叠面板间距 */
+.reslinks-panel {
+  margin-bottom: 1rem;
+}
+
+/* 统计网格 */
+.reslinks-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .reslinks-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.reslinks-stats-grid h4 {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 0.75rem 0;
+}
+
+.reslinks-stat-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.reslinks-stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  font-family: inherit;
+  text-align: left;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--hairline);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.reslinks-stat-item:first-child {
+  border-top: none;
+}
+
+.reslinks-stat-item:hover:not(.active):not(.static) {
+  color: var(--primary-600);
+}
+
+.reslinks-stat-item.active {
+  color: var(--primary-600);
+  font-weight: 600;
+}
+
+.reslinks-stat-item.static {
+  cursor: default;
+}
+
+.reslinks-stat-count {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 列表行中的 URL（等宽字体） */
+.reslinks-url {
+  font-family: var(--font-mono);
+  word-break: break-all;
+}

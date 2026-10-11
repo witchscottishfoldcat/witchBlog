@@ -1,0 +1,235 @@
+@import './styles/design-tokens.css';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: var(--text-primary);
+  background: var(--bg-page);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  /* 必须让 body 成为层叠上下文：否则负 z-index 的 ::before 背景层
+     会被 body 自己的实色背景盖住（元素自身背景绘制在负 z 子元素之后），
+     整页只剩底色看不到插画 */
+  isolation: isolate;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  transition: background-color 0.3s ease;
+}
+
+/* 背景插画层：fixed 伪元素永远铺满视口（长页面底部不再露画布白边），
+   inset 负值给漂移/缩放动效留余量避免露边 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -6%;
+  z-index: -1;
+  pointer-events: none;
+  background: url('/images/bg.jpg') center / cover no-repeat;
+  animation: bg-drift 36s ease-in-out infinite alternate;
+  will-change: transform;
+  transition: filter 0.3s ease;
+}
+
+[data-theme='dark'] body::before {
+  filter: brightness(0.65) contrast(1.1) saturate(0.85);
+}
+
+/* 噪点纹理层，增加高级质感 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+}
+
+[data-theme='dark'] body::after {
+  opacity: 0.08;
+}
+
+/* Ken Burns 式缓慢漂移：轻微平移 + 缩放，36s 往返 */
+@keyframes bg-drift {
+  0% {
+    transform: translate3d(-1.5%, -1%, 0) scale(1.06);
+  }
+  50% {
+    transform: translate3d(1.5%, 1%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(-1%, 1.5%, 0) scale(1.08);
+  }
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+input,
+textarea,
+select {
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+::selection {
+  background: var(--primary-500);
+  color: #fff;
+}
+
+/* =========================================
+   UI 工具类 (Utilities)
+   ========================================= */
+
+/* 玻璃拟态面板 */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-lg);
+}
+
+/* 渐变文字高亮 */
+.text-gradient {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =========================================
+   全局极简隐形/微致浮动滚动条（极致清透 · 无突兀感）
+   ========================================= */
+
+/* Firefox 跨浏览器支持：微弱纤细 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+[data-theme='dark'] * {
+  scrollbar-color: rgba(255, 255, 255, 0.14) transparent;
+}
+
+/* WebKit / Blink (Chrome, Edge, Safari) 5px 极细极隐滑动条 */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.14);
+  border-radius: var(--radius-full);
+  transition: background-color 0.25s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.32);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+/* 动画工具类 */
+@keyframes slide-up-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: slide-up-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 骨架屏呼吸 */
+@keyframes pulse-subtle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton-pulse {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-in,
+  .skeleton-pulse {
+    animation: none;
+  }
+
+  body::before {
+    animation: none;
+  }
+}

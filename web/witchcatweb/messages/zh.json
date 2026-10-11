@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "home": "主页",
+    "archive": "归档",
+    "links": "Links",
+    "my": "My",
+    "about": "关于",
+    "others": "... Others"
+  },
+  "common": {
+    "readMore": "阅读更多",
+    "words": "字",
+    "characters": "字",
+    "search": "搜索",
+    "language": "语言",
+    "theme": "主题"
+  },
+  "blog": {
+    "title": "Beautiful Mizuki!",
+    "subtitle": "Carousel Focus: User Experience",
+    "noPosts": "暂无文章",
+    "encrypted": "加密文章"
+  }
+}

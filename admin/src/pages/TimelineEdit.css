@@ -1,0 +1,35 @@
+@import '../styles/witchcat-admin.css';
+
+/* 编辑页容器收窄 */
+.timeline-edit {
+  max-width: 980px;
+}
+
+/* 标签/技能 chip 行与输入组间距 */
+.timeline-edit .tl-chip-row {
+  margin-top: 0.625rem;
+}
+
+/* wc-tag 内的删除小按钮 */
+.timeline-edit .tl-chip {
+  gap: 0.125rem;
+}
+
+.timeline-edit .tl-chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: inherit;
+  opacity: 0.55;
+  cursor: pointer;
+  padding: 0.125rem;
+  border-radius: var(--radius-full);
+  transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+
+.timeline-edit .tl-chip-remove:hover {
+  opacity: 1;
+  color: var(--state-error);
+}

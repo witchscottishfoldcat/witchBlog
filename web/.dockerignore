@@ -1,0 +1,29 @@
+# 本地配置与密钥
+.env
+.env.*
+!.env.*.example
+
+# 版本控制与 CI
+.git
+.gitignore
+Jenkinsfile
+
+# 依赖与构建产物（镜像内重新安装/构建）
+node_modules
+.next
+.contentlayer
+tsconfig.tsbuildinfo
+
+# 日志
+logs
+*.log
+
+# IDE / 工具
+.idea
+.vscode
+.claude
+.codebuddy
+
+# 杂项
+screenshot-*.png
+HERO_ANIMATION_PERFORMANCE.md

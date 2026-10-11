@@ -1,0 +1,11 @@
+@import '../styles/witchcat-admin.css';
+
+/* GamesEdit —— 页面专属样式：容器宽度、底部按钮右对齐 */
+
+.games-edit-page {
+  max-width: 61.25rem;
+}
+
+.games-edit-actions {
+  justify-content: flex-end;
+}

@@ -1,0 +1,101 @@
+@import '../styles/witchcat-admin.css';
+
+/* 编辑页容器收窄 */
+.skill-edit {
+  max-width: 980px;
+}
+
+/* 子区块头部按钮组 */
+.skill-edit .skill-section-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* 时间段内联表单 */
+.skill-edit .period-form {
+  margin-bottom: 1.25rem;
+  padding: 1.25rem;
+  background: var(--bg-card-raised);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+}
+
+.skill-edit .period-notes-input {
+  min-height: 4rem;
+}
+
+.skill-edit .period-form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* 时间段 / 关联项目列表 */
+.skill-edit .periods-list,
+.skill-edit .projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.skill-edit .period-item,
+.skill-edit .project-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--bg-card-raised);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+}
+
+.skill-edit .period-item-main,
+.skill-edit .project-item-main {
+  min-width: 0;
+}
+
+.skill-edit .period-item-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.skill-edit .period-date,
+.skill-edit .project-name {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--text-primary);
+}
+
+.skill-edit .period-notes,
+.skill-edit .project-description {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.skill-edit .project-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.skill-edit .project-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* 子区块内的小空态 */
+.skill-edit .skill-empty {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+}

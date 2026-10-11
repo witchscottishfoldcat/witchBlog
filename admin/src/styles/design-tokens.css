@@ -1,0 +1,201 @@
+/*
+ * WitchCat 设计 Tokens —— 移植自主站（witchcat-web）视觉体系
+ * 蓝(hue 215)主色阶 + 紫罗兰辅色渐变 / 柔和浅色 + 玻璃拟态 / 大圆角卡片
+ *
+ * 主题：浅色（默认，:root）/ 暗色（<html data-theme="dark">）
+ * 持久化 localStorage["witchcat-theme"]，由 index.html 内联脚本防闪烁恢复。
+ */
+
+/* 品牌展示字（主站同款 ZCOOL KuaiLe，加载失败自动回退系统字体） */
+@import url('https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap');
+
+:root {
+  /* ============ 字体 ============ */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --font-display: 'ZCOOL KuaiLe', 'PingFang SC', 'Microsoft YaHei', cursive, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', monospace;
+
+  /* ============ 动态色相（主站签名系统） ============
+     整站主色由 --hue 驱动，顶栏可实时调节；
+     辅色 = hue + 55（默认 215 蓝 → 270 紫罗兰渐变） */
+  --hue: 350;
+
+  /* ============ 主色阶：hsl(var(--hue), 45%, L)，低饱和哑光（去荧光感） ============ */
+  --primary-50: hsl(var(--hue), 45%, 95%);
+  --primary-100: hsl(var(--hue), 45%, 90%);
+  --primary-200: hsl(var(--hue), 45%, 85%);
+  --primary-300: hsl(var(--hue), 45%, 75%);
+  --primary-400: hsl(var(--hue), 45%, 65%);
+  --primary-500: hsl(var(--hue), 45%, 60%);
+  --primary-600: hsl(var(--hue), 45%, 55%);
+  --primary-700: hsl(var(--hue), 45%, 45%);
+  --primary-800: hsl(var(--hue), 45%, 35%);
+  --primary-900: hsl(var(--hue), 45%, 25%);
+
+  /* 辅色：hue+55，渐变终点 */
+  --secondary: hsl(calc(var(--hue) + 55), 45%, 60%);
+  --secondary-light: hsl(calc(var(--hue) + 55), 45%, 70%);
+
+  /* ============ 渐变配方（照搬主站） ============ */
+  --gradient-primary: linear-gradient(to right, var(--primary-400), var(--secondary));
+  --gradient-primary-br: linear-gradient(to bottom right, var(--primary-400), var(--secondary));
+  --gradient-accent-bar: linear-gradient(to bottom, var(--primary-500), var(--secondary));
+  --gradient-text: linear-gradient(to right, var(--primary-500), var(--secondary));
+  --gradient-divider: linear-gradient(to right, transparent, var(--primary-300), transparent);
+
+  /* ============ 中性色（Tailwind gray） ============ */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* ============ 语义：表面 / 文本 / 边界（浅色默认） ============ */
+  --bg-page: hsl(214, 40%, 97%);
+  --bg-page-start: hsl(214, 45%, 98%);
+  --bg-page-end: hsl(210, 40%, 98.5%);
+  --bg-card: rgba(255, 255, 255, 0.58);
+  --bg-card-raised: rgba(255, 255, 255, 0.65);
+  --bg-hover: rgba(99, 102, 241, 0.12);
+  --bg-active: rgba(99, 102, 241, 0.18);
+  --bg-tag: rgba(99, 102, 241, 0.15);
+  --bg-code: rgba(241, 245, 249, 0.75);
+
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-tertiary: #64748b;
+  --text-on-primary: #ffffff;
+
+  --border: rgba(255, 255, 255, 0.75);
+  --hairline: rgba(255, 255, 255, 0.6);
+
+  /* 玻璃拟态（背景插画之上：半透明透光） */
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-blur: blur(12px);
+
+  /* 玻璃平板与高透发光卡片遮罩 */
+  --bg-card-glass: rgba(255, 255, 255, 0.38);
+  --bg-inset: rgba(255, 255, 255, 0.52);
+  --border-inset: rgba(255, 255, 255, 0.72);
+  --bg-modal-glass: rgba(255, 255, 255, 0.92);
+  --card-blur: blur(4px);
+  --inset-blur: blur(8px);
+  --modal-blur: blur(20px);
+
+  /* Bento Grid 人性化设计 Token (浅色半透明高透) */
+  --bento-bg: rgba(255, 255, 255, 0.52);
+  --bento-border: rgba(255, 255, 255, 0.75);
+  --bento-hover-border: var(--primary-500);
+  --bento-blur: blur(2px);
+
+  /* 聚焦光环 */
+  --ring: hsla(var(--hue), 45%, 65%, 0.35);
+
+  /* ============ 状态色 ============ */
+  --state-success: hsl(160, 65%, 40%);
+  --state-success-surface: hsl(160, 60%, 93%);
+  --state-success-foreground: hsl(160, 70%, 26%);
+  --state-error: hsl(0, 72%, 55%);
+  --state-error-surface: hsl(0, 85%, 96%);
+  --state-error-foreground: hsl(0, 70%, 42%);
+  --state-warning: hsl(38, 92%, 48%);
+  --state-warning-surface: hsl(42, 95%, 93%);
+  --state-warning-foreground: hsl(32, 90%, 32%);
+  --state-info: var(--primary-500);
+  --state-info-surface: var(--primary-50);
+  --state-info-foreground: var(--primary-700);
+
+  /* ============ 阴影（slate 系，同主站） ============ */
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+  --shadow-modal: 0 18px 50px rgba(15, 23, 42, 0.25);
+
+  /* ============ 圆角（主站规律：按钮8 / 输入12 / 卡片16 / 大容器24） ============ */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* ============ 动效 ============ */
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.3s ease;
+  --transition-spring: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==================================================================
+   暗色主题：<html data-theme="dark">
+   ================================================================== */
+[data-theme='dark'] {
+  --bg-page: hsl(222, 26%, 8%);
+  --bg-page-start: hsl(222, 28%, 7%);
+  --bg-page-end: hsl(220, 24%, 10%);
+  --bg-card: hsl(218, 22%, 12%);
+  --bg-card-raised: hsla(216, 18%, 16%, 0.55);
+  --bg-hover: hsl(var(--hue), 20%, 15%);
+  --bg-active: hsl(var(--hue), 20%, 20%);
+  --bg-tag: hsl(var(--hue), 20%, 15%);
+  --bg-code: hsl(216, 18%, 15%);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+
+  --border: hsla(215, 20%, 35%, 0.75);
+  --hairline: hsla(215, 20%, 32%, 0.5);
+
+  --glass-bg: rgba(17, 24, 39, 0.82);
+  --glass-border: rgba(75, 85, 99, 0.55);
+
+  /* 玻璃平板（极致清透 · 背景插画 100% 无模糊直出） */
+  --bg-card-glass: rgba(15, 23, 42, 0.35);
+  --bg-inset: rgba(30, 41, 59, 0.45);
+  --border-inset: rgba(255, 255, 255, 0.12);
+  --bg-modal-glass: rgba(15, 23, 42, 0.92);
+  --card-blur: blur(2px);
+  --inset-blur: blur(4px);
+  --modal-blur: blur(24px);
+
+  /* Bento Grid 人性化设计 Token (深色极致高透模式) */
+  --bento-bg: rgba(15, 23, 42, 0.42);
+  --bento-border: rgba(255, 255, 255, 0.1);
+  --bento-hover-border: rgba(255, 255, 255, 0.22);
+  --bento-blur: blur(2px);
+
+  --ring: hsla(var(--hue), 55%, 65%, 0.5);
+
+  --state-success: hsl(160, 60%, 45%);
+  --state-success-surface: hsla(160, 60%, 45%, 0.15);
+  --state-success-foreground: hsl(160, 60%, 65%);
+  --state-error: hsl(0, 70%, 60%);
+  --state-error-surface: hsla(0, 70%, 55%, 0.15);
+  --state-error-foreground: hsl(0, 80%, 72%);
+  --state-warning: hsl(38, 90%, 55%);
+  --state-warning-surface: hsla(40, 90%, 50%, 0.15);
+  --state-warning-foreground: hsl(40, 90%, 65%);
+  --state-info: var(--primary-400);
+  --state-info-surface: hsla(var(--hue), 70%, 60%, 0.15);
+  --state-info-foreground: var(--primary-300);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.35), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.45), 0 10px 10px -5px rgba(0, 0, 0, 0.35);
+  --shadow-modal: 0 18px 50px rgba(0, 0, 0, 0.55);
+
+  /* 霓虹发光阴影 (Neon Glows) */
+  --glow-indigo: 0 10px 30px -5px rgba(99, 102, 241, 0.3);
+  --glow-emerald: 0 10px 30px -5px rgba(16, 185, 129, 0.3);
+  --glow-cyan: 0 10px 30px -5px rgba(6, 182, 212, 0.3);
+  --glow-amber: 0 10px 30px -5px rgba(245, 158, 11, 0.3);
+}

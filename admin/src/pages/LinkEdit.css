@@ -1,0 +1,22 @@
+@import '../styles/witchcat-admin.css';
+
+/* 链接编辑页专属样式（其余复用 wc-* 共享类） */
+
+/* 图片预览 */
+.link-edit-preview {
+  margin-top: 0.5rem;
+}
+
+.link-edit-preview img {
+  display: block;
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--hairline);
+}
+
+/* 复选框字段与输入框纵向对齐 */
+.link-edit-check-field {
+  justify-content: flex-end;
+  padding-bottom: 0.5rem;
+}

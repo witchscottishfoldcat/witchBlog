@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD文件上传测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .success {
+            background-color: #dff0d8;
+            border: 1px solid #d6e9c6;
+            color: #3c763d;
+        }
+        .error {
+            background-color: #f2dede;
+            border: 1px solid #ebccd1;
+            color: #a94442;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MD 文件上传测试</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">文件标题:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">文件描述:</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="tags">标签:</label>
+                <input type="text" id="tags" name="tags" placeholder="标签1,标签2,标签3">
+            </div>
+            
+            <div class="form-group">
+                <label for="isPublic">公开文件:</label>
+                <input type="checkbox" id="isPublic" name="is_public" value="true">
+            </div>
+            
+            <div class="form-group">
+                <label for="file">选择MD文件:</label>
+                <input type="file" id="file" name="file" accept=".md,.markdown,.mdown,.mkd" required>
+            </div>
+            
+            <button type="submit">上传文件</button>
+        </form>
+        
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('tags', document.getElementById('tags').value);
+            
+            const isPublic = document.getElementById('isPublic').checked;
+            formData.append('is_public', isPublic);
+            
+            const fileInput = document.getElementById('file');
+            if (fileInput.files.length > 0) {
+                formData.append('file', fileInput.files[0]);
+            }
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/md-files/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = document.getElementById('result');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    result.className = 'result success';
+                    result.innerHTML = `
+                        <h3>上传成功!</h3>
+                        <p>文件ID: ${data.id}</p>
+                        <p>文件标题: ${data.title}</p>
+                        <p>原始文件名: ${data.original_filename}</p>
+                        <p>文件大小: ${data.file_size} 字节</p>
+                        <p>查看文件: <a href="http://localhost:8000/api/v1/md-files/${data.id}/content" target="_blank">点击这里</a></p>
+                    `;
+                } else {
+                    const error = await response.text();
+                    result.className = 'result error';
+                    result.innerHTML = `<h3>上传失败!</h3><p>${error}</p>`;
+                }
+                
+                result.style.display = 'block';
+            } catch (error) {
+                const result = document.getElementById('result');
+                result.className = 'result error';
+                result.innerHTML = `<h3>上传错误!</h3><p>${error.message}</p>`;
+                result.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,681 @@
+@import '../styles/witchcat-admin.css';
+
+/* ============================================
+   Bento Grid 人性化优雅排版 (Linear / Vercel 风格)
+   彻底去除 AI 模板感与重叠大方块
+   ============================================ */
+
+.bento-dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 2.5rem;
+  animation: wc-fade-in-up 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============ 顶部 Hero 欢迎与快捷栏 ============ */
+.bento-hero-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0.25rem 0.5rem 0;
+}
+
+.bento-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.bento-avatar-glow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--primary-500), var(--secondary));
+  color: #ffffff;
+  box-shadow: 0 8px 24px -4px rgba(129, 140, 248, 0.4);
+  flex-shrink: 0;
+}
+
+.bento-hero-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.bento-user-highlight {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bento-hero-sub {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+}
+
+.bento-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.bento-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--bento-border);
+  background: var(--bento-bg);
+  backdrop-filter: var(--bento-blur);
+  -webkit-backdrop-filter: var(--bento-blur);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.bento-action-btn:hover {
+  border-color: var(--bento-hover-border);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.bento-action-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: var(--radius-full);
+  background: var(--gradient-primary);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.35);
+  transition: all var(--transition-fast);
+}
+
+.bento-action-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+  box-shadow: 0 12px 25px -4px rgba(99, 102, 241, 0.5);
+}
+
+/* ============ 顶层极简精致指标胶囊条 (Stat Strip) ============ */
+.bento-stat-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+@media (min-width: 768px) {
+  .bento-stat-strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.bento-stat-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-lg);
+  background: var(--bento-bg);
+  backdrop-filter: var(--bento-blur);
+  -webkit-backdrop-filter: var(--bento-blur);
+  border: 1px solid var(--bento-border);
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.bento-stat-pill:hover {
+  border-color: var(--bento-hover-border);
+  transform: translateY(-2px);
+}
+
+.bento-pill-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pill-indigo {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+}
+
+.pill-emerald {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+}
+
+.pill-cyan {
+  background: rgba(6, 182, 212, 0.15);
+  color: #67e8f9;
+}
+
+.pill-amber {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
+}
+
+.bento-pill-label {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.bento-pill-value {
+  margin-left: auto;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============ Bento Grid 便当盒阵列 ============ */
+.bento-grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  /* minmax(0, …) 防止主列长内容把网格撑爆、侧栏（常用模块）被挤成一条窄缝 */
+  .bento-grid-container {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+}
+
+.bento-col-main,
+.bento-col-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* 基础 Bento 盒样式 */
+.bento-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-xl);
+  background: var(--bento-bg);
+  backdrop-filter: var(--bento-blur);
+  -webkit-backdrop-filter: var(--bento-blur);
+  border: 1px solid var(--bento-border);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transition: border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.bento-box:hover {
+  border-color: var(--bento-hover-border);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.35);
+}
+
+.bento-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.1rem 1.35rem 0.85rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.bento-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.bento-icon-accent {
+  color: var(--primary-500);
+}
+
+.bento-box-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.bento-box-sub {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-top: 0.1rem;
+}
+
+.bento-box-body {
+  padding: 1.1rem 1.35rem;
+  flex: 1;
+}
+
+/* ---- 便当盒 1: 图表卡 ---- */
+.bento-chart-wrapper {
+  height: 280px;
+  width: 100%;
+}
+
+.bento-period-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.18rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-hover);
+  border: 1px solid var(--hairline);
+}
+
+.bento-tab {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.bento-tab.active {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Recharts Tooltip */
+.bento-chart-tooltip {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.85rem;
+  box-shadow: var(--shadow-xl);
+}
+
+.bento-tooltip-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.bento-tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 0.15rem;
+}
+
+.bento-tooltip-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.bento-tooltip-val {
+  margin-left: auto;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ---- 便当盒 2: 最新 Markdown 文章预览列表 ---- */
+.bento-more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  color: var(--primary-600);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+[data-theme='dark'] .bento-more-link {
+  color: var(--primary-400);
+}
+
+.bento-more-link:hover {
+  color: var(--primary-500);
+}
+
+.bento-recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.bento-recent-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-lg);
+  background: var(--bg-hover);
+  border: 1px solid var(--hairline);
+  transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.bento-recent-card:hover {
+  background: var(--bg-active);
+  border-color: var(--primary-300);
+  transform: translateX(3px);
+}
+
+.bento-recent-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.bento-recent-head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.bento-recent-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bento-badge-pub,
+.bento-badge-priv {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-full);
+  font-size: 0.68rem;
+  flex-shrink: 0;
+}
+
+.bento-badge-pub {
+  background: var(--state-success-surface);
+  color: var(--state-success-foreground);
+}
+
+.bento-badge-priv {
+  background: var(--bg-hover);
+  color: var(--text-tertiary);
+}
+
+.bento-recent-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bento-recent-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+}
+
+.bento-recent-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.bento-mini-tag {
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tag);
+  color: var(--primary-700);
+}
+
+[data-theme='dark'] .bento-mini-tag {
+  color: var(--primary-300);
+}
+
+.bento-recent-edit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--bg-card-raised);
+  color: var(--text-secondary);
+  border: 1px solid var(--hairline);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.bento-recent-edit-btn:hover {
+  background: var(--primary-500);
+  color: #ffffff;
+}
+
+/* ---- 便当盒 3: 灵感速记草稿 ---- */
+.bento-badge-pill {
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-tag);
+  color: var(--primary-700);
+  font-size: 0.7rem;
+  border: 1px solid var(--border);
+}
+
+[data-theme='dark'] .bento-badge-pill {
+  color: var(--primary-300);
+}
+
+.bento-draft-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1rem 1.35rem 1.25rem;
+}
+
+.bento-draft-textarea {
+  width: 100%;
+  height: 5.5rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  resize: none;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.bento-draft-textarea:focus {
+  border-color: var(--primary-500);
+}
+
+.bento-draft-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bento-draft-hint {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+}
+
+.bento-draft-submit {
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--gradient-primary);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter var(--transition-fast);
+}
+
+.bento-draft-submit:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+/* ---- 便当盒 4: 运行与存储比例 ---- */
+.bento-status-dot-pulse {
+  font-size: 0.75rem;
+  color: var(--state-success);
+  font-weight: 600;
+}
+
+.bento-status-dot-error {
+  color: var(--state-error);
+}
+
+.bento-status-body {
+  padding: 1rem 1.35rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.bento-progress-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.bento-progress-track {
+  display: flex;
+  height: 0.5rem;
+  width: 100%;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  background: var(--bg-hover);
+  gap: 2px;
+}
+
+.bento-progress-bar {
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+.bar-indigo {
+  background: #818cf8;
+}
+
+.bar-emerald {
+  background: #34d399;
+}
+
+.bar-cyan {
+  background: #38bdf8;
+}
+
+.bento-status-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 0.25rem;
+}
+
+.bento-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+}
+
+.bento-row-key {
+  color: var(--text-secondary);
+}
+
+.bento-row-val {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.val-highlight {
+  color: var(--primary-600);
+}
+
+[data-theme='dark'] .val-highlight {
+  color: #818cf8;
+}
+
+/* ---- 便当盒 5: 常用模块 Tiles ---- */
+.bento-tiles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding: 0.85rem 0.75rem 1rem;
+}
+
+.bento-tile-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+  padding: 0.75rem 0.6rem;
+  border-radius: var(--radius-lg);
+  background: var(--bg-hover);
+  border: 1px solid var(--hairline);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.bento-tile-item:hover {
+  background: var(--bg-active);
+  border-color: var(--primary-300);
+  transform: translateY(-2px);
+}
+
+.bento-tile-icon {
+  color: var(--primary-500);
+}
+
+.bento-tile-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  /* 窄列下长单词（如 Markdown）超出格子宽度时强制折行，避免横向溢出到相邻格子 */
+  overflow-wrap: anywhere;
+}
+
+.bento-tile-arrow {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  color: var(--text-tertiary);
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.bento-tile-item:hover .bento-tile-arrow {
+  transform: translate(2px, -2px);
+  color: var(--primary-500);
+}

@@ -1,0 +1,148 @@
+node {
+    env.PROJECT_NAME = 'witchcat-web-bd'
+    env.DOCKER_IMAGE = "witchcat/${env.PROJECT_NAME}"
+    env.DOCKER_TAG = "${env.BUILD_NUMBER}"
+    env.CONTAINER_NAME = 'witchcatweb-bd'
+    env.FRONTEND_PORT = '8080'
+    env.HEALTH_CHECK_URL = "http://127.0.0.1:${env.FRONTEND_PORT}"
+    env.STARTUP_WAIT_SECONDS = '10'
+
+    properties([
+        buildDiscarder(logRotator(numToKeepStr: '10')),
+        disableConcurrentBuilds()
+    ])
+
+    timestamps {
+        timeout(time: 30, unit: 'MINUTES') {
+            try {
+                checkoutSource()
+                buildDockerImage()
+                scanDockerImage()
+                deployApplication()
+                notifySuccess()
+            } catch (err) {
+                notifyFailure()
+                throw err
+            } finally {
+                cleanupDockerImage()
+            }
+        }
+    }
+}
+
+def checkoutSource() {
+    stage('Checkout') {
+        echo 'Checking out code...'
+        checkout scm
+
+        env.GIT_COMMIT_SHORT = sh(
+            script: 'git rev-parse --short HEAD',
+            returnStdout: true
+        ).trim()
+
+        env.GIT_AUTHOR = sh(
+            script: 'git log -1 --pretty=format:"%an"',
+            returnStdout: true
+        ).trim()
+
+        echo "Checkout completed - Commit: ${env.GIT_COMMIT_SHORT}, Author: ${env.GIT_AUTHOR}"
+    }
+}
+
+def buildDockerImage() {
+    stage('Build Docker Image') {
+        echo 'Building Docker image...'
+
+        sh "docker build -t ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} ."
+        sh "docker tag ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} ${env.DOCKER_IMAGE}:latest"
+
+        if (env.GIT_COMMIT_SHORT) {
+            sh "docker tag ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} ${env.DOCKER_IMAGE}:${env.GIT_COMMIT_SHORT}"
+        }
+
+        echo 'Docker image built successfully'
+    }
+}
+
+def scanDockerImage() {
+    stage('Image Security Scan') {
+        echo 'Scanning image for vulnerabilities...'
+
+        sh """
+            trivy image --exit-code 1 --severity HIGH,CRITICAL ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}
+        """
+    }
+}
+
+def deployApplication() {
+    stage('Deploy') {
+        echo 'Deploying admin frontend locally...'
+
+        sh(
+            script: """
+                set -eu
+
+                echo "1. Removing old admin frontend container if present..."
+                docker rm -f "${env.CONTAINER_NAME}" || true
+
+                echo "2. Starting admin frontend container from local image..."
+                docker run -d \\
+                    --name "${env.CONTAINER_NAME}" \\
+                    --restart unless-stopped \\
+                    --add-host=host.docker.internal:host-gateway \\
+                    -p "${env.FRONTEND_PORT}:${env.FRONTEND_PORT}" \\
+                    "${env.DOCKER_IMAGE}:latest"
+
+                echo "3. Checking admin frontend health..."
+                sleep "${env.STARTUP_WAIT_SECONDS}"
+                docker exec "${env.CONTAINER_NAME}" wget -qO- "${env.HEALTH_CHECK_URL}" >/dev/null
+
+                echo "4. Cleaning unused Docker images..."
+                docker image prune -f
+
+                echo "Deployment successful"
+            """.stripIndent()
+        )
+    }
+}
+
+def cleanupDockerImage() {
+    echo 'Cleaning up workspace Docker images...'
+
+    sh """
+        docker rmi ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} || true
+        docker image prune -f || true
+    """
+}
+
+def notifySuccess() {
+    echo 'Build successful!'
+
+    echo """
+        Build Success Notification
+
+        Project: ${env.PROJECT_NAME}
+        Build: #${env.BUILD_NUMBER}
+        Branch: ${env.BRANCH_NAME ?: 'N/A'}
+        Commit: ${env.GIT_COMMIT_SHORT ?: 'N/A'}
+        Author: ${env.GIT_AUTHOR ?: 'N/A'}
+        Image: ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}
+        URL: http://localhost:${env.FRONTEND_PORT}
+    """
+}
+
+def notifyFailure() {
+    echo 'Build failed!'
+
+    echo """
+        Build Failure Notification
+
+        Project: ${env.PROJECT_NAME}
+        Build: #${env.BUILD_NUMBER}
+        Branch: ${env.BRANCH_NAME ?: 'N/A'}
+        Commit: ${env.GIT_COMMIT_SHORT ?: 'N/A'}
+        Author: ${env.GIT_AUTHOR ?: 'N/A'}
+
+        Check build log: ${env.BUILD_URL}
+    """
+}

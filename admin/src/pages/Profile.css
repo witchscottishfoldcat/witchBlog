@@ -1,0 +1,84 @@
+@import '../styles/witchcat-admin.css';
+
+/* 个人资料 —— WitchCat 主站风格（页面专属样式） */
+
+.profile-page {
+  max-width: 1180px;
+  padding-bottom: 3rem;
+}
+
+.profile-back {
+  margin-bottom: 0.75rem;
+}
+
+.profile-alert {
+  margin-bottom: 1.5rem;
+}
+
+.profile-loading {
+  min-height: 12rem;
+}
+
+/* 两栏布局：左账户信息 / 右编辑表单，移动端单列 */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .profile-grid {
+    grid-template-columns: 1fr 1.2fr;
+    align-items: stretch;
+  }
+}
+
+/* 两列卡片等高对齐：卡片随网格行拉伸，内容区填满剩余高度 */
+.profile-grid .wc-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 只读信息列表：行均分卡片剩余高度，与右侧表单对齐 */
+.profile-info-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.profile-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 1.25rem;
+  border-top: 1px solid var(--hairline);
+  flex: 1;
+}
+
+.profile-info-row:first-child {
+  border-top: none;
+}
+
+.profile-info-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.profile-info-value {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  word-break: break-all;
+}
+
+/* 编辑表单填满卡片，按钮区贴底 */
+.profile-edit-body {
+  flex: 1;
+}
+
+.profile-edit-body .wc-form-actions {
+  margin-top: auto;
+}

@@ -1,0 +1,14 @@
+@import '../styles/witchcat-admin.css';
+
+/* SponsorEdit - 表单提示文字 */
+
+.sponsor-edit-page {
+  max-width: 980px;
+  padding-bottom: 3rem;
+}
+
+.wc-field-hint {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
