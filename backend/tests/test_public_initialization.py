@@ -54,6 +54,11 @@ def test_no_console_does_not_attempt_password_prompt(monkeypatch):
         create_admin_user.resolve_password(password_args(non_interactive=False))
 
 
+def test_windows_console_check_is_unavailable_on_other_platforms(monkeypatch):
+    monkeypatch.setattr(create_admin_user.sys, "platform", "linux")
+    assert create_admin_user._has_windows_console(0) is False
+
+
 def test_password_is_validated_before_database_mutation(monkeypatch):
     monkeypatch.setattr(init_db, "parse_args", password_args)
 

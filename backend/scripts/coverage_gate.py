@@ -25,6 +25,9 @@ TEST_FILES = [
     "tests/test_links_random_route.py",
     "tests/test_error_envelope.py",
     "tests/test_project_stats_sync.py",
+    "tests/test_auth.py",
+    "tests/test_public_initialization.py",
+    "tests/test_initialization_isolation.py",
 ]
 
 

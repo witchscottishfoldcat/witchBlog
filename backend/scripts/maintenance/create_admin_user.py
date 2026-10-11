@@ -48,6 +48,9 @@ def parse_args() -> argparse.Namespace:
 def _has_windows_console(fd: int) -> bool:
     """Windows 下 isatty() 会把 NUL 设备等重定向误报为 True；
     GetConsoleMode 只对真实控制台句柄成功，可立即区分。仅 Windows 调用。"""
+    if sys.platform != "win32":
+        return False
+
     import ctypes
     from ctypes import wintypes
 
